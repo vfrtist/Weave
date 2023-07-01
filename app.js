@@ -13,7 +13,6 @@ for (let btn of pageButtons) {
     btn.addEventListener('click', function () {
         makeInActive();
         this.classList.add('active');
-        readwrite();
     })
 }
 
