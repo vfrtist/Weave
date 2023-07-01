@@ -75,8 +75,9 @@ footer {
     color: var(--menu-background);
     display: inline-block;
     z-index: 99;
-    position: absolute;
+    position: fixed;
     bottom: 35px;
+    user-select: none;
     transition: bottom .2s cubic-bezier(0.77, 0, 0.18, 1);
 
     &.move {

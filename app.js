@@ -5,12 +5,15 @@ let materialDescription = document.querySelector('.Material_Description')
 let allPieces = document.querySelectorAll('.piece')
 let pieceMenus = document.querySelectorAll('.pieces')
 
+let isEditable = false
+
 // Page change -------------------
 // const title = document.querySelector('h1');
 for (let btn of pageButtons) {
     btn.addEventListener('click', function () {
         makeInActive();
         this.classList.add('active');
+        readwrite();
     })
 }
 
@@ -18,9 +21,16 @@ function makeInActive() {
     for (let btn of pageButtons) { btn.classList.remove('active') }
 }
 
+function readwrite() {
+    isEditable = !isEditable
+    for (piece of allPieces) {
+        piece.contentEditable = isEditable;
+    };
+}
+
 // Hover text -------------------
 for (let btn of pageButtons) {
-    const pageLabel = document.createElement('div');
+    let pageLabel = document.createElement('div');
     pageLabel.classList.add('pageLabel');
     pageLabel.innerText = btn.title;
 
@@ -55,6 +65,9 @@ let movePiece;
 
 allPieces.forEach(piece => {
     piece.addEventListener('dragstart', (e) => {
+        // re-align pieces to wherever they are scroll wise 
+        allPieces = document.querySelectorAll('.piece')
+
         // make a temporary since drag/drop doesn't work past a certain width
         tempPiece = piece.cloneNode(true);
         tempPiece.classList.add('tempPiece');
@@ -64,6 +77,8 @@ allPieces.forEach(piece => {
         //change display of dragged item and move to a 
         piece.classList.add('dragging');
         movePiece = piece
+        console.log(piece)
+        console.log(allPieces)
     });
 
     piece.addEventListener('dragend', () => {
