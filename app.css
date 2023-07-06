@@ -16,6 +16,16 @@ font-style: normal; */
     --color-shadow-light: #ceb6b656;
 }
 
+[data-theme="purple"] {
+    --menu-background: #57325d;
+    --menu-light: #B4ADE3;
+    --color-base: #F1D0E9;
+    --color-accent: #D7282F;
+    --color-light2: #F5F0EE;
+    --color-shadow: #AD89B2;
+    --color-shadow-light: #AD89B256;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -26,7 +36,7 @@ body {
     font-family: 'Nunito Sans', sans-serif;
     font-size: 14pt;
     background-color: var(--color-base);
-    /*a slightly less hot white*/
+    /* background: linear-gradient(90deg, rgba(234, 210, 202, 1) 27%, rgba(235, 121, 184, 1) 100%); */
 }
 
 /* --------------------------- Footer ---------------------------  */
