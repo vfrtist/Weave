@@ -11,7 +11,7 @@ font-style: normal; */
     --menu-light: #989da3;
     --color-base: #EAD2CA;
     --color-accent: #D7282F;
-    --color-light2: #F5F0EE;
+    --color-light: #F5F0EE;
     --color-shadow: #CEB6B6;
     --color-shadow-light: #ceb6b656;
 }
@@ -21,7 +21,7 @@ font-style: normal; */
     --menu-light: #B4ADE3;
     --color-base: #F1D0E9;
     --color-accent: #D7282F;
-    --color-light2: #F5F0EE;
+    --color-light: #F5F0EE;
     --color-shadow: #AD89B2;
     --color-shadow-light: #AD89B256;
 }
@@ -49,6 +49,7 @@ footer {
     height: 50px;
     position: fixed;
     bottom: 0;
+    /* top: 0; */
     gap: 8px;
     z-index: 0;
 }
@@ -197,7 +198,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-items: center;
-    background-color: var(--color-light2);
+    background-color: var(--color-light);
     border-radius: 6px;
     width: 40%;
     box-shadow: 3px 3px 12px var(--color-shadow), -3px -3px 8px var(--color-base);
