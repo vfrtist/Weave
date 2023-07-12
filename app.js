@@ -105,3 +105,26 @@ function cancelDefault(e) {
     e.stopPropagation();
     return false;
 }
+
+// ----------------- Dark Mode (not really working yet but the ideas are there for it) -------------------
+const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    // if (currentTheme === 'dark') {
+    //     darkSwitch()
+    // }
+}
+
+function darkSwitch() {
+    document.documentElement.setAttribute('data-theme', 'purple');
+    // document.documentElement.toggleAttribute('data-theme', 'purple');
+    // if (document.body.classList.contains('dark-bg')) {
+    //     document.documentElement.setAttribute('data-theme', 'dark');
+    //     localStorage.setItem('theme', 'dark');
+    // } else {
+    //     document.documentElement.setAttribute('data-theme', 'light');
+    //     localStorage.setItem('theme', 'light');
+    // }
+}
