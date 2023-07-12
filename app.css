@@ -49,7 +49,6 @@ footer {
     height: 50px;
     position: fixed;
     bottom: 0;
-    /* top: 0; */
     gap: 8px;
     z-index: 0;
 }
@@ -97,6 +96,34 @@ footer {
     }
 
 }
+
+/* --------------------------- Generic Text Formatting ---------------------------  */
+
+.leftBar {
+    width: 140px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background: var(--menu-background);
+    color: var(--menu-light);
+    padding: 0;
+    position: fixed;
+}
+
+.leftBar ul {
+    list-style-type: none;
+    padding: 8px;
+}
+
+.leftBar ul li {
+    margin: 8px 0px;
+}
+
+.leftBar ul li:hover {
+    color: white;
+    transition: color .2s;
+}
+
 
 /*  --------------------------- Buttons ---------------------------   */
 
