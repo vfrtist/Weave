@@ -97,26 +97,32 @@ footer {
 
 }
 
-/* --------------------------- Generic Text Formatting ---------------------------  */
+/* --------------------------- Left Bar Formatting ---------------------------  */
 
 .leftBar {
     width: 140px;
+    height: 100%;
     display: flex;
-    align-content: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     background: var(--menu-background);
     color: var(--menu-light);
-    padding: 0;
+    padding: 6px;
     position: fixed;
 }
 
 .leftBar ul {
     list-style-type: none;
     padding: 8px;
+    width: 80%;
 }
 
 .leftBar ul li {
-    margin: 8px 0px;
+    margin: 18px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .leftBar ul li:hover {
@@ -124,6 +130,35 @@ footer {
     transition: color .2s;
 }
 
+/* --------------------------- Arrow Shenanigans ---------------------------  */
+
+.arrow {
+    display: inline-block;
+    transition: all .2s ease;
+    width: 14px;
+}
+
+.leftBar ul li:hover .arrow span {
+    background: white;
+}
+
+.leftBar ul li:hover .arrow span:nth-child(1) {
+    transform: rotate(30deg);
+}
+
+.leftBar ul li:hover .arrow span:nth-child(2) {
+    transform: rotate(-30deg);
+}
+
+.arrow span {
+    transform-origin: right;
+    width: 14px;
+    height: 3px;
+    border-radius: 2px;
+    position: absolute;
+    transition: all .2s ease;
+    background: var(--menu-light);
+}
 
 /*  --------------------------- Buttons ---------------------------   */
 
@@ -370,34 +405,4 @@ h3 {
     width: 260px;
     text-align: start;
     display: inline-block;
-}
-
-/* --------------------------- Arrow Shenanigans ---------------------------  */
-
-.arrow {
-    transition: all .2s ease;
-    width: 14px;
-    height: 14px;
-}
-
-.arrow:hover span {
-    background: white;
-}
-
-.arrow:hover span:nth-child(1) {
-    transform: rotate(30deg);
-}
-
-.arrow:hover span:nth-child(2) {
-    transform: rotate(-30deg);
-}
-
-.arrow span {
-    transform-origin: right;
-    width: 14px;
-    height: 3px;
-    border-radius: 2px;
-    position: absolute;
-    transition: all .2s ease;
-    background: var(--menu-light);
 }
