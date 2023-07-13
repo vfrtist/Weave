@@ -155,8 +155,9 @@ footer {
 
 .leftSub {
     display: flex;
-    padding: 0;
-    transition: all .3s ease;
+    box-sizing: border-box;
+    padding: 8px;
+    transition: width .3s ease;
     z-index: 10;
     background: var(--menu-background);
     position: fixed;
@@ -164,11 +165,29 @@ footer {
     left: 120px;
     height: 100%;
     width: 0;
+    display: none;
 }
 
 .leftSub.open {
     width: 180px;
-    border-left: 1px solid var(--menu-button);
+    border-left: 1px solid black;
+    display: block;
+}
+
+.leftSub .piece {
+    background: var(--container-background);
+    border-radius: 12px;
+    color: var(--font-color);
+    align-items: center;
+}
+
+.pieceFrame {
+    background-image: url('Ears Gentle.png');
+    background-repeat: repeat;
+    background-size: 50%;
+    height: 80px;
+    width: 85%;
+    border: 1px solid var(--board-background);
 }
 
 /* --------------------------- Arrow Shenanigans ---------------------------  */
@@ -334,9 +353,8 @@ footer {
     border-bottom: 1px solid var(--board-background);
     padding: 4px;
     display: flex;
-
-    /* flex-direction: column-reverse;
-    text-align: center; */
+    flex-direction: column-reverse;
+    text-align: center;
 
     gap: 8px;
     transition: box-shadow .15s, border-radius .25s;
