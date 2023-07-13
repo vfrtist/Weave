@@ -4,6 +4,7 @@ const materialLookUp = document.querySelector('.Material_Number')
 let materialDescription = document.querySelector('.Material_Description')
 let allPieces = document.querySelectorAll('.piece')
 let pieceMenus = document.querySelectorAll('.pieces')
+let leftButtons = document.querySelectorAll('.leftButton')
 
 let isEditable = false
 
@@ -124,4 +125,12 @@ function darkSwitch() {
     //     document.documentElement.setAttribute('data-theme', 'light');
     //     localStorage.setItem('theme', 'light');
     // }
+}
+
+// ----------------- Side Menu -------------------
+for (let btn of leftButtons) {
+    btn.addEventListener('click', () => {
+        btn.nextElementSibling.classList.toggle('open');
+        // btn.classList.toggle('open');
+    });
 }
