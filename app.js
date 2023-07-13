@@ -76,7 +76,6 @@ allPieces.forEach(piece => {
         //change display of dragged item and move to a 
         piece.classList.add('dragging');
         movePiece = piece
-        console.log(piece)
     });
 
     piece.addEventListener('dragend', () => {
@@ -92,8 +91,6 @@ pieceMenus.forEach(dropTarget => {
 
 function dragOver(e) {
     let siblings = [...this.querySelectorAll('.piece:not(.dragging)')];
-    console.log(e)
-    console.log(e.clientY)
     let nextSibling = siblings.find(sibling => {
         return e.pageY <= sibling.offsetTop + sibling.offsetHeight / 2;
     });
