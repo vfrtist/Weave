@@ -7,13 +7,14 @@ font-weight: 800;
 font-style: normal; */
 
 :root {
-    --menu-background: #343638;
-    --menu-button: #989da3;
-    --menu-active: white;
-    --board-background: #EAD2CA;
-    --container-background: #F5F0EE;
-    --container-shadow: #CEB6B6;
-    --container-shadow-light: #ceb6b656;
+    --menu-background: white;
+    --menu-background2: #f1ebf3;
+    --menu-button: #7c7c7c;
+    --menu-active: #875bd8;
+    --board-background: #dad1de;
+    --container-background: white;
+    --container-shadow: #c0b6ce;
+    --container-shadow-light: #c0b6ce56;
     --font-color: black;
 }
 
@@ -43,12 +44,6 @@ font-style: normal; */
     display: none;
 }
 
-/* ----------------- Mickey Repeat Background ---------------------- */
-/* background-color: var(--container-background);
-    background-image: url('Ears Gentle.png');
-    background-repeat: repeat;
-    background-size: 10%; */
-
 body {
     margin: 0;
     padding: 0;
@@ -56,19 +51,18 @@ body {
     font-size: 14pt;
     background: var(--board-background);
     color: var(--font-color);
-    /* background: linear-gradient(90deg, rgba(234, 210, 202, 1) 27%, rgba(235, 121, 184, 1) 100%); */
 }
 
-/* --------------------------- Footer ---------------------------  */
+/* --------------------------- Header ---------------------------  */
 
-footer {
+header {
     background: var(--menu-background);
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     width: 100vw;
     height: 50px;
     position: fixed;
-    bottom: 0;
+    top: 0;
     gap: 8px;
     z-index: 0;
 }
@@ -107,12 +101,13 @@ footer {
     display: inline-block;
     z-index: 99;
     position: fixed;
-    bottom: 35px;
+    top: 35px;
     user-select: none;
-    transition: bottom .2s cubic-bezier(0.77, 0, 0.18, 1);
+    transition: top .2s cubic-bezier(0.77, 0, 0.18, 1), color .2s ease;
 
     &.move {
-        bottom: 54px;
+        top: 54px;
+        color: var(--menu-active);
     }
 
 }
@@ -121,34 +116,36 @@ footer {
 
 .leftBar {
     box-sizing: border-box;
-    width: 120px;
-    height: 100%;
+    width: 180px;
+    height: calc(100% - 50px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: var(--menu-background);
     color: var(--menu-button);
+    fill: var(--menu-button);
     padding: 6px;
     position: fixed;
+    bottom: 0;
 }
 
 .leftBar ul {
     list-style-type: none;
     padding: 8px;
-    width: 80%;
-    font-size: 12pt;
+    width: 90%;
+    font-size: 11pt;
 }
 
 .leftBar ul li {
     margin: 18px 0px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .leftBar ul li:hover {
     color: var(--menu-active);
+    fill: var(--menu-active);
     transition: color .2s;
     cursor: pointer;
 }
@@ -156,22 +153,29 @@ footer {
 .leftSub {
     display: flex;
     box-sizing: border-box;
-    padding: 8px;
     transition: width .3s ease;
     z-index: 10;
-    background: var(--menu-background);
+    background: var(--menu-background2);
     position: fixed;
-    top: 0;
-    left: 120px;
-    height: 100%;
+    bottom: 0;
+    left: 180px;
+    height: calc(100% - 50px);
     width: 0;
-    display: none;
 }
 
 .leftSub.open {
-    width: 180px;
-    border-left: 1px solid black;
+    width: 200px;
+    padding: 12px;
+}
+
+.leftSub>div {
+    display: none;
+}
+
+.leftSub.open>div {
     display: block;
+    width: 100%;
+    animation: slide-in .2s .3s backwards;
 }
 
 .leftSub .piece {
@@ -179,15 +183,43 @@ footer {
     border-radius: 12px;
     color: var(--font-color);
     align-items: center;
+    margin-bottom: 12px;
+}
+
+.leftSub .pieces {
+    border: none;
+    height: inherit;
+}
+
+.arrow {
+    margin-left: auto;
 }
 
 .pieceFrame {
     background-image: url('Ears Gentle.png');
     background-repeat: repeat;
-    background-size: 50%;
+    background-size: 40%;
     height: 80px;
     width: 85%;
     border: 1px solid var(--board-background);
+}
+
+.leftIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+
+@keyframes slide-in {
+    0% {
+        opacity: 0;
+        translate: -60px 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* --------------------------- Arrow Shenanigans ---------------------------  */
@@ -221,7 +253,6 @@ footer {
     background: var(--menu-button);
 }
 
-
 /* ----------- This might be too confusing though it is cute and does work --------------*/
 /* .leftButton.open .arrow span {
     transform-origin: left;
@@ -235,7 +266,7 @@ footer {
     height: 50px;
     background: transparent;
     border: none;
-    transition: fill .25s, color .25s, border-bottom .1s;
+    transition: fill .25s, color .25s, border-top .1s;
     text-align: center;
     overflow: visible;
     display: flex;
@@ -273,7 +304,7 @@ footer {
 .subMenu {
     display: none;
     position: absolute;
-    bottom: 25px;
+    top: 25px;
     background: var(--menu-background);
     width: max-content;
     z-index: 1;
@@ -285,7 +316,7 @@ footer {
 
 .subMenu li,
 .subMenu a {
-    color: var(--menu-active);
+    color: var(--font-color);
     padding: 3px 8px;
     display: block;
     transition: all .1s;
@@ -293,9 +324,10 @@ footer {
     text-decoration: none;
 }
 
-.subMenu li:hover {
-    background: var(--menu-button);
+.subMenu li:hover,
+.subMenu a:hover {
     cursor: default;
+    background: var(--menu-background2);
 }
 
 .menu:hover .subMenu {
@@ -307,14 +339,14 @@ footer {
 .active {
     fill: var(--menu-active);
     color: var(--menu-active);
-    border-bottom: 3pt solid var(--menu-active);
+    border-top: 3pt solid var(--menu-active);
 }
 
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
     padding: 20px;
-    padding-top: 60px;
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
