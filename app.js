@@ -1,12 +1,19 @@
 // ----------------- Page Button Shenanigans -------------------
 const pageButtons = document.querySelectorAll('.pageButton');
 const materialLookUp = document.querySelector('.Material_Number')
-let materialDescription = document.querySelector('.Material_Description')
 let allPieces = document.querySelectorAll('.piece')
 let pieceMenus = document.querySelectorAll('.pieces')
 let leftButtons = document.querySelectorAll('.leftButton')
 
 let isEditable = false
+
+
+let dupMenu = document.querySelector('.pieces')
+
+for (let i = 0; i < 4; i++) {
+    let dupPiece = document.querySelector('.piece').cloneNode('true');
+    dupMenu.append(dupPiece);
+}
 
 // Page change -------------------
 // const title = document.querySelector('h1');
@@ -131,6 +138,6 @@ function darkSwitch() {
 for (let btn of leftButtons) {
     btn.addEventListener('click', () => {
         btn.nextElementSibling.classList.toggle('open');
-        // btn.classList.toggle('open');
+        btn.classList.toggle('open');
     });
 }

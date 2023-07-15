@@ -18,19 +18,9 @@ font-style: normal; */
     --font-color: black;
 }
 
-[data-theme="purple"] {
-    --menu-background: #57325d;
-    --menu-button: #B4ADE3;
-    --menu-active: white;
-    --board-background: #d797c761;
-    --container-background: #F5F0EE;
-    --container-shadow: #AD89B2;
-    --container-shadow-light: #AD89B256;
-    --font-color: black;
-}
-
 [data-theme="dark"] {
     --menu-background: #26292c;
+    --menu-background2: #c1cbd7;
     --menu-button: #989da3;
     --menu-active: white;
     --board-background: #525252;
@@ -97,17 +87,16 @@ header {
 .pageLabel {
     font-weight: 600;
     font-size: 1.1rem;
-    color: var(--menu-background);
+    color: var(--menu-active);
     display: inline-block;
-    z-index: 99;
+    z-index: -1;
     position: fixed;
     top: 35px;
     user-select: none;
-    transition: top .2s cubic-bezier(0.77, 0, 0.18, 1), color .2s ease;
+    transition: top .2s cubic-bezier(0.77, 0, 0.18, 1);
 
     &.move {
         top: 54px;
-        color: var(--menu-active);
     }
 
 }
@@ -116,7 +105,7 @@ header {
 
 .leftBar {
     box-sizing: border-box;
-    width: 180px;
+    width: 170px;
     height: calc(100% - 50px);
     display: flex;
     flex-direction: column;
@@ -158,7 +147,7 @@ header {
     background: var(--menu-background2);
     position: fixed;
     bottom: 0;
-    left: 180px;
+    left: 170px;
     height: calc(100% - 50px);
     width: 0;
 }
@@ -166,6 +155,7 @@ header {
 .leftSub.open {
     width: 200px;
     padding: 12px;
+    overflow-y: auto;
 }
 
 .leftSub>div {
@@ -179,8 +169,6 @@ header {
 }
 
 .leftSub .piece {
-    background: var(--container-background);
-    border-radius: 12px;
     color: var(--font-color);
     align-items: center;
     margin-bottom: 12px;
@@ -195,14 +183,6 @@ header {
     margin-left: auto;
 }
 
-.pieceFrame {
-    background-image: url('Ears Gentle.png');
-    background-repeat: repeat;
-    background-size: 40%;
-    height: 80px;
-    width: 85%;
-    border: 1px solid var(--board-background);
-}
 
 .leftIcon {
     width: 16px;
@@ -243,6 +223,20 @@ header {
     transform: rotate(-30deg);
 }
 
+.leftButton.open .arrow span {
+    transform-origin: center;
+}
+
+.leftButton.open:hover .arrow span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.leftButton.open:hover .arrow span:nth-child(2) {
+    transform: rotate(-45deg);
+}
+
+
+
 .arrow span {
     transform-origin: right;
     width: 10px;
@@ -252,11 +246,6 @@ header {
     transition: all .2s ease;
     background: var(--menu-button);
 }
-
-/* ----------- This might be too confusing though it is cute and does work --------------*/
-/* .leftButton.open .arrow span {
-    transform-origin: left;
-} */
 
 /*  --------------------------- Buttons ---------------------------   */
 
@@ -339,7 +328,9 @@ header {
 .active {
     fill: var(--menu-active);
     color: var(--menu-active);
-    border-top: 3pt solid var(--menu-active);
+    background: var(--menu-background2);
+    border-radius: 0 0 50% 50%;
+    outline: var(--menu-background) solid 4px;
 }
 
 /* --------------------------- Bundling ---------------------------  */
@@ -372,22 +363,27 @@ header {
 }
 
 .pieces {
-    padding: 6px 6px 0px 6px;
+    padding: 8px;
     box-sizing: border-box;
-    border-top: 2px solid var(--container-shadow);
+    /* border-top: 2px solid var(--container-shadow); */
+    background: var(--menu-background2);
+    display: flex;
+    border-radius: 18px;
+    justify-content: center;
 }
 
 .piece {
     text-transform: uppercase;
     font-weight: 300;
     font-size: 1rem;
-    background: none;
-    border-bottom: 1px solid var(--board-background);
-    padding: 4px;
+    background: var(--container-background);
+    border-radius: 12px;
+    padding: 12px;
+    max-width: 200px;
+    min-width: 140px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     text-align: center;
-
     gap: 8px;
     transition: box-shadow .15s, border-radius .25s;
 
@@ -402,13 +398,17 @@ header {
     }
 }
 
-.piece:nth-last-of-type(1) {
-    border-bottom: none;
+.pieceCount {
+    text-align: center;
 }
 
-.pieceCount {
-    /* width: 8ch; */
-    text-align: center;
+.pieceFrame {
+    background-image: url('Ears Gentle.png');
+    background-repeat: repeat;
+    background-size: 40%;
+    height: 80px;
+    width: 100%;
+    border: 1px solid var(--board-background);
 }
 
 .hover {
