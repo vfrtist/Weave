@@ -168,21 +168,20 @@ header {
     animation: slide-in .2s .3s backwards;
 }
 
-.leftSub .piece {
+.piece.tray {
     color: var(--font-color);
     align-items: center;
     margin-bottom: 12px;
 }
 
+.piece.tray>div:nth-last-child(1) {
+    display: none;
+}
+
 .leftSub .pieces {
     border: none;
-    height: inherit;
+    height: 60%;
 }
-
-.arrow {
-    margin-left: auto;
-}
-
 
 .leftIcon {
     width: 16px;
@@ -208,6 +207,7 @@ header {
     display: inline-block;
     transition: all .2s ease;
     width: 14px;
+    margin-left: auto;
 }
 
 .leftBar ul li:hover .arrow span {
@@ -234,8 +234,6 @@ header {
 .leftButton.open:hover .arrow span:nth-child(2) {
     transform: rotate(-45deg);
 }
-
-
 
 .arrow span {
     transform-origin: right;
@@ -333,6 +331,12 @@ header {
     outline: var(--menu-background) solid 4px;
 }
 
+.dragging {
+    opacity: .5;
+    box-shadow: none;
+    border: 2px solid var(--menu-active);
+}
+
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
@@ -368,8 +372,10 @@ header {
     /* border-top: 2px solid var(--container-shadow); */
     background: var(--menu-background2);
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     border-radius: 18px;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .piece {
@@ -392,11 +398,9 @@ header {
         border-radius: 12px;
     }
 
-    &.dragging {
-        opacity: .5;
-        box-shadow: none;
-    }
 }
+
+
 
 .pieceCount {
     text-align: center;
@@ -448,7 +452,6 @@ h2 {
     font-weight: 600;
     font-size: 2rem;
     margin: 0 0 12px 0;
-    /* font-family: 'Work Sans', sans-serif; */
     text-transform: Capitalize;
     font-family: brother-1816, sans-serif;
 }

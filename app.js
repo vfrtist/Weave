@@ -1,22 +1,17 @@
-// ----------------- Page Button Shenanigans -------------------
 const pageButtons = document.querySelectorAll('.pageButton');
 const materialLookUp = document.querySelector('.Material_Number')
-let allPieces = document.querySelectorAll('.piece')
-let pieceMenus = document.querySelectorAll('.pieces')
 let leftButtons = document.querySelectorAll('.leftButton')
 
 let isEditable = false
 
-
+// to fill out the page and keep the html small
 let dupMenu = document.querySelector('.pieces')
-
-for (let i = 0; i < 4; i++) {
+for (let i = 1; i < 3; i++) {
     let dupPiece = document.querySelector('.piece').cloneNode('true');
     dupMenu.append(dupPiece);
 }
 
 // Page change -------------------
-// const title = document.querySelector('h1');
 for (let btn of pageButtons) {
     btn.addEventListener('click', function () {
         makeInActive();
@@ -28,18 +23,16 @@ function makeInActive() {
     for (let btn of pageButtons) { btn.classList.remove('active') }
 }
 
-function readwrite() {
+function readwrite(item) {
     isEditable = !isEditable
-    for (piece of allPieces) {
-        piece.contentEditable = isEditable;
-    };
+    item.contentEditable = isEditable;
 }
 
 // Hover text -------------------
 for (let btn of pageButtons) {
     let pageLabel = document.createElement('div');
     pageLabel.classList.add('pageLabel');
-    pageLabel.innerText = btn.title;
+    pageLabel.innerText = btn.value;
 
     btn.addEventListener('mouseenter', function () {
         document.body.appendChild(pageLabel)
@@ -66,6 +59,10 @@ for (let btn of pageButtons) {
 // })
 
 // ----------------- Piece Sort -------------------
+let allPieces = document.querySelectorAll('.piece')
+let pieceTray = document.querySelector('#pieceTray')
+let pieceMenus = document.querySelectorAll('.pieces:not(#pieceTray)')
+
 
 let tempPiece;
 let movePiece;
@@ -73,22 +70,17 @@ let movePiece;
 allPieces.forEach(piece => {
     piece.addEventListener('dragstart', (e) => {
         // re-align pieces to wherever they are scroll wise 
-        allPieces = document.querySelectorAll('.piece')
-
-        // make a temporary since drag/drop doesn't work past a certain width
-        tempPiece = piece.cloneNode(true);
-        tempPiece.classList.add('tempPiece');
-        document.body.appendChild(tempPiece)
-        e.dataTransfer.setDragImage(tempPiece, 0, 0);
-
-        //change display of dragged item and move to a 
+        allPieces = document.querySelectorAll('.piece');
         piece.classList.add('dragging');
-        movePiece = piece
+        movePiece = piece.cloneNode('true');
     });
 
-    piece.addEventListener('dragend', () => {
+    piece.addEventListener('dragend', (e) => {
         piece.classList.remove('dragging');
-        tempPiece.remove()
+        movePiece.classList.remove('dragging');
+        if (!(movePiece.parentElement === pieceTray)) {
+            movePiece.classList.remove('tray')
+        }
     });
 })
 
@@ -135,9 +127,46 @@ function darkSwitch() {
 }
 
 // ----------------- Side Menu -------------------
+let time
+
 for (let btn of leftButtons) {
     btn.addEventListener('click', () => {
-        btn.nextElementSibling.classList.toggle('open');
-        btn.classList.toggle('open');
+        time = 0
+        leftButtons.forEach(element => {
+            if (element != btn && element.classList.contains('open')) {
+                element.nextElementSibling.classList.toggle('open');
+                element.classList.toggle('open');
+                time = 400
+            };
+        });
+        setTimeout(() => {
+            btn.nextElementSibling.classList.toggle('open');
+            btn.classList.toggle('open');
+        }, time);
     });
+}
+
+// ----------------- Side Menu -------------------
+
+function dropHandler(ev) {
+    console.log("File(s) dropped");
+
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+
+    if (ev.dataTransfer.items) {
+        // Use DataTransferItemList interface to access the file(s)
+        [...ev.dataTransfer.items].forEach((item, i) => {
+            // If dropped items aren't files, reject them
+            if (item.kind === "file") {
+                const file = item.getAsFile();
+                console.log(`… file[${i}].name = ${file.name}`);
+            }
+        });
+    } else {
+        // Use DataTransfer interface to access the file(s)
+        [...ev.dataTransfer.files].forEach((file, i) => {
+            console.log(`… file[${i}].name = ${file.name}`);
+        });
+    }
 }
