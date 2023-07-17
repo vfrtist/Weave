@@ -1,6 +1,5 @@
 const pageButtons = document.querySelectorAll('.pageButton');
 const materialLookUp = document.querySelector('.Material_Number')
-let leftButtons = document.querySelectorAll('.leftButton')
 
 let isEditable = false
 
@@ -126,7 +125,9 @@ function darkSwitch() {
     // }
 }
 
-// ----------------- Side Menu -------------------
+// ----------------- Left Menu -------------------
+let leftButtons = document.querySelectorAll('.leftButton')
+let uploadPiece = document.querySelectorAll('input[name="uploadPiece"]')
 let time
 
 for (let btn of leftButtons) {
@@ -146,27 +147,21 @@ for (let btn of leftButtons) {
     });
 }
 
-// ----------------- Side Menu -------------------
+// ----------------- Piece Tray Events -------------------
+
+for (let input of uploadPiece) {
+    input.addEventListener('click', () => {
+        console.log(input);
+    });
+    input.addEventListener('change', dropHandler);
+}
 
 function dropHandler(ev) {
-    console.log("File(s) dropped");
-
-    // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
-
-    if (ev.dataTransfer.items) {
-        // Use DataTransferItemList interface to access the file(s)
-        [...ev.dataTransfer.items].forEach((item, i) => {
-            // If dropped items aren't files, reject them
-            if (item.kind === "file") {
-                const file = item.getAsFile();
-                console.log(`… file[${i}].name = ${file.name}`);
-            }
-        });
-    } else {
-        // Use DataTransfer interface to access the file(s)
-        [...ev.dataTransfer.files].forEach((file, i) => {
-            console.log(`… file[${i}].name = ${file.name}`);
-        });
-    }
+    let fileName = URL.createObjectURL(ev.target.files[0]);
+    let image = document.createElement('img');
+    image.setAttribute('src', fileName);
+    image.innerHTML = '';
+    this.parentElement.classList.remove('unloaded');
+    this.parentElement.appendChild(image);
 }

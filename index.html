@@ -42,7 +42,12 @@
 
     <aside>
         <nav class="leftBar">
-            <ul>
+            <!-- notes for me for later, Create headers and dividers:
+                move Pieces and Material into "Elements" 
+                move Favorites, Order, and Tools into "Basics"
+                move Links, Settings into "Utility"-->
+            <div>
+                <h2>Basics</h2>
                 <div id="Order" class="leftMenu">
                     <li class="leftButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.1 36" class="leftIcon">
@@ -67,6 +72,39 @@
                     </div>
                 </div>
 
+
+                <div id="Favorites" class="leftMenu">
+                    <li class="leftButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 34.4" class="leftIcon">
+                            <path
+                                d="M18,2.6l4.3,8.7l0.5,0.9l1,0.2l9.6,1.4l-7,6.8l-0.8,0.7l0.2,1l1.6,9.6l-8.6-4.5L18,27l-0.9,0.5L8.5,32l1.6-9.6
+                                    l0.2-1l-0.8-0.7l-7-6.8l9.6-1.4l1-0.2l0.5-0.9L18,2.6 M18,0c-0.5,0-1.1,0.3-1.4,0.8l-4.7,9.6L1.3,12c-1.2,0.2-1.7,1.7-0.8,2.6
+                                    l7.7,7.5L6.3,32.6c-0.2,1,0.6,1.8,1.5,1.8c0.2,0,0.5-0.1,0.7-0.2l9.5-5l9.5,5c0.2,0.1,0.5,0.2,0.7,0.2c0.9,0,1.7-0.8,1.5-1.8
+                                    l-1.8-10.6l7.7-7.5c0.9-0.9,0.4-2.4-0.8-2.6l-10.6-1.5l-4.7-9.6C19.1,0.3,18.5,0,18,0L18,0z" />
+                        </svg>
+
+                        Favorites
+                        <span class="arrow">
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </li>
+                    <div class="leftSub middle">
+                        <div>
+                            <ul>
+                                <li><a href="">1234SHT</a></li>
+                                <li><a href="">1234SHT</a></li>
+                                <li><a href="">1234SHT</a></li>
+                                <li><a href="">1234SHT</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Elements</h2>
+
                 <div id="Pieces" class="leftMenu">
                     <li class="leftButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.9 31.3" class="leftIcon">
@@ -86,8 +124,15 @@
                     <div class="leftSub">
                         <div id="pieceTray" class="pieces">
                             <div class="piece tray" draggable="true">
-                                <div class="pieceFrame"></div>
-                                <span>Sht Front</span>
+                                <div class="pieceFrame unloaded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                        <path
+                                            d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                                    </svg>
+                                    <input type="file" name="uploadPiece">
+                                </div>
+                                <span contenteditable="true">Sht Front</span>
                                 <div class="pieceCount">
                                     <span class="up" contenteditable="true">1</span>
                                     <span class="flip" contenteditable="true">0</span>
@@ -120,50 +165,24 @@
                     </div>
                 </div>
 
-                <div id="Favorites" class="leftMenu">
+            </div>
+
+            <div>
+                <h2>Utility</h2>
+                <div id="Settings" class="leftMenu bottom">
                     <li class="leftButton">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 34.4" class="leftIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" class="leftIcon">
                             <path
-                                d="M18,2.6l4.3,8.7l0.5,0.9l1,0.2l9.6,1.4l-7,6.8l-0.8,0.7l0.2,1l1.6,9.6l-8.6-4.5L18,27l-0.9,0.5L8.5,32l1.6-9.6
-                                    l0.2-1l-0.8-0.7l-7-6.8l9.6-1.4l1-0.2l0.5-0.9L18,2.6 M18,0c-0.5,0-1.1,0.3-1.4,0.8l-4.7,9.6L1.3,12c-1.2,0.2-1.7,1.7-0.8,2.6
-                                    l7.7,7.5L6.3,32.6c-0.2,1,0.6,1.8,1.5,1.8c0.2,0,0.5-0.1,0.7-0.2l9.5-5l9.5,5c0.2,0.1,0.5,0.2,0.7,0.2c0.9,0,1.7-0.8,1.5-1.8
-                                    l-1.8-10.6l7.7-7.5c0.9-0.9,0.4-2.4-0.8-2.6l-10.6-1.5l-4.7-9.6C19.1,0.3,18.5,0,18,0L18,0z" />
-                        </svg>
-
-                        Favorites
-                        <span class="arrow">
-                            <span></span>
-                            <span></span>
-                        </span>
-                    </li>
-                    <div class="leftSub middle">
-                        <div>
-                            <ul>
-                                <li><a href="">1234SHT</a></li>
-                                <li><a href="">1234SHT</a></li>
-                                <li><a href="">1234SHT</a></li>
-                                <li><a href="">1234SHT</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </ul>
-            <div id="Settings" class="leftMenu bottom">
-                <li class="leftButton">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.8 36" class="leftIcon">
-                        <path
-                            d="M36,18c0-2.9-2.2-3.3-5.3-4c-0.2-0.8-0.6-1.5-0.9-2.2c1.7-2.6,3-4.5,0.9-6.5
+                                d="M36,18c0-2.9-2.2-3.3-5.3-4c-0.2-0.8-0.6-1.5-0.9-2.2c1.7-2.6,3-4.5,0.9-6.5
                             c-2-2-4-0.8-6.5,0.9c-0.7-0.4-1.5-0.7-2.2-0.9C21.3,2.2,20.9,0,18,0s-3.3,2.2-4,5.3c-0.8,0.2-1.5,0.6-2.2,0.9
                             c-2.6-1.7-4.5-3-6.5-0.9c-2,2-0.8,4,0.9,6.5c-0.4,0.7-0.7,1.5-0.9,2.2C2.2,14.7,0,15.1,0,18c0,2.9,2.2,3.3,5.3,4
                             c0.2,0.8,0.6,1.5,0.9,2.2c-1.7,2.6-3,4.5-0.9,6.5c2,2,4,0.8,6.5-0.9c0.7,0.4,1.5,0.7,2.2,0.9c0.6,3.1,1.1,5.3,4,5.3s3.3-2.2,4-5.3
                             c0.8-0.2,1.5-0.6,2.2-0.9c2.6,1.7,4.5,3,6.5,0.9c2-2,0.8-4-0.9-6.5c0.4-0.7,0.7-1.5,0.9-2.2C33.8,21.3,36,20.9,36,18z M18,28.5
                             c-5.8,0-10.5-4.7-10.5-10.5c0-5.8,4.7-10.5,10.5-10.5c5.8,0,10.5,4.7,10.5,10.5C28.5,23.8,23.8,28.5,18,28.5z" />
-                    </svg>
-                    Settings
+                        </svg>
+                        Settings
+                </div>
             </div>
-
-
         </nav>
     </aside>
 
@@ -176,8 +195,10 @@
             </svg>
             <div class="title">
                 <h2>Self</h2>
-                <h3>(10001234) TEXT</h3>
-                <h3>(10001234) TEXT</h3>
+                <div class="fabrics">
+                    <h3>(10001234) TEXT</h3>
+                    <h3>(10001234) TEXT</h3>
+                </div>
             </div>
             <div class="pieces"></div>
         </section>
@@ -190,7 +211,9 @@
             </svg>
             <div class="title">
                 <h2>Twill</h2>
-                <h3>(10001234) TEXT</h3>
+                <div class="fabrics">
+                    <h3>(10001234) TEXT</h3>
+                </div>
             </div>
             <div class="pieces"></div>
         </section>

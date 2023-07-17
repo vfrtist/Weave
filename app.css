@@ -119,7 +119,12 @@ header {
     bottom: 0;
 }
 
-.leftBar ul {
+.leftBar h2 {
+    font-size: 14pt;
+    border-top: 1pt solid var(--menu-background2);
+}
+
+.leftBar>div {
     padding: 0;
     width: 100%;
 }
@@ -131,17 +136,25 @@ header {
 
 .leftButton {
     list-style-type: none;
-    margin: 18px 0px;
+    margin: 4px 0px;
     display: flex;
     align-items: center;
     font-size: 11pt;
+    padding: 8px;
+    border-radius: 18px;
+    transition: background .2s, outline .2s;
 }
 
-.leftBar ul li:hover {
+.leftButton:hover {
     color: var(--menu-active);
     fill: var(--menu-active);
     transition: color .2s;
     cursor: pointer;
+}
+
+.leftButton.open {
+    background: var(--menu-background2);
+    outline: 4px solid var(--menu-background);
 }
 
 .leftMenu.bottom {
@@ -198,7 +211,7 @@ header {
     margin-right: 8px;
 }
 
-.leftSub input {
+.leftSub input[type='text'] {
     margin: 12px 0px;
     padding: 6px;
     display: block;
@@ -212,7 +225,8 @@ header {
     justify-content: center;
 }
 
-.middle ul li, .middle a {
+.middle ul li,
+.middle a {
     text-align: center;
     display: block;
     border-radius: 8px;
@@ -223,7 +237,8 @@ header {
     transition: all .1s;
 }
 
-.middle li:hover, .middle a:hover {
+.middle li:hover,
+.middle a:hover {
     color: var(--menu-active);
     background: var(--menu-background);
 }
@@ -248,18 +263,19 @@ header {
     margin-left: auto;
 }
 
-.leftBar ul li:hover .arrow span {
+.leftButton:hover .arrow span {
     background: var(--menu-active);
     height: 3px;
 }
 
-.leftBar ul li:hover .arrow span:nth-child(1) {
+.leftButton:hover .arrow span:nth-child(1) {
     transform: rotate(30deg);
 }
 
-.leftBar ul li:hover .arrow span:nth-child(2) {
+.leftButton:hover .arrow span:nth-child(2) {
     transform: rotate(-30deg);
 }
+
 
 .leftButton.open .arrow span {
     transform-origin: center;
@@ -404,7 +420,8 @@ header {
 }
 
 .pieces {
-    padding: 8px;
+    padding: 12px;
+    gap: 12px;
     box-sizing: border-box;
     /* border-top: 2px solid var(--container-shadow); */
     background: var(--menu-background2);
@@ -427,7 +444,7 @@ header {
     display: flex;
     flex-direction: column;
     text-align: center;
-    gap: 8px;
+    gap: 4px;
     transition: box-shadow .15s, border-radius .25s;
 
     &:hover {
@@ -437,19 +454,51 @@ header {
 
 }
 
-
-
 .pieceCount {
     text-align: center;
 }
 
 .pieceFrame {
+    height: 80px;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    display: flex;
+}
+
+.pieceFrame>svg {
+    display: none;
+}
+
+.pieceFrame input {
+    background: none;
+    border: none;
+    width: inherit;
+    height: inherit;
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+}
+
+.pieceFrame img {
+    width: inherit;
+    height: inherit;
+}
+
+.pieceFrame.unloaded {
     background-image: url('Ears Gentle.png');
     background-repeat: repeat;
     background-size: 40%;
-    height: 80px;
-    width: 100%;
     border: 1px solid var(--board-background);
+}
+
+
+.pieceFrame.unloaded svg {
+    fill: var(--menu-active);
+    width: 30px;
+    display: block;
 }
 
 .hover {
