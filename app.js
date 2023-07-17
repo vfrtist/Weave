@@ -6,7 +6,7 @@ let isEditable = false
 
 // to fill out the page and keep the html small
 let dupMenu = document.querySelector('.pieces')
-for (let i = 1; i < 3; i++) {
+for (let i = 1; i < 6; i++) {
     let dupPiece = document.querySelector('.piece').cloneNode('true');
     dupMenu.append(dupPiece);
 }

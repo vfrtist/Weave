@@ -114,22 +114,27 @@ header {
     background: var(--menu-background);
     color: var(--menu-button);
     fill: var(--menu-button);
-    padding: 6px;
+    padding: 12px;
     position: fixed;
     bottom: 0;
 }
 
 .leftBar ul {
-    list-style-type: none;
-    padding: 8px;
-    width: 90%;
-    font-size: 11pt;
+    padding: 0;
+    width: 100%;
 }
 
-.leftBar ul li {
+.leftMenu {
+    display: block;
+    width: 100%;
+}
+
+.leftButton {
+    list-style-type: none;
     margin: 18px 0px;
     display: flex;
     align-items: center;
+    font-size: 11pt;
 }
 
 .leftBar ul li:hover {
@@ -137,6 +142,10 @@ header {
     fill: var(--menu-active);
     transition: color .2s;
     cursor: pointer;
+}
+
+.leftMenu.bottom {
+    margin-top: auto;
 }
 
 .leftSub {
@@ -189,6 +198,35 @@ header {
     margin-right: 8px;
 }
 
+.leftSub input {
+    margin: 12px 0px;
+    padding: 6px;
+    display: block;
+    border: none;
+    border-radius: 12px;
+}
+
+.middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.middle ul li, .middle a {
+    text-align: center;
+    display: block;
+    border-radius: 8px;
+    display: block;
+    text-decoration: none;
+    color: var(--font-color);
+    padding: 3px 0px;
+    transition: all .1s;
+}
+
+.middle li:hover, .middle a:hover {
+    color: var(--menu-active);
+    background: var(--menu-background);
+}
 
 @keyframes slide-in {
     0% {
@@ -263,7 +301,6 @@ header {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* border-radius: 50%; */
 }
 
 .menuButton:hover,
@@ -298,7 +335,7 @@ header {
     list-style-type: none;
     padding: 8px;
     border-radius: 8px;
-    border: 2px solid var(--board-background);
+    border: 2px solid var(--menu-active);
 }
 
 .subMenu li,
