@@ -16,6 +16,7 @@ font-style: normal; */
     --container-shadow: #c0b6ce;
     --container-shadow-light: #c0b6ce56;
     --font-color: black;
+    scroll-behavior: smooth;
 }
 
 [data-theme="dark"] {
@@ -32,6 +33,11 @@ font-style: normal; */
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -110,7 +116,6 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     background: var(--menu-background);
     color: var(--menu-button);
     fill: var(--menu-button);
@@ -120,13 +125,20 @@ header {
 }
 
 .leftBar h2 {
-    font-size: 14pt;
-    border-top: 1pt solid var(--menu-background2);
+    font-size: 12pt;
+    padding: 8px 0;
+    margin: 0;
 }
 
 .leftBar>div {
     padding: 0;
     width: 100%;
+    margin-bottom: 8px;
+    border-top: 1pt solid var(--menu-background2);
+}
+
+.leftBar>div:first-of-type {
+    border: none;
 }
 
 .leftMenu {
@@ -136,7 +148,7 @@ header {
 
 .leftButton {
     list-style-type: none;
-    margin: 4px 0px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
     font-size: 11pt;
@@ -154,7 +166,6 @@ header {
 
 .leftButton.open {
     background: var(--menu-background2);
-    outline: 4px solid var(--menu-background);
 }
 
 .leftMenu.bottom {
@@ -177,23 +188,26 @@ header {
 .leftSub.open {
     width: 200px;
     padding: 12px;
-    overflow-y: auto;
 }
 
 .leftSub>div {
     display: none;
+    overflow: auto;
 }
 
 .leftSub.open>div {
-    display: block;
+    display: flex;
     width: 100%;
-    animation: slide-in .2s .3s backwards;
+    animation: slide-in .2s backwards;
+}
+
+.leftSub ul {
+    width: 100%;
 }
 
 .piece.tray {
     color: var(--font-color);
     align-items: center;
-    margin-bottom: 12px;
 }
 
 .piece.tray>div:nth-last-child(1) {
@@ -202,7 +216,7 @@ header {
 
 .leftSub .pieces {
     border: none;
-    height: 60%;
+    height: 100%;
 }
 
 .leftIcon {
@@ -219,17 +233,11 @@ header {
     border-radius: 12px;
 }
 
-.middle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.middle ul li,
-.middle a {
+.leftSub>div li,
+.leftSub>div a {
     text-align: center;
-    display: block;
     border-radius: 8px;
+    width: 100%;
     display: block;
     text-decoration: none;
     color: var(--font-color);
@@ -237,8 +245,8 @@ header {
     transition: all .1s;
 }
 
-.middle li:hover,
-.middle a:hover {
+.leftSub>div li:hover,
+.leftSub>div a:hover {
     color: var(--menu-active);
     background: var(--menu-background);
 }
@@ -333,6 +341,43 @@ header {
     z-index: 1;
 }
 
+.screenButtons {
+    display: flex;
+    position: fixed;
+    bottom: 8%;
+    right: 12%;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.screenButton {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    display: inline-block;
+    fill: var(--menu-button);
+    background: var(--menu-background);
+    border-radius: 50%;
+    box-sizing: border-box;
+    padding: 8px;
+    box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
+    transition: all .2s;
+    overflow: visible;
+}
+
+.screenButton:hover {
+    fill: var(--menu-active);
+    transform: scale(1.05);
+}
+
+#trash>path:last-of-type {
+    transition: transform .2s;
+    transform-origin: right;
+}
+
+#trash:hover>path:last-of-type {
+    transform: rotate(15deg);
+}
 
 /*  --------------------------- Hover Menu ---------------------------   */
 
@@ -419,11 +464,13 @@ header {
     margin-bottom: 160px;
 }
 
-.pieces {
+.bundle .pieces {
     padding: 12px;
-    gap: 12px;
+}
+
+.pieces {
+    gap: 24px;
     box-sizing: border-box;
-    /* border-top: 2px solid var(--container-shadow); */
     background: var(--menu-background2);
     display: flex;
     flex-direction: row;
