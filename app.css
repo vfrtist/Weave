@@ -122,6 +122,7 @@ header {
     padding: 12px;
     position: fixed;
     bottom: 0;
+    z-index: 2;
 }
 
 .leftBar h2 {
@@ -176,7 +177,7 @@ header {
     display: flex;
     box-sizing: border-box;
     transition: width .3s ease;
-    z-index: 10;
+    z-index: 0;
     background: var(--menu-background2);
     position: fixed;
     bottom: 0;
@@ -199,6 +200,10 @@ header {
     display: flex;
     width: 100%;
     animation: slide-in .2s backwards;
+}
+
+#Order .open>div {
+    flex-direction: column;
 }
 
 .leftSub ul {
@@ -231,6 +236,9 @@ header {
     display: block;
     border: none;
     border-radius: 12px;
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
 }
 
 .leftSub>div li,
