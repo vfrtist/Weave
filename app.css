@@ -367,15 +367,17 @@ header {
     background: var(--menu-background);
     border-radius: 50%;
     box-sizing: border-box;
-    padding: 8px;
+    padding: 10px;
     box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
     transition: all .2s;
     overflow: visible;
+    opacity: .8;
 }
 
 .screenButton:hover {
     fill: var(--menu-active);
     transform: scale(1.05);
+    opacity: 1;
 }
 
 #trash>path:last-of-type {
@@ -392,12 +394,14 @@ header {
 .menu {
     position: relative;
     display: inline-block;
+    width: 100%;
 }
 
 .subMenu {
     display: none;
     position: absolute;
-    top: 25px;
+    top: 0px;
+    left: 100px;
     background: var(--menu-background);
     width: max-content;
     z-index: 1;
@@ -586,6 +590,22 @@ header {
 .flip {
     border-left: 1px solid var(--board-background);
 }
+
+.bundle.collapsed {
+    width: 200px;
+}
+
+.bundle.collapsed h2 {
+    text-align: center;
+    margin: 0;
+}
+
+.bundle.collapsed .pieces,
+.bundle.collapsed .fabrics,
+.bundle.collapsed .bundlingIcon {
+    display: none;
+}
+
 
 /* --------------------------- Generic Text Formatting ---------------------------  */
 

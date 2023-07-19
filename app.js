@@ -165,3 +165,13 @@ function dropHandler(ev) {
     this.parentElement.classList.remove('unloaded');
     this.parentElement.appendChild(image);
 }
+
+// ----------------- Piece Tray Events -------------------
+
+const viewButton = document.querySelector('#view')
+
+viewButton.addEventListener('click', () => {
+    for (let bundle of document.querySelectorAll('.bundle')) {
+        bundle.classList.toggle('collapsed');
+    };
+});
