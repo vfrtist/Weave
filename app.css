@@ -470,6 +470,7 @@ header {
     width: 40%;
     box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
     box-sizing: border-box;
+    transition: width .4s;
 }
 
 .bundle:nth-last-of-type(1) {
