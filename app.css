@@ -374,7 +374,8 @@ header {
     opacity: .8;
 }
 
-.screenButton:hover {
+.screenButton:hover,
+.screenButton.awake {
     fill: var(--menu-active);
     transform: scale(1.05);
     opacity: 1;
@@ -385,6 +386,7 @@ header {
     transform-origin: right;
 }
 
+#trash.awake>path:last-of-type,
 #trash:hover>path:last-of-type {
     transform: rotate(15deg);
 }
@@ -466,11 +468,11 @@ header {
     flex-direction: column;
     justify-items: center;
     background-color: var(--container-background);
-    border-radius: 6px;
+    border-radius: 12px;
     width: 40%;
     box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
     box-sizing: border-box;
-    transition: width .4s;
+    transition: width .4s, height .4s;
 }
 
 .bundle:nth-last-of-type(1) {

@@ -166,12 +166,39 @@ function dropHandler(ev) {
     this.parentElement.appendChild(image);
 }
 
-// ----------------- Piece Tray Events -------------------
+// ----------------- Screen Button Events -------------------
 
+// View Button
 const viewButton = document.querySelector('#view')
-
 viewButton.addEventListener('click', () => {
     for (let bundle of document.querySelectorAll('.bundle')) {
         bundle.classList.toggle('collapsed');
     };
 });
+
+// Trash Button 
+const deleteButton = document.querySelector('#trash')
+let dragItem;
+function deleteItem(ev) { console.log(ev) };
+
+function wakeUp(item) { item.classList.toggle('awake') }
+
+deleteButton.addEventListener('drop', () => {
+    dragItem.remove();
+    deleteButton.classList.remove('awake');
+})
+
+deleteButton.addEventListener('dragenter', (ev) => {
+    ev.preventDefault();
+    wakeUp(deleteButton);
+})
+deleteButton.addEventListener('dragover', (ev) => {
+    ev.preventDefault();
+})
+deleteButton.addEventListener('dragleave', () => {
+    wakeUp(deleteButton);
+})
+
+document.addEventListener('dragstart', (ev) => {
+    dragItem = ev.target;
+})
