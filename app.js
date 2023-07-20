@@ -1,11 +1,12 @@
 const pageButtons = document.querySelectorAll('.pageButton');
-const materialLookUp = document.querySelector('.Material_Number')
+const materialLookUp = document.querySelector('.Material_Number');
+const piece = document.querySelector('#piece').content;
 
 let isEditable = false
 
 // to fill out the page and keep the html small
 let dupMenu = document.querySelector('.pieces')
-for (let i = 1; i < 9; i++) {
+for (let i = 1; i < 3; i++) {
     let dupPiece = document.querySelector('.piece').cloneNode('true');
     dupMenu.append(dupPiece);
 }
@@ -57,12 +58,27 @@ for (let btn of pageButtons) {
 //     };
 // })
 
-// ----------------- Piece Sort -------------------
+
+
+// Drag and Drop Section ***********************************************************************
+
+
+// Global Events ======================================
+let dragItem;
+
+document.addEventListener('dragstart', (ev) => {
+    dragItem = ev.target;
+    dragItem.classList.add('dragging');
+})
+
+document.addEventListener('dragend', (ev) => {
+    dragItem.classList.remove('dragging');
+})
+
+// Bundles ======================================
 let allPieces = document.querySelectorAll('.piece')
 let pieceTray = document.querySelector('#pieceTray')
 let pieceMenus = document.querySelectorAll('.pieces:not(#pieceTray)')
-
-
 let tempPiece;
 let movePiece;
 
@@ -70,12 +86,10 @@ allPieces.forEach(piece => {
     piece.addEventListener('dragstart', (e) => {
         // re-align pieces to wherever they are scroll wise 
         allPieces = document.querySelectorAll('.piece');
-        piece.classList.add('dragging');
         movePiece = piece.cloneNode('true');
     });
 
     piece.addEventListener('dragend', (e) => {
-        piece.classList.remove('dragging');
         movePiece.classList.remove('dragging');
         if (!(movePiece.parentElement === pieceTray)) {
             movePiece.classList.remove('tray')
@@ -86,6 +100,7 @@ allPieces.forEach(piece => {
 pieceMenus.forEach(dropTarget => {
     dropTarget.addEventListener('dragenter', cancelDefault);
     dropTarget.addEventListener('dragover', dragOver);
+    // dropTarget.addEventListener('dragleave', dragLeave);
 });
 
 function dragOver(e) {
@@ -96,33 +111,59 @@ function dragOver(e) {
     this.insertBefore(movePiece, nextSibling)
 }
 
+function dragLeave(e) {
+    dragItem.remove();
+}
+
 function cancelDefault(e) {
     e.preventDefault();
     e.stopPropagation();
     return false;
 }
 
+// Trash Button ======================================
+const deleteButton = document.querySelector('#trash')
+function deleteItem(ev) { console.log(ev) };
+
+function wakeUp(item) { item.classList.toggle('awake') }
+
+deleteButton.addEventListener('drop', () => {
+    dragItem.remove();
+    deleteButton.classList.remove('awake');
+})
+
+deleteButton.addEventListener('dragenter', (ev) => {
+    ev.preventDefault();
+    wakeUp(deleteButton);
+})
+deleteButton.addEventListener('dragover', (ev) => {
+    ev.preventDefault();
+})
+deleteButton.addEventListener('dragleave', () => {
+    wakeUp(deleteButton);
+})
+
+//*******************************************************************************************
+
 // ----------------- Dark Mode (not really working yet but the ideas are there for it) -------------------
 const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+const darkButton = document.querySelector('#darkButton')
 
+darkButton.addEventListener('click', darkSwitch)
+
+// This returns the value for repeat visits to bring back the same theme as before.
 if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
-
-    // if (currentTheme === 'dark') {
-    //     darkSwitch()
-    // }
 }
 
 function darkSwitch() {
-    document.documentElement.setAttribute('data-theme', 'purple');
-    // document.documentElement.toggleAttribute('data-theme', 'purple');
-    // if (document.body.classList.contains('dark-bg')) {
-    //     document.documentElement.setAttribute('data-theme', 'dark');
-    //     localStorage.setItem('theme', 'dark');
-    // } else {
-    //     document.documentElement.setAttribute('data-theme', 'light');
-    //     localStorage.setItem('theme', 'light');
-    // }
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    }
 }
 
 // ----------------- Left Menu -------------------
@@ -147,14 +188,8 @@ for (let btn of leftButtons) {
     });
 }
 
-// ----------------- Piece Tray Events -------------------
-
-for (let input of uploadPiece) {
-    input.addEventListener('click', () => {
-        console.log(input);
-    });
-    input.addEventListener('change', dropHandler);
-}
+// Piece Tray ======================================
+const addPieceButton = pieceTray.nextElementSibling
 
 function dropHandler(ev) {
     ev.preventDefault();
@@ -166,6 +201,17 @@ function dropHandler(ev) {
     this.parentElement.appendChild(image);
 }
 
+for (let input of uploadPiece) {
+    input.addEventListener('click', () => {
+        console.log(input);
+    });
+    input.addEventListener('change', dropHandler);
+}
+
+addPieceButton.addEventListener('click', () => {
+    pieceTray.append(piece.cloneNode('true'));
+})
+
 // ----------------- Screen Button Events -------------------
 
 // View Button
@@ -176,29 +222,3 @@ viewButton.addEventListener('click', () => {
     };
 });
 
-// Trash Button 
-const deleteButton = document.querySelector('#trash')
-let dragItem;
-function deleteItem(ev) { console.log(ev) };
-
-function wakeUp(item) { item.classList.toggle('awake') }
-
-deleteButton.addEventListener('drop', () => {
-    dragItem.remove();
-    deleteButton.classList.remove('awake');
-})
-
-deleteButton.addEventListener('dragenter', (ev) => {
-    ev.preventDefault();
-    wakeUp(deleteButton);
-})
-deleteButton.addEventListener('dragover', (ev) => {
-    ev.preventDefault();
-})
-deleteButton.addEventListener('dragleave', () => {
-    wakeUp(deleteButton);
-})
-
-document.addEventListener('dragstart', (ev) => {
-    dragItem = ev.target;
-})

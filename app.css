@@ -7,6 +7,7 @@ font-weight: 800;
 font-style: normal; */
 
 :root {
+    scroll-behavior: smooth;
     --menu-background: white;
     --menu-background2: #f1ebf3;
     --menu-button: #7c7c7c;
@@ -16,16 +17,15 @@ font-style: normal; */
     --container-shadow: #c0b6ce;
     --container-shadow-light: #c0b6ce56;
     --font-color: black;
-    scroll-behavior: smooth;
 }
 
 [data-theme="dark"] {
     --menu-background: #26292c;
-    --menu-background2: #c1cbd7;
+    --menu-background2: #796185;
     --menu-button: #989da3;
     --menu-active: white;
     --board-background: #525252;
-    --container-background: #26292c;
+    --container-background: #494154;
     --container-shadow: none;
     --container-shadow-light: #47f3ff13;
     --font-color: white;
@@ -98,13 +98,13 @@ header {
     z-index: -1;
     position: fixed;
     top: 35px;
+    -webkit-user-select: none;
     user-select: none;
     transition: top .2s cubic-bezier(0.77, 0, 0.18, 1);
 
     &.move {
         top: 54px;
     }
-
 }
 
 /* --------------------------- Left Bar Formatting ---------------------------  */
@@ -167,6 +167,7 @@ header {
 
 .leftButton.open {
     background: var(--menu-background2);
+    color: var(--menu-active);
 }
 
 .leftMenu.bottom {
@@ -174,7 +175,7 @@ header {
 }
 
 .leftSub {
-    display: flex;
+    /* display: flex; */
     box-sizing: border-box;
     transition: width .3s ease;
     z-index: 0;
@@ -184,6 +185,7 @@ header {
     left: 170px;
     height: calc(100% - 50px);
     width: 0;
+    overflow: auto;
 }
 
 .leftSub.open {
@@ -193,17 +195,17 @@ header {
 
 .leftSub>div {
     display: none;
-    overflow: auto;
+    /* overflow: auto; */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
 }
 
 .leftSub.open>div {
     display: flex;
     width: 100%;
     animation: slide-in .2s backwards;
-}
-
-#Order .open>div {
-    flex-direction: column;
 }
 
 .leftSub ul {
@@ -222,6 +224,9 @@ header {
 .leftSub .pieces {
     border: none;
     height: 100%;
+    border-radius: 0;
+    flex-direction: column;
+    /* overflow: auto; */
 }
 
 .leftIcon {
@@ -231,7 +236,7 @@ header {
 }
 
 .leftSub input[type='text'] {
-    margin: 12px 0px;
+    margin: 6px 0px;
     padding: 6px;
     display: block;
     border: none;
@@ -257,6 +262,28 @@ header {
 .leftSub>div a:hover {
     color: var(--menu-active);
     background: var(--menu-background);
+}
+
+.leftSub button {
+    border-radius: 50%;
+    background: var(--menu-background);
+    border: none;
+    outline: none;
+    font-size: 18pt;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    transition: all .2s;
+    font-weight: 800;
+    font-family: brother-1816, sans-serif;
+}
+
+.leftSub button:hover {
+    background-color: var(--menu-active);
+    color: var(--menu-background);
+    fill: var(--menu-background);
+    box-shadow: 4px 4px 10px var(--container-shadow-light);
 }
 
 @keyframes slide-in {
@@ -315,7 +342,7 @@ header {
     background: var(--menu-button);
 }
 
-/*  --------------------------- Buttons ---------------------------   */
+/*  --------------------------- Page Buttons ---------------------------   */
 
 .menuButton,
 .pageButton {
@@ -349,6 +376,8 @@ header {
     z-index: 1;
 }
 
+/*  --------------------------- Screen Buttons ---------------------------   */
+
 .screenButtons {
     display: flex;
     position: fixed;
@@ -379,6 +408,7 @@ header {
     fill: var(--menu-active);
     transform: scale(1.05);
     opacity: 1;
+    z-index: 99;
 }
 
 #trash>path:last-of-type {
@@ -507,11 +537,11 @@ header {
     flex-direction: column;
     text-align: center;
     gap: 4px;
-    transition: box-shadow .15s, border-radius .25s;
+
+    transition: box-shadow .15s;
 
     &:hover {
         box-shadow: 4px 4px 10px var(--container-shadow-light);
-        border-radius: 12px;
     }
 
 }
