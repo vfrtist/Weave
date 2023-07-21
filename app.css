@@ -10,9 +10,9 @@ font-style: normal; */
     scroll-behavior: smooth;
     --menu-background: white;
     --menu-background2: #f1ebf3;
-    --menu-button: #7c7c7c;
+    --menu-button: #7c787c;
     --menu-active: #875bd8;
-    --board-background: #dad1de;
+    --board-background: #d8ccda;
     --container-background: white;
     --container-shadow: #c0b6ce;
     --container-shadow-light: #c0b6ce56;
@@ -21,13 +21,13 @@ font-style: normal; */
 
 [data-theme="dark"] {
     --menu-background: #26292c;
-    --menu-background2: #796185;
+    --menu-background2: #815e92;
     --menu-button: #989da3;
     --menu-active: white;
     --board-background: #525252;
-    --container-background: #494154;
-    --container-shadow: none;
-    --container-shadow-light: #47f3ff13;
+    --container-background: #342A41;
+    --container-shadow: #312c38ce;
+    --container-shadow-light: #312c3856;
     --font-color: white;
 }
 
@@ -54,7 +54,7 @@ body {
 header {
     background: var(--menu-background);
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 2fr 3fr 2fr;
     width: 100vw;
     height: 50px;
     position: fixed;
@@ -155,13 +155,12 @@ header {
     font-size: 11pt;
     padding: 8px;
     border-radius: 18px;
-    transition: background .2s, outline .2s;
+    transition: background .2s, outline .2s, color .2s, fill .2s;
 }
 
 .leftButton:hover {
     color: var(--menu-active);
     fill: var(--menu-active);
-    transition: color .2s;
     cursor: pointer;
 }
 
@@ -170,7 +169,7 @@ header {
     color: var(--menu-active);
 }
 
-.leftMenu.bottom {
+.bottom {
     margin-top: auto;
 }
 
@@ -195,7 +194,6 @@ header {
 
 .leftSub>div {
     display: none;
-    /* overflow: auto; */
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -226,7 +224,6 @@ header {
     height: 100%;
     border-radius: 0;
     flex-direction: column;
-    /* overflow: auto; */
 }
 
 .leftIcon {
@@ -400,7 +397,7 @@ header {
     box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
     transition: all .2s;
     overflow: visible;
-    opacity: .8;
+    opacity: .75;
 }
 
 .screenButton:hover,
@@ -432,7 +429,7 @@ header {
 .subMenu {
     display: none;
     position: absolute;
-    top: 0px;
+    bottom: 0px;
     left: 100px;
     background: var(--menu-background);
     width: max-content;
@@ -546,6 +543,11 @@ header {
 
 }
 
+.piece.big {
+    width: 90%;
+    max-width: none;
+}
+
 .pieceCount {
     text-align: center;
 }
@@ -599,7 +601,7 @@ header {
 }
 
 .bundlingIcon {
-    fill: var(--container-shadow);
+    fill: var(--board-background);
     width: 30px;
     align-self: flex-end;
     position: absolute;

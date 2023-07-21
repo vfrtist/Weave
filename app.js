@@ -2,8 +2,6 @@ const pageButtons = document.querySelectorAll('.pageButton');
 const materialLookUp = document.querySelector('.Material_Number');
 const piece = document.querySelector('#piece').content;
 
-let isEditable = false
-
 // to fill out the page and keep the html small
 let dupMenu = document.querySelector('.pieces')
 for (let i = 1; i < 3; i++) {
@@ -22,6 +20,9 @@ for (let btn of pageButtons) {
 function makeInActive() {
     for (let btn of pageButtons) { btn.classList.remove('active') }
 }
+
+// Give the option to swap beteen readwrite and not -------------------
+let isEditable = false
 
 function readwrite(item) {
     isEditable = !isEditable
@@ -77,10 +78,11 @@ document.addEventListener('dragend', (ev) => {
 
 // Bundles ======================================
 let allPieces = document.querySelectorAll('.piece')
-let pieceTray = document.querySelector('#pieceTray')
+const pieceTray = document.querySelector('#pieceTray')
 let pieceMenus = document.querySelectorAll('.pieces:not(#pieceTray)')
 let tempPiece;
 let movePiece;
+let moveSnap = false
 
 allPieces.forEach(piece => {
     piece.addEventListener('dragstart', (e) => {
@@ -91,6 +93,7 @@ allPieces.forEach(piece => {
 
     piece.addEventListener('dragend', (e) => {
         movePiece.classList.remove('dragging');
+        moveSnap = false;
         if (!(movePiece.parentElement === pieceTray)) {
             movePiece.classList.remove('tray')
         }
@@ -105,10 +108,21 @@ pieceMenus.forEach(dropTarget => {
 
 function dragOver(e) {
     let siblings = [...this.querySelectorAll('.piece:not(.dragging)')];
-    let nextSibling = siblings.find(sibling => {
-        return e.pageY <= sibling.offsetTop + sibling.offsetHeight / 2;
-    });
-    this.insertBefore(movePiece, nextSibling)
+
+    if (siblings.includes(e.target)) {
+        console.log('moved before another piece');
+        this.insertBefore(movePiece, e.target);
+        moveSnap = true;
+    };
+
+    if (!moveSnap) {
+        console.log('moved to container');
+        this.append(movePiece);
+    }
+    // let nextSibling = siblings.find(sibling => {
+    //     return e.pageY <= sibling.offsetTop + sibling.offsetHeight / 2;
+    // });
+    // this.insertBefore(movePiece, nextSibling)
 }
 
 function dragLeave(e) {
@@ -145,7 +159,7 @@ deleteButton.addEventListener('dragleave', () => {
 
 //*******************************************************************************************
 
-// ----------------- Dark Mode (not really working yet but the ideas are there for it) -------------------
+// ----------------- Dark Mode-------------------
 const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
 const darkButton = document.querySelector('#darkButton')
 
@@ -168,7 +182,7 @@ function darkSwitch() {
 
 // ----------------- Left Menu -------------------
 let leftButtons = document.querySelectorAll('.leftButton')
-let uploadPiece = document.querySelectorAll('input[name="uploadPiece"]')
+let uploadPieceImage = document.querySelectorAll('input[name="uploadPiece"]')
 let time
 
 for (let btn of leftButtons) {
@@ -201,7 +215,7 @@ function dropHandler(ev) {
     this.parentElement.appendChild(image);
 }
 
-for (let input of uploadPiece) {
+for (let input of uploadPieceImage) {
     input.addEventListener('click', () => {
         console.log(input);
     });
@@ -221,4 +235,12 @@ viewButton.addEventListener('click', () => {
         bundle.classList.toggle('collapsed');
     };
 });
+
+
+// This could be a piece sorting option to get everything into a list --------------------
+// viewButton.addEventListener('click', () => {
+//     for (let pieces of document.querySelectorAll('.piece:not(.tray)')) {
+//         pieces.classList.toggle('big');
+//     };
+// });
 
