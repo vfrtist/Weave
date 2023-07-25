@@ -18,7 +18,10 @@ for (let i = 0; i < 3; i++) {
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
+let bundleNoTitle = fillFrame.cloneNode('true');
+bundleNoTitle.querySelector('.fabrics').remove();
 frameTray.append(fillFrame);
+frameTray.append(bundleNoTitle);
 
 // Page change -------------------
 for (let btn of pageButtons) {

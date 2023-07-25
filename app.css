@@ -536,13 +536,12 @@ header {
     flex-direction: column;
     text-align: center;
     gap: 4px;
-
     transition: box-shadow .15s;
+}
 
-    &:hover {
-        box-shadow: 4px 4px 10px var(--container-shadow-light);
-    }
-
+.bundle.inTray:hover,
+.piece:hover {
+    box-shadow: 4px 4px 10px var(--container-shadow-light);
 }
 
 .piece.big {
@@ -612,10 +611,10 @@ header {
     width: 30px;
     align-self: flex-end;
     position: absolute;
+}
 
-    &:hover {
-        fill: var(--menu-active);
-    }
+.bundlingIcon:hover {
+    fill: var(--menu-active);
 }
 
 .tempPiece {
@@ -637,6 +636,8 @@ header {
     width: 100%;
     text-align: center;
     margin: 0;
+    box-shadow: none;
+    transition: box-shadow .15s;
 }
 
 .bundle.inTray h2 {
@@ -644,8 +645,11 @@ header {
     padding: 0;
 }
 
-.bundle.inTray .bundlingIcon,
-.bundle.inTray .fabrics {
+.bundle.inTray h3 {
+    margin: 0;
+}
+
+.bundle.inTray .bundlingIcon {
     display: none;
 }
 
