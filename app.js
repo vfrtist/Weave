@@ -1,13 +1,24 @@
 const pageButtons = document.querySelectorAll('.pageButton');
-const materialLookUp = document.querySelector('.Material_Number');
+const mainContent = document.querySelector('.content');
+
+// Templates and Main Zones ***********************************************************************
 const piece = document.querySelector('#piece').content;
+const bundle = document.querySelector('#bundle').content;
+const bundleSub = document.querySelector('#bundleSub').content;
+const pieceTray = document.querySelector('#pieceTray')
+const frameTray = document.querySelector('#frameTray')
+
 
 // to fill out the page and keep the html small
-let dupMenu = document.querySelector('.pieces')
-for (let i = 1; i < 3; i++) {
-    let dupPiece = document.querySelector('.piece').cloneNode('true');
-    dupMenu.append(dupPiece);
+
+for (let i = 0; i < 3; i++) {
+    pieceTray.append(piece.cloneNode('true'));
+    mainContent.append(bundle.cloneNode('true'));
 }
+
+let fillFrame = bundle.cloneNode('true');
+fillFrame.querySelector('.bundle').classList.add('inTray');
+frameTray.append(fillFrame);
 
 // Page change -------------------
 for (let btn of pageButtons) {
@@ -51,7 +62,7 @@ for (let btn of pageButtons) {
 // ----------------- Material Lookup -------------------
 // working but not in use so it's easier to just shut it off for now.
 
-
+// const materialLookUp = document.querySelector('.Material_Number');
 // materialLookUp.addEventListener('keydown', function (e) {
 //     // e.preventDefault();
 //     if (e.key === 'Tab') {
@@ -66,6 +77,11 @@ for (let btn of pageButtons) {
 
 // Global Events ======================================
 let dragItem;
+const dropZonePairs = {
+    pieces: 'piece',
+    fabrics: 'fabric',
+    content: ['bundle', 'sewDetail'],
+}
 
 document.addEventListener('dragstart', (ev) => {
     dragItem = ev.target;
@@ -78,8 +94,7 @@ document.addEventListener('dragend', (ev) => {
 
 // Bundles ======================================
 let allPieces = document.querySelectorAll('.piece')
-const pieceTray = document.querySelector('#pieceTray')
-let pieceMenus = document.querySelectorAll('.pieces:not(#pieceTray)')
+let pieceMenus = document.querySelectorAll('.pieces')
 let tempPiece;
 let movePiece;
 let moveSnap = false
@@ -95,7 +110,7 @@ allPieces.forEach(piece => {
         movePiece.classList.remove('dragging');
         moveSnap = false;
         if (!(movePiece.parentElement === pieceTray)) {
-            movePiece.classList.remove('tray')
+            movePiece.classList.remove('inTray')
         }
     });
 })
@@ -220,6 +235,20 @@ for (let input of uploadPieceImage) {
         console.log(input);
     });
     input.addEventListener('change', dropHandler);
+    input.addEventListener('dragover', () => {
+        input.parentElement.classList.add('selected');
+    });
+    input.addEventListener('dragleave', () => {
+        input.parentElement.classList.remove('selected');
+    });
+    input.addEventListener('drop', () => {
+        input.parentElement.classList.remove('selected');
+    });
+}
+
+function HoverOver() {
+    this.classList.toggle('selected');
+    console.log('here');
 }
 
 addPieceButton.addEventListener('click', () => {
