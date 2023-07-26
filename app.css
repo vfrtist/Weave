@@ -481,6 +481,10 @@ header {
     box-sizing: border-box;
 }
 
+.available {
+    box-shadow: inset 0 0 20px var(--container-shadow-light);
+}
+
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
@@ -674,6 +678,12 @@ header {
     display: none;
 }
 
+.fabrics {
+    box-sizing: border-box;
+    padding: 8px;
+    height: fit-content;
+}
+
 /* --------------------------- Generic Text Formatting ---------------------------  */
 
 .title h2 {
@@ -688,7 +698,8 @@ header {
 .title h3 {
     font-weight: 400;
     font-size: 1.2rem;
-    margin: 8px 0 8px 24px;
+    margin: 0;
+    margin-left: 24px;
     color: var(--font-color);
 }
 

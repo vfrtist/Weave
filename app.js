@@ -114,6 +114,7 @@ document.addEventListener('dragstart', (ev) => {
     parents.forEach(parent => {
         parent.addEventListener('dragenter', cancelDefault);
         parent.addEventListener('dragover', dragOverZone);
+        // parent.classList.toggle('available');
     })
 })
 
@@ -125,28 +126,19 @@ document.addEventListener('dragend', () => {
     parents.forEach(parent => {
         parent.removeEventListener('dragenter', cancelDefault);
         parent.removeEventListener('dragover', dragOverZone);
+        // parent.classList.toggle('available');
     })
     siblings.forEach(sibling => {
         sibling.removeEventListener('dragover', dragOverItem);
     })
 })
 
-function verifyDropZone(element, zone) {
-    let e = element.dataset.itemtype;
-    let z = zone.dataset.itemtype;
-    console.log(z)
-    return dropZonePairs[z].includes(e);
-}
-
 function dragOverZone() {
     if (newZone !== this) {
         newZone = this;
         sorting = false;
     }
-
-    if (verifyDropZone(dragItem, this) || !sorting) {
-        this.insertBefore(dragItem, this.firstChild);
-    }
+    if (!sorting) { this.insertBefore(dragItem, this.firstChild); }
 }
 
 function dragOverItem() {
