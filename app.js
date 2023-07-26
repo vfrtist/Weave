@@ -4,7 +4,6 @@ const mainContent = document.querySelector('.content');
 // Templates and Main Zones ***********************************************************************
 const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
-const bundleSub = document.querySelector('#bundleSub').content;
 const pieceTray = document.querySelector('#pieceTray')
 const frameTray = document.querySelector('#frameTray')
 

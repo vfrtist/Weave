@@ -684,6 +684,13 @@ header {
     height: fit-content;
 }
 
+
+.bundle .subMenu {
+    left: 0;
+    bottom: auto;
+    top: 24px;
+}
+
 /* --------------------------- Generic Text Formatting ---------------------------  */
 
 .title h2 {
