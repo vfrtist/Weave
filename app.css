@@ -404,7 +404,7 @@ header {
     opacity: .75;
 }
 
-.screenButton:hover,
+.screenButton:not(#trash):hover,
 .screenButton.awake {
     fill: var(--menu-active);
     transform: scale(1.05);
@@ -417,8 +417,8 @@ header {
     transform-origin: right;
 }
 
-#trash.awake>path:last-of-type,
-#trash:hover>path:last-of-type {
+
+#trash.awake>path:last-of-type {
     transform: rotate(15deg);
 }
 
