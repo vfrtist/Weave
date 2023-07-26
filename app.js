@@ -80,71 +80,78 @@ for (let btn of pageButtons) {
 
 // Global Events ======================================
 let dragItem;
+let siblings;
+let parents;
+let newZone;
+let sorting;
+
 const dropZonePairs = {
     pieces: 'piece',
     fabrics: 'fabric',
     content: ['bundle', 'sewDetail'],
 }
 
-document.addEventListener('dragstart', (ev) => {
-    dragItem = ev.target;
-    dragItem.classList.add('dragging');
-})
-
-document.addEventListener('dragend', (ev) => {
-    dragItem.classList.remove('dragging');
-})
-
-// Bundles ======================================
-let allPieces = document.querySelectorAll('.piece')
-let pieceMenus = document.querySelectorAll('.pieces')
-let tempPiece;
-let movePiece;
-let moveSnap = false
-
-allPieces.forEach(piece => {
-    piece.addEventListener('dragstart', (e) => {
-        // re-align pieces to wherever they are scroll wise 
-        allPieces = document.querySelectorAll('.piece');
-        movePiece = piece.cloneNode('true');
-    });
-
-    piece.addEventListener('dragend', (e) => {
-        movePiece.classList.remove('dragging');
-        moveSnap = false;
-        if (!(movePiece.parentElement === pieceTray)) {
-            movePiece.classList.remove('inTray')
-        }
-    });
-})
-
-pieceMenus.forEach(dropTarget => {
-    dropTarget.addEventListener('dragenter', cancelDefault);
-    dropTarget.addEventListener('dragover', dragOver);
-    // dropTarget.addEventListener('dragleave', dragLeave);
-});
-
-function dragOver(e) {
-    let siblings = [...this.querySelectorAll('.piece:not(.dragging)')];
-
-    if (siblings.includes(e.target)) {
-        console.log('moved before another piece');
-        this.insertBefore(movePiece, e.target);
-        moveSnap = true;
-    };
-
-    if (!moveSnap) {
-        console.log('moved to container');
-        this.append(movePiece);
-    }
-    // let nextSibling = siblings.find(sibling => {
-    //     return e.pageY <= sibling.offsetTop + sibling.offsetHeight / 2;
-    // });
-    // this.insertBefore(movePiece, nextSibling)
+function getObjectKey(obj, value) {
+    return Object.keys(obj).find(key => obj[key].includes(value));
 }
 
-function dragLeave(e) {
-    dragItem.remove();
+document.addEventListener('dragstart', (ev) => {
+    // Set all variables
+    sorting = false;
+    newZone = ""
+    dragItem = ev.target;
+    if (dragItem.classList.contains('inTray')) { dragItem = ev.target.cloneNode('true') }
+    dragItem.classList.add('dragging');
+
+    // identify all like objects and install listening
+    siblings = mainContent.querySelectorAll(`*[data-itemtype='${dragItem.dataset.itemtype}']:not(.dragging)`);
+    siblings.forEach(sibling => {
+        sibling.addEventListener('dragover', dragOverItem);
+    })
+
+    // identify the proper zones and install listening
+    parents = mainContent.querySelectorAll(`.${getObjectKey(dropZonePairs, dragItem.dataset.itemtype)}`)
+    parents.forEach(parent => {
+        parent.addEventListener('dragenter', cancelDefault);
+        parent.addEventListener('dragover', dragOverZone);
+    })
+})
+
+document.addEventListener('dragend', () => {
+    dragItem.classList.remove('dragging');
+    if (!(dragItem.parentElement === pieceTray)) {
+        dragItem.classList.remove('inTray')
+    }
+    parents.forEach(parent => {
+        parent.removeEventListener('dragenter', cancelDefault);
+        parent.removeEventListener('dragover', dragOverZone);
+    })
+    siblings.forEach(sibling => {
+        sibling.removeEventListener('dragover', dragOverItem);
+    })
+})
+
+function verifyDropZone(element, zone) {
+    let e = element.dataset.itemtype;
+    let z = zone.dataset.itemtype;
+    console.log(z)
+    return dropZonePairs[z].includes(e);
+}
+
+function dragOverZone() {
+    if (newZone !== this) {
+        newZone = this;
+        sorting = false;
+    }
+
+    if (verifyDropZone(dragItem, this) || !sorting) {
+        this.insertBefore(dragItem, this.firstChild);
+    }
+}
+
+function dragOverItem() {
+    sorting = true;
+    this.parentElement.insertBefore(dragItem, this);
 }
 
 function cancelDefault(e) {
