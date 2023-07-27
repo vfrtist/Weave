@@ -76,7 +76,6 @@ for (let btn of pageButtons) {
 
 // Drag and Drop Section ***********************************************************************
 
-
 // Global Events ======================================
 let dragItem;
 let siblings;
@@ -124,7 +123,6 @@ document.addEventListener('dragstart', (ev) => {
 
 document.addEventListener('drop', () => { controller.abort() })
 document.addEventListener('dragend', () => {
-    // console.log('end');
     controller.abort();
     dragItem.classList.remove('dragging');
     if (!(dragItem.parentElement === pieceTray)) {
@@ -132,7 +130,8 @@ document.addEventListener('dragend', () => {
     }
 })
 
-function dragOverZone() {
+function dragOverZone(e) {
+    e.preventDefault()
     if (newZone !== this) {
         newZone = this;
         sorting = false;
@@ -140,7 +139,8 @@ function dragOverZone() {
     if (!sorting) { this.insertBefore(dragItem, this.firstChild); }
 }
 
-function dragOverItem() {
+function dragOverItem(e) {
+    e.preventDefault()
     sorting = true;
     this.parentElement.insertBefore(dragItem, this);
 }
