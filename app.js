@@ -83,6 +83,8 @@ let siblings;
 let parents;
 let newZone;
 let sorting;
+let controller;
+let signal;
 
 const dropZonePairs = {
     pieces: 'piece',
@@ -98,6 +100,9 @@ document.addEventListener('dragstart', (ev) => {
     // Set all variables
     sorting = false;
     newZone = ""
+    controller = new AbortController();
+    signal = controller.signal
+
     dragItem = ev.target;
     if (dragItem.classList.contains('inTray')) { dragItem = ev.target.cloneNode('true') }
     dragItem.classList.add('dragging');
@@ -105,31 +110,26 @@ document.addEventListener('dragstart', (ev) => {
     // identify all like objects and install listening
     siblings = mainContent.querySelectorAll(`*[data-itemtype='${dragItem.dataset.itemtype}']:not(.dragging)`);
     siblings.forEach(sibling => {
-        sibling.addEventListener('dragover', dragOverItem);
+        sibling.addEventListener('dragover', dragOverItem, { signal });
     })
 
     // identify the proper zones and install listening
     parents = mainContent.querySelectorAll(`.${getObjectKey(dropZonePairs, dragItem.dataset.itemtype)}`)
     parents.forEach(parent => {
-        parent.addEventListener('dragenter', cancelDefault);
-        parent.addEventListener('dragover', dragOverZone);
+        parent.addEventListener('dragenter', cancelDefault, { signal });
+        parent.addEventListener('dragover', dragOverZone, { signal });
         // parent.classList.toggle('available');
     })
 })
 
+document.addEventListener('drop', () => { controller.abort() })
 document.addEventListener('dragend', () => {
+    // console.log('end');
+    controller.abort();
     dragItem.classList.remove('dragging');
     if (!(dragItem.parentElement === pieceTray)) {
         dragItem.classList.remove('inTray')
     }
-    parents.forEach(parent => {
-        parent.removeEventListener('dragenter', cancelDefault);
-        parent.removeEventListener('dragover', dragOverZone);
-        // parent.classList.toggle('available');
-    })
-    siblings.forEach(sibling => {
-        sibling.removeEventListener('dragover', dragOverItem);
-    })
 })
 
 function dragOverZone() {
