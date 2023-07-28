@@ -665,6 +665,7 @@ header {
     width: 30px;
     align-self: flex-end;
     position: absolute;
+    cursor: default;
 }
 
 .bundlingIcon:hover {
@@ -736,6 +737,7 @@ header {
     text-transform: Capitalize;
     font-family: brother-1816, sans-serif;
     color: var(--font-color);
+    display: inline;
 }
 
 .title ul {
