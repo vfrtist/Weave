@@ -22,7 +22,7 @@
     <!------------------------------------------------ Templates ------------------------------------------------>
 
     <template id="piece">
-        <div data-itemtype="piece" class="piece inTray" draggable="true">
+        <div data-itemtype="piece" class="piece card inTray" draggable="true">
             <div class="pieceFrame unloaded">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -31,17 +31,17 @@
                 </svg>
                 <input type="file" name="uploadPiece">
             </div>
-            <span contenteditable="true">Sht Front</span>
+            <span contenteditable="true" class="typeable">Sht Front</span>
             <div class="pieceCount">
-                <span class="up" contenteditable="true">1</span>
-                <span class="flip" contenteditable="true">0</span>
+                <span class="up typeable" contenteditable="true">1</span>
+                <span class="flip typeable" contenteditable="true">0</span>
             </div>
         </div>
         </div>
     </template>
 
     <template id="bundle">
-        <section data-itemtype="bundle" class="bundle" draggable="true">
+        <section data-itemtype="bundle" class="bundle card" draggable="true">
             <div class="menu bundlingIcon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8.6">
                     <path
@@ -56,12 +56,12 @@
             </div>
             <div class="title">
                 <h2>Self</h2>
-                <div data-itemtype="fabrics" class="fabrics">
-                    <h3 data-itemtype="fabric" draggable="true">
-                        <span class="material" contenteditable="true">10001234</span>
+                <ul data-itemtype="materials" class="fabrics">
+                    <li data-itemtype="material" draggable="true">
+                        <span class="typeable" contenteditable="true">10001234</span>
                         <span></span>
-                    </h3>
-                </div>
+                    </li>
+                </ul>
             </div>
             <div data-itemtype="pieces" class="pieces"></div>
         </section>
@@ -182,10 +182,10 @@
                     <div class="leftSub">
                         <div>
                             <ul>
-                                <li><a href="">1234SHT</a></li>
-                                <li><a href="">1234SHT</a></li>
-                                <li><a href="">1234SHT</a></li>
-                                <li><a href="">1234SHT</a></li>
+                                <li class="linkButton"><a href="">1234SHT</a></li>
+                                <li class="linkButton"><a href="">1234SHT</a></li>
+                                <li class="linkButton"><a href="">1234SHT</a></li>
+                                <li class="linkButton"><a href="">1234SHT</a></li>
                             </ul>
                             <button>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -280,11 +280,9 @@
                                 </svg>
                             </div>
                             <ul>
-                                <li>
-                                    <h3 data-itemtype="fabric" draggable="true">
-                                        <span class="material inTray" contenteditable="true">10066161</span>
-                                        <span>FUR S/P LAVENDER ANGEL BODY 80A/20O 60"</span>
-                                    </h3>
+                                <li data-itemtype="material" draggable="true" class="material card inTray">
+                                    <span contenteditable="true" class="typeable">10066161</span>
+                                    <span>FUR S/P LAVENDER ANGEL BODY 80A/20O 60"</span>
                                 </li>
                             </ul>
                         </div>
@@ -328,23 +326,24 @@
                         </li>
 
                         <li> <a href="http://characterconnection.disney.com/" target="_blank"
-                                rel="noopener noreferrer">Character
-                                Connection</a> </li>
+                                rel="noopener noreferrer">Character Connection</a>
+                        </li>
 
                         <li> <a href="https://disneysendit.ibmaspera.com" target="_blank"
                                 rel="noopener noreferrer">SendIt</a>
                         </li>
 
                         <li> <a href="https://jira.disney.com/secure/RapidBoard.jspa?rapidView=7060&projectKey=COSTUMING2&selectedIssue=COSTUMING2-728"
-                                target="_blank" rel="noopener noreferrer">Jira</a> </li>
+                                target="_blank" rel="noopener noreferrer">Jira</a>
+                        </li>
 
                         <li> <a href="https://app.smartsheet.com/dashboards/HV3xJj2jrPf79xfjX4HV4J7hxMpv522R9r5Fx7R1"
-                                target="_blank" rel="noopener noreferrer">Cut
-                                Ticket</a> </li>
+                                target="_blank" rel="noopener noreferrer">Cut Ticket</a>
+                        </li>
 
                         <li> <a href="https://app.smartsheet.com/b/form/30304d1947294dca9611e721989961b8"
-                                target="_blank" rel="noopener noreferrer">Material
-                                Change</a> </li>
+                                target="_blank" rel="noopener noreferrer">Material Change</a>
+                        </li>
                     </ul>
                 </div>
 

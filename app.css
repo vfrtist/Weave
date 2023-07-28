@@ -119,9 +119,6 @@ header {
     background: var(--menu-background);
     color: var(--menu-button);
     fill: var(--menu-button);
-    /* fill: transparent; */
-    /* stroke: var(--menu-button); */
-    /* stroke-width: 2px; */
     padding: 12px;
     position: fixed;
     bottom: 0;
@@ -177,6 +174,39 @@ header {
     margin-top: auto;
 }
 
+/* ------------------------------------------------------ Card ------------------------------------------------------  */
+.card {
+    background: var(--container-background);
+    color: var(--font-color);
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+    cursor: grab;
+    transition: box-shadow .15s;
+    margin: 0;
+}
+
+.card:active {
+    cursor: grabbing;
+}
+
+.card:hover {
+    box-shadow: 4px 4px 10px var(--container-shadow-light);
+}
+
+.card.inTray {
+    box-shadow: none;
+}
+
+/* ------------------------------------------------------ Card ------------------------------------------------------  */
+
+
 .leftSub {
     box-sizing: border-box;
     transition: width .3s ease;
@@ -213,11 +243,6 @@ header {
     width: 100%;
 }
 
-.piece.inTray {
-    color: var(--font-color);
-    align-items: center;
-}
-
 .piece.inTray>div:nth-last-child(1) {
     display: none;
 }
@@ -245,12 +270,6 @@ header {
     width: 100%;
     height: fit-content;
     box-sizing: border-box;
-}
-
-
-
-.leftSub input:focus {
-    outline: 1px solid var(--container-shadow)
 }
 
 .leftSub input:focus {
@@ -282,13 +301,8 @@ header {
     transition: fill .2s;
 }
 
-.trayContainer h3 {
-    margin: 0;
-    font-size: 1rem;
-}
-
-.leftSub>div li,
-.leftSub>div a {
+.linkButton,
+.linkButton a {
     text-align: center;
     border-radius: 8px;
     width: 100%;
@@ -299,8 +313,8 @@ header {
     transition: all .1s;
 }
 
-.leftSub>div li:hover,
-.leftSub>div a:hover {
+.linkButton:hover,
+.linkButton a:hover {
     color: var(--menu-active);
     background: var(--menu-background);
 }
@@ -543,14 +557,9 @@ header {
 .bundle {
     padding: 16px;
     text-align: left;
-    display: flex;
-    flex-direction: column;
     justify-items: center;
     background-color: var(--container-background);
-    border-radius: 12px;
-    width: 100%;
     box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
-    box-sizing: border-box;
     transition: width .4s, height .4s;
 }
 
@@ -575,40 +584,17 @@ header {
 }
 
 .piece {
-    box-sizing: border-box;
     text-transform: uppercase;
     font-weight: 300;
     font-size: 1rem;
-    background: var(--container-background);
-    border-radius: 12px;
-    padding: 12px;
     max-width: 200px;
     min-width: 140px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 4px;
     transition: box-shadow .15s;
-    cursor: grab;
-}
-
-.piece:active {
-    cursor: grabbing;
-}
-
-.bundle.inTray:hover,
-.piece:hover {
-    box-shadow: 4px 4px 10px var(--container-shadow-light);
 }
 
 .piece.big {
     width: 90%;
     max-width: none;
-}
-
-.piece span {
-    cursor: text;
 }
 
 .pieceCount {
@@ -695,21 +681,9 @@ header {
     border-left: 1px solid var(--board-background);
 }
 
-.bundle.inTray {
-    width: 100%;
-    text-align: center;
-    margin: 0;
-    box-shadow: none;
-    transition: box-shadow .15s;
-}
-
 .bundle.inTray h2 {
     margin: 0;
     padding: 0;
-}
-
-.bundle.inTray h3 {
-    margin: 0;
 }
 
 .bundle.inTray .bundlingIcon {
@@ -738,7 +712,7 @@ header {
     cursor: grab;
 }
 
-.material {
+.typeable {
     cursor: text;
 }
 
@@ -759,14 +733,17 @@ header {
     color: var(--font-color);
 }
 
-.title h3 {
+.title ul {
     font-weight: 400;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0;
     margin-left: 24px;
     color: var(--font-color);
 }
 
+li {
+    list-style-type: none;
+}
 
 .filler {
     padding: 10px;
