@@ -196,12 +196,17 @@ header {
     cursor: grabbing;
 }
 
+.card.inTray {
+    box-shadow: none;
+}
+
 .card:hover {
     box-shadow: 4px 4px 10px var(--container-shadow-light);
 }
 
-.card.inTray {
-    box-shadow: none;
+.bundle .material {
+    padding: 0;
+    flex-direction: row;
 }
 
 /* ------------------------------------------------------ Card ------------------------------------------------------  */

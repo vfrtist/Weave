@@ -87,7 +87,7 @@ let signal;
 
 const dropZonePairs = {
     pieces: 'piece',
-    fabrics: 'fabric',
+    materials: 'material',
     content: ['bundle', 'sewDetail'],
 }
 
@@ -113,7 +113,7 @@ document.addEventListener('dragstart', (ev) => {
     })
 
     // identify the proper zones and install listening
-    parents = mainContent.querySelectorAll(`.${getObjectKey(dropZonePairs, dragItem.dataset.itemtype)}`)
+    parents = mainContent.querySelectorAll(`*[data-itemtype='${getObjectKey(dropZonePairs, dragItem.dataset.itemtype)}']`)
     parents.forEach(parent => {
         parent.addEventListener('dragenter', cancelDefault, { signal });
         parent.addEventListener('dragover', dragOverZone, { signal });
