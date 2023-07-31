@@ -35,6 +35,11 @@ font-style: normal; */
     display: none;
 }
 
+input[type='text'] {
+    background: var(--menu-background);
+    color: var(--font-color);
+}
+
 ul {
     margin: 0;
     padding: 0;
