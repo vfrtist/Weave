@@ -4,9 +4,9 @@ const mainContent = document.querySelector('.content');
 // Templates and Main Zones ***********************************************************************
 const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
+const basket = document.querySelector('#basket').content;
 const pieceTray = document.querySelector('#pieceTray')
 const frameTray = document.querySelector('#frameTray')
-
 
 // to fill out the page and keep the html small
 
@@ -17,10 +17,16 @@ for (let i = 0; i < 3; i++) {
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
+
 let bundleNoTitle = fillFrame.cloneNode('true');
 bundleNoTitle.querySelector('.fabrics').remove();
+
+// let basketFrame = basket.cloneNode('true');
+// basketFrame.querySelector('.basket').classList.add('inTray');
+
 frameTray.append(fillFrame);
 frameTray.append(bundleNoTitle);
+// frameTray.append(basketFrame);
 
 // Page change -------------------
 for (let btn of pageButtons) {
@@ -35,12 +41,13 @@ function makeInActive() {
 }
 
 // Give the option to swap beteen readwrite and not -------------------
-let isEditable = false
+// working but not in use so it's easier to just shut it off for now.
+// let isEditable = false
 
-function readwrite(item) {
-    isEditable = !isEditable
-    item.contentEditable = isEditable;
-}
+// function readwrite(item) {
+//     isEditable = !isEditable
+//     item.contentEditable = isEditable;
+// }
 
 // Hover text -------------------
 for (let btn of pageButtons) {
@@ -71,8 +78,6 @@ for (let btn of pageButtons) {
 //         materialDescription.innerText = fabrics[materialLookUp.value]
 //     };
 // })
-
-
 
 // Drag and Drop Section ***********************************************************************
 
@@ -117,17 +122,26 @@ document.addEventListener('dragstart', (ev) => {
     parents.forEach(parent => {
         parent.addEventListener('dragenter', cancelDefault, { signal });
         parent.addEventListener('dragover', dragOverZone, { signal });
-        // parent.classList.toggle('available');
+        parent.classList.add('available');
     })
 })
 
-document.addEventListener('drop', () => { controller.abort() })
+document.addEventListener('drop', () => {
+    controller.abort();
+    parents.forEach(parent => {
+        parent.classList.remove('available');
+    })
+})
+
 document.addEventListener('dragend', () => {
     controller.abort();
     dragItem.classList.remove('dragging');
     if (!(dragItem.parentElement === pieceTray)) {
         dragItem.classList.remove('inTray')
     }
+    parents.forEach(parent => {
+        parent.classList.remove('available');
+    })
 })
 
 function dragOverZone(e) {
