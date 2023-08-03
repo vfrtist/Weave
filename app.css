@@ -195,6 +195,7 @@ header {
     cursor: grab;
     transition: box-shadow .15s;
     margin: 0;
+    position: relative;
 }
 
 .card:active {
@@ -619,6 +620,30 @@ header {
 
 .pieceCount {
     text-align: center;
+}
+
+.pieceCount.sideline {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 12px;
+    right: -12px;
+    gap: 4px;
+}
+
+.pieceCount.sideline span {
+    background-color: var(--container-background);
+    /* background-image: url('Boxy\ Arrow.svg'); */
+    /* mask: url('Boxy\ Arrow.svg');
+    -webkit-mask: url('Boxy\ Arrow.svg'); */
+    clip-path: path("M47.4,26.5h-3.7V47c0,1.5-1.2,2.8-2.8,2.8H9.1c-1.5,0-2.8-1.2-2.8-2.8V26.5H2.7c-2.2,0-3.5-1.6-2.3-2.8 L22.8,0.8c1.1-1.1,3.5-1.1,4.5,0l22.3,22.9C50.8,24.9,49.5,26.5,47.4,26.5z");
+    width: 30px;
+    height: 30px;
+    /* border-radius: 50%; */
+    box-shadow: 2px 2px 12px var(--container-shadow-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pieceFrame {
