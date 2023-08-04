@@ -567,12 +567,15 @@ header {
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
-    padding: 100px 30% 20px;
+    margin: 100px 25% 20px;
+    padding: 18px;
+    border-radius: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 24px;
+    transition: border .2s;
 }
 
 .bundle {
@@ -613,11 +616,6 @@ header {
     transition: box-shadow .15s;
 }
 
-.piece.big {
-    width: 90%;
-    max-width: none;
-}
-
 .pieceCount {
     text-align: center;
 }
@@ -633,13 +631,12 @@ header {
 
 .pieceCount.sideline span {
     background-color: var(--container-background);
-    /* background-image: url('Boxy\ Arrow.svg'); */
-    /* mask: url('Boxy\ Arrow.svg');
-    -webkit-mask: url('Boxy\ Arrow.svg'); */
-    clip-path: path("M47.4,26.5h-3.7V47c0,1.5-1.2,2.8-2.8,2.8H9.1c-1.5,0-2.8-1.2-2.8-2.8V26.5H2.7c-2.2,0-3.5-1.6-2.3-2.8 L22.8,0.8c1.1-1.1,3.5-1.1,4.5,0l22.3,22.9C50.8,24.9,49.5,26.5,47.4,26.5z");
+    /* background-image: url('Boxy\ Arrow.svg');
+    -webkit-mask: url('Boxy\ Arrow.svg');
+    mask: url('Boxy\ Arrow.svg');
     width: 30px;
     height: 30px;
-    /* border-radius: 50%; */
+    border-radius: 50%; */
     box-shadow: 2px 2px 12px var(--container-shadow-light);
     display: flex;
     justify-content: center;

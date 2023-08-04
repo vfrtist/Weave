@@ -17,16 +17,17 @@ for (let i = 0; i < 3; i++) {
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
+frameTray.append(fillFrame);
 
 let bundleNoTitle = fillFrame.cloneNode('true');
 bundleNoTitle.querySelector('.fabrics').remove();
+frameTray.append(bundleNoTitle);
 
 // let basketFrame = basket.cloneNode('true');
 // basketFrame.querySelector('.basket').classList.add('inTray');
-
-frameTray.append(fillFrame);
-frameTray.append(bundleNoTitle);
 // frameTray.append(basketFrame);
+
+
 
 // Page change -------------------
 for (let btn of pageButtons) {
@@ -93,7 +94,8 @@ let signal;
 const dropZonePairs = {
     pieces: 'piece',
     materials: 'material',
-    content: ['bundle', 'sewDetail'],
+    content: ['bundle', 'basket'],
+    basket: ['instruction'],
 }
 
 function getObjectKey(obj, value) {
@@ -118,7 +120,8 @@ document.addEventListener('dragstart', (ev) => {
     })
 
     // identify the proper zones and install listening
-    parents = mainContent.querySelectorAll(`*[data-itemtype='${getObjectKey(dropZonePairs, dragItem.dataset.itemtype)}']`)
+    let correctZone = getObjectKey(dropZonePairs, dragItem.dataset.itemtype);
+    parents = (correctZone === 'content') ? [mainContent] : mainContent.querySelectorAll(`*[data-itemtype='${correctZone}']`)
     parents.forEach(parent => {
         parent.addEventListener('dragenter', cancelDefault, { signal });
         parent.addEventListener('dragover', dragOverZone, { signal });
