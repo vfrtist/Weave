@@ -12,6 +12,7 @@ font-style: normal; */
     --menu-background2: #f1ebf3;
     --menu-button: #7c787c;
     --menu-active: #875bd8;
+    /* --menu-active: linear-gradient(90deg, rgb(135, 91, 216) 0%, rgb(196, 91, 216) 100%); */
     --board-background: #d8ccda;
     --container-background: white;
     --container-shadow: #c0b6ce;
