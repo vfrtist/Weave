@@ -588,10 +588,6 @@ header {
     transition: width .4s, height .4s;
 }
 
-.bundle:nth-last-of-type(1) {
-    margin-bottom: 160px;
-}
-
 .bundle .pieces {
     padding: 12px;
 }

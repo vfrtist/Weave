@@ -283,6 +283,24 @@ viewButton.addEventListener('click', () => {
     };
 });
 
+// ----------------- Generic Dropdown Functions -------------------
+document.addEventListener('click', function (e) {
+    let func = e.target.dataset.function;
+    let container = e.target.closest('section');
+
+    if (func === 'delete') {
+        container.remove();
+    }
+
+    if (func === 'delete-fabrics') {
+        let fabrics = container.querySelectorAll('.material')
+        for (fabric of fabrics) { fabric.remove() }
+    }
+
+    if (func === 'duplicate') {
+        mainContent.insertBefore(container.cloneNode('true'), container.nextElementSibling);
+    }
+});
 
 // This could be a piece sorting option to get everything into a list --------------------
 // viewButton.addEventListener('click', () => {
