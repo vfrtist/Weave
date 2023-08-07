@@ -23,9 +23,9 @@ bundleNoTitle.querySelector('.material').remove();
 frameTray.append(fillFrame);
 frameTray.append(bundleNoTitle);
 
-let basketFrame = basket.cloneNode('true');
-basketFrame.querySelector('.basket').classList.add('inTray');
-frameTray.append(basketFrame);
+// let basketFrame = basket.cloneNode('true');
+// basketFrame.querySelector('.basket').classList.add('inTray');
+// frameTray.append(basketFrame);
 
 
 
@@ -129,22 +129,26 @@ document.addEventListener('dragstart', (ev) => {
     })
 })
 
-document.addEventListener('drop', () => {
-    controller.abort();
-    parents.forEach(parent => {
-        parent.classList.remove('available');
-    })
+document.addEventListener('drop', (e) => {
+    if (e.target.name != 'uploadPiece') {
+        controller.abort();
+        parents.forEach(parent => {
+            parent.classList.remove('available');
+        })
+    }
 })
 
-document.addEventListener('dragend', () => {
-    controller.abort();
-    dragItem.classList.remove('dragging');
-    if (!(dragItem.parentElement === pieceTray)) {
-        dragItem.classList.remove('inTray')
+document.addEventListener('dragend', (e) => {
+    if (e.target.name != 'uploadPiece') {
+        controller.abort();
+        dragItem.classList.remove('dragging');
+        if (!(dragItem.parentElement === pieceTray)) {
+            dragItem.classList.remove('inTray')
+        }
+        parents.forEach(parent => {
+            parent.classList.remove('available');
+        })
     }
-    parents.forEach(parent => {
-        parent.classList.remove('available');
-    })
 })
 
 function dragOverZone(e) {
@@ -244,29 +248,17 @@ function dropHandler(ev) {
     let image = document.createElement('img');
     image.setAttribute('src', fileName);
     image.innerHTML = '';
-    this.parentElement.classList.remove('unloaded');
-    this.parentElement.appendChild(image);
+    ev.target.parentElement.classList.remove('unloaded');
+    ev.target.parentElement.appendChild(image);
 }
 
-for (let input of uploadPieceImage) {
-    input.addEventListener('click', () => {
-        console.log(input);
-    });
-    input.addEventListener('change', dropHandler);
-    input.addEventListener('dragover', () => {
-        input.parentElement.classList.add('selected');
-    });
-    input.addEventListener('dragleave', () => {
-        input.parentElement.classList.remove('selected');
-    });
-    input.addEventListener('drop', () => {
-        input.parentElement.classList.remove('selected');
-    });
-}
+document.addEventListener('change', (e) => { if (verifyUpload(e.target.name)) { dropHandler(e) } })
+document.addEventListener('dragover', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.add('selected') } })
+document.addEventListener('dragleave', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.remove('selected') } })
+document.addEventListener('drop', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.remove('selected') } })
 
-function HoverOver() {
-    this.classList.toggle('selected');
-    console.log('here');
+function verifyUpload(thing) {
+    return thing === 'uploadPiece'
 }
 
 addPieceButton.addEventListener('click', () => {
