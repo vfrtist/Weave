@@ -209,6 +209,7 @@ header {
 
 .card:hover {
     box-shadow: 4px 4px 10px var(--container-shadow-light);
+    /* transform: scale(1.01); */
 }
 
 .material {
@@ -758,7 +759,7 @@ header {
 
 .typeable:focus {
     outline: none;
-    border-bottom: 2pt solid var(--menu-active);
+    background: linear-gradient(0deg, var(--menu-active) 0% 2px, rgba(255, 255, 255, 0) 2px);
 }
 
 .bundle .subMenu {
