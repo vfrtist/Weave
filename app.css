@@ -753,6 +753,12 @@ header {
 
 .typeable {
     cursor: text;
+    padding: 0 4px;
+}
+
+.typeable:focus {
+    outline: none;
+    border-bottom: 2pt solid var(--menu-active);
 }
 
 .bundle .subMenu {
