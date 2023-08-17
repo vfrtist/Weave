@@ -12,7 +12,7 @@ const frameTray = document.querySelector('#frameTray')
 
 for (let i = 0; i < 3; i++) {
     pieceTray.append(piece.cloneNode('true'));
-    mainContent.append(bundle.cloneNode('true'));
+    // mainContent.append(bundle.cloneNode('true'));
 }
 
 let fillFrame = bundle.cloneNode('true');
@@ -26,8 +26,6 @@ frameTray.append(bundleNoTitle);
 // let basketFrame = basket.cloneNode('true');
 // basketFrame.querySelector('.basket').classList.add('inTray');
 // frameTray.append(basketFrame);
-
-
 
 // Page change -------------------
 for (let btn of pageButtons) {
@@ -143,7 +141,8 @@ document.addEventListener('dragend', (e) => {
         controller.abort();
         dragItem.classList.remove('dragging');
         if (!(dragItem.parentElement === pieceTray)) {
-            dragItem.classList.remove('inTray')
+            dragItem.classList.remove('inTray');
+            dragItem.querySelector('input').classList.add('hidden');
         }
         parents.forEach(parent => {
             parent.classList.remove('available');
@@ -245,11 +244,11 @@ const addPieceButton = pieceTray.nextElementSibling
 function dropHandler(ev) {
     ev.preventDefault();
     let fileName = URL.createObjectURL(ev.target.files[0]);
-    let image = document.createElement('img');
+    let image = ev.target.nextElementSibling;
     image.setAttribute('src', fileName);
     image.innerHTML = '';
     ev.target.parentElement.classList.remove('unloaded');
-    ev.target.parentElement.appendChild(image);
+    // ev.target.parentElement.appendChild(image);
 }
 
 document.addEventListener('change', (e) => { if (verifyUpload(e.target.name)) { dropHandler(e) } })
@@ -270,7 +269,7 @@ addPieceButton.addEventListener('click', () => {
 // View Button
 const viewButton = document.querySelector('#view')
 viewButton.addEventListener('click', () => {
-    for (let bundle of document.querySelectorAll('.bundle')) {
+    for (let bundle of mainContent.querySelectorAll('.bundle')) {
         bundle.classList.toggle('collapsed');
     };
 });
@@ -293,11 +292,3 @@ document.addEventListener('click', function (e) {
         mainContent.insertBefore(container.cloneNode('true'), container.nextElementSibling);
     }
 });
-
-// This could be a piece sorting option to get everything into a list --------------------
-// viewButton.addEventListener('click', () => {
-//     for (let pieces of document.querySelectorAll('.piece:not(.tray)')) {
-//         pieces.classList.toggle('big');
-//     };
-// });
-

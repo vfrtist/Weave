@@ -18,6 +18,7 @@ font-style: normal; */
     --container-shadow: #c0b6ce;
     --container-shadow-light: #c0b6ce56;
     --font-color: black;
+    --piece-color: 0%;
 }
 
 [data-theme="dark"] {
@@ -30,6 +31,7 @@ font-style: normal; */
     --container-shadow: #312c38ce;
     --container-shadow-light: #312c3856;
     --font-color: white;
+    --piece-color: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -566,6 +568,10 @@ header {
     outline: 2px dashed var(--menu-active);
 }
 
+.hidden {
+    display: none;
+}
+
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
@@ -672,8 +678,11 @@ header {
 }
 
 .pieceFrame img {
+    display: block;
     width: inherit;
     height: inherit;
+    object-fit: contain;
+    filter: invert(var(--piece-color));
 }
 
 .pieceFrame.unloaded {
@@ -688,6 +697,10 @@ header {
     fill: var(--menu-active);
     width: 30px;
     display: block;
+}
+
+.pieceFrame.unloaded img {
+    display: none;
 }
 
 .hover {
