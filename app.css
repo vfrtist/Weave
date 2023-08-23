@@ -19,6 +19,7 @@ font-style: normal; */
     --container-shadow-light: #c0b6ce56;
     --font-color: black;
     --piece-color: 0%;
+    --alert: #D7282F;
 }
 
 [data-theme="dark"] {
@@ -32,6 +33,7 @@ font-style: normal; */
     --container-shadow-light: #312c3856;
     --font-color: white;
     --piece-color: 100%;
+    --alert: #D7282F;
 }
 
 ::-webkit-scrollbar {
@@ -115,7 +117,7 @@ header {
     }
 }
 
-/* --------------------------- Left Bar Formatting ---------------------------  */
+/* --------------------------- vv Left Bar Formatting vv ---------------------------  */
 
 .leftBar {
     box-sizing: border-box;
@@ -182,7 +184,7 @@ header {
     margin-top: auto;
 }
 
-/* ------------------------------------------------------ Card ------------------------------------------------------  */
+/* ------------------------------------------------------ vv Card vv ------------------------------------------------------  */
 .card {
     background: var(--container-background);
     color: var(--font-color);
@@ -230,7 +232,7 @@ header {
     font-family: 'Work Sans', sans-serif;
 }
 
-/* ------------------------------------------------------ Card ------------------------------------------------------  */
+/* ------------------------------------------------------ Left Sub ------------------------------------------------------  */
 
 
 .leftSub {
@@ -570,6 +572,23 @@ header {
 
 .hidden {
     display: none;
+}
+
+.hot {
+    fill: white;
+    background: var(--alert);
+    padding: 8px;
+    overflow: visible;
+    box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
+    width: 24px;
+    height: 24px;
+}
+
+.notification {
+    position: absolute;
+    top: -6px;
+    left: -20px;
+    border-radius: 50%;
 }
 
 /* --------------------------- Bundling ---------------------------  */
