@@ -479,7 +479,6 @@ header {
     border-radius: 50%;
     box-sizing: border-box;
     padding: 10px;
-    box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
     transition: all .2s;
     overflow: visible;
     opacity: .65;
@@ -579,7 +578,6 @@ header {
     background: var(--alert);
     padding: 8px;
     overflow: visible;
-    box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
     width: 24px;
     height: 24px;
 }
@@ -610,7 +608,6 @@ header {
     text-align: left;
     justify-items: center;
     background-color: var(--container-background);
-    box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
     transition: width .4s, height .4s;
 }
 
@@ -654,12 +651,6 @@ header {
 
 .pieceCount.sideline span {
     background-color: var(--container-background);
-    /* background-image: url('Boxy\ Arrow.svg');
-    -webkit-mask: url('Boxy\ Arrow.svg');
-    mask: url('Boxy\ Arrow.svg');
-    width: 30px;
-    height: 30px;
-    border-radius: 50%; */
     box-shadow: 2px 2px 12px var(--container-shadow-light);
     display: flex;
     justify-content: center;
@@ -866,4 +857,8 @@ li {
     width: 260px;
     text-align: start;
     display: inline-block;
+}
+
+.shadowed {
+    box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
 }
