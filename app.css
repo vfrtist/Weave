@@ -17,6 +17,7 @@ font-style: normal; */
     --container-background: white;
     --container-shadow: #c0b6ce;
     --container-shadow-light: #c0b6ce56;
+    --container-shadow-dark: #a29caa;
     --font-color: black;
     --piece-color: 0%;
     --alert: #D7282F;
@@ -31,6 +32,7 @@ font-style: normal; */
     --container-background: #342A41;
     --container-shadow: #312c38ce;
     --container-shadow-light: #312c3856;
+    --container-shadow-dark: #312c38;
     --font-color: white;
     --piece-color: 100%;
     --alert: #D7282F;
@@ -198,7 +200,7 @@ header {
     text-align: center;
     gap: 4px;
     cursor: grab;
-    transition: box-shadow .15s;
+    transition: box-shadow .15s !important;
     margin: 0;
     position: relative;
 }
@@ -214,6 +216,14 @@ header {
 .card:hover {
     box-shadow: 4px 4px 10px var(--container-shadow-light);
     /* transform: scale(1.01); */
+}
+
+.content>.card {
+    border-radius: 12px 12px 34px 34px;
+}
+
+.content>.card:hover {
+    box-shadow: 3px 3px 12px var(--container-shadow-dark), -3px -3px 8px var(--board-background);
 }
 
 .material {
@@ -754,11 +764,11 @@ header {
     display: none;
 }
 
-.bundle.collapsed {
+.content>.collapsed {
     width: 200px;
 }
 
-.bundle.collapsed h2 {
+.bundle.collapsed .title {
     text-align: center;
     margin: 0;
 }
