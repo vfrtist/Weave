@@ -274,7 +274,7 @@ header {
 .leftSub.open>div {
     display: flex;
     width: 100%;
-    animation: slide-in .2s .1s backwards;
+    animation: slide-in .35s .22s backwards;
 }
 
 .leftSub ul {
@@ -381,7 +381,6 @@ header {
 @keyframes slide-in {
     0% {
         opacity: 0;
-        translate: -60px 0;
     }
 
     100% {
