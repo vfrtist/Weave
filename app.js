@@ -23,9 +23,9 @@ bundleNoTitle.querySelector('.material').remove();
 frameTray.append(fillFrame);
 frameTray.append(bundleNoTitle);
 
-// let basketFrame = basket.cloneNode('true');
-// basketFrame.querySelector('.basket').classList.add('inTray');
-// frameTray.append(basketFrame);
+let basketFrame = basket.cloneNode('true');
+basketFrame.querySelector('.basket').classList.add('inTray');
+frameTray.append(basketFrame);
 
 // Page change -------------------
 for (let btn of pageButtons) {

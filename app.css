@@ -80,18 +80,28 @@ header {
 .centerNav {
     display: flex;
     height: inherit;
+    align-items: center;
 }
 
 .leftNav {
     grid-column: 1;
     justify-content: flex-start;
-    margin-left: 20px;
+    margin-left: 12px;
+    font-size: 28px;
+    gap: 8px;
+}
+
+.leftNav svg {
+    width: 28px;
+    height: 28px;
+    vertical-align: middle;
+    fill: var(--menu-active);
 }
 
 .rightNav {
     grid-column: 3;
     justify-content: flex-end;
-    margin-right: 20px;
+    margin-right: 12px;
 }
 
 .centerNav {
@@ -530,7 +540,7 @@ header {
     list-style-type: none;
     padding: 8px;
     border-radius: 8px;
-    border: 2px solid var(--menu-active);
+    /* border: 2px solid var(--menu-active); */
 }
 
 .subMenu li,
@@ -601,7 +611,7 @@ header {
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
-    margin: 100px 25% 20px;
+    margin: 100px 20% 20px;
     padding: 18px;
     border-radius: 18px;
     display: flex;
@@ -727,7 +737,7 @@ header {
     outline: 2px solid var(--board-background)
 }
 
-.bundlingIcon {
+.dropdownIcon {
     fill: var(--board-background);
     width: 30px;
     align-self: flex-end;
@@ -735,7 +745,7 @@ header {
     cursor: default;
 }
 
-.bundlingIcon:hover {
+.dropdownIcon:hover {
     fill: var(--menu-active);
 }
 
@@ -759,7 +769,7 @@ header {
     padding: 0;
 }
 
-.bundle.inTray .bundlingIcon {
+.inTray .dropdownIcon {
     display: none;
 }
 
@@ -774,7 +784,7 @@ header {
 
 .bundle.collapsed .pieces,
 .bundle.collapsed .fabrics,
-.bundle.collapsed .bundlingIcon {
+.bundle.collapsed .dropdownIcon {
     display: none;
 }
 
@@ -794,7 +804,7 @@ header {
     background: linear-gradient(0deg, var(--menu-active) 0% 2px, rgba(255, 255, 255, 0) 2px);
 }
 
-.bundle .subMenu {
+.content .subMenu {
     left: 0;
     bottom: auto;
     top: 24px;
