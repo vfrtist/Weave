@@ -231,7 +231,7 @@ header {
     /* transform: scale(1.01); */
 }
 
-.content>.card {
+.content>.bundle {
     border-radius: 12px 12px 34px 34px;
 }
 
@@ -241,6 +241,10 @@ header {
 
 .material {
     font-size: 1rem;
+}
+
+.material.inTray {
+    align-items: center;
 }
 
 .bundle .material {
@@ -399,6 +403,10 @@ header {
     100% {
         opacity: 1;
     }
+}
+
+.inTray .typeable {
+    cursor: inherit;
 }
 
 /* --------------------------- Arrow Shenanigans ---------------------------  */
@@ -618,6 +626,7 @@ header {
     top: -6px;
     left: -20px;
     border-radius: 50%;
+    color: white;
 }
 
 .leftBar.zen,
@@ -660,14 +669,12 @@ header {
     transition: width .4s, height .4s;
 }
 
-.pieces,
-.details {
+.cardContainer {
     padding: 12px;
 }
 
 .trayContainer,
-.pieces,
-.details {
+.cardContainer {
     gap: 24px;
     box-sizing: border-box;
     background: var(--menu-background2);
@@ -843,14 +850,47 @@ header {
     top: 24px;
 }
 
-/* --------------------------- Basket & Details ---------------------------  */
+/* --------------------------- Section & Details ---------------------------  */
 
-.basket,
 .details {
     gap: 12px;
+    border-radius: 0;
+    padding-top: 22px;
 }
 
-.basket .pieceFrame {
+.section {
+    gap: 0px;
+    padding-inline: 0px;
+}
+
+.section .dropdownIcon {
+    margin: 12px;
+}
+
+.divot {
+    width: 24px;
+    align-self: center;
+    position: relative;
+}
+
+.divot:first-of-type {
+    fill: var(--container-background);
+    top: 16px;
+}
+
+.divot:last-of-type {
+    fill: var(--menu-background2);
+}
+
+.section .components {
+    background: none;
+}
+
+.section .cardContainer:last-of-type {
+    padding-top: 22px;
+}
+
+.section .pieceFrame {
     display: none;
 }
 

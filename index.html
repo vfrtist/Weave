@@ -30,10 +30,10 @@
                 <input type="file" name="uploadPiece">
                 <img src="" alt="" loading="lazy">
             </div>
-            <span contenteditable="true" class="typeable">Sht Front</span>
+            <span contenteditable="false" class="typeable">Sht Front</span>
             <div class="pieceCount">
-                <span class="up typeable" contenteditable="true">1</span>
-                <span class="flip typeable" contenteditable="true">0</span>
+                <span class="up typeable" contenteditable="false">1</span>
+                <span class="flip typeable" contenteditable="false">0</span>
             </div>
         </div>
         </div>
@@ -41,7 +41,7 @@
 
     <template id="detail">
         <li data-itemtype="detail" class="detail card inTray" draggable="true">
-            <span contenteditable="true" class="typeable">This is the first instruction of which there will be
+            <span contenteditable="false" class="typeable">This is the first instruction of which there will be
                 many.</span>
             <div class="menu handleIcon">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21.8 38">
@@ -72,20 +72,20 @@
                 </ul>
             </div>
             <div class="title">
-                <h2 contenteditable="true" class="typeable">Self</h2>
+                <h2 contenteditable="false" class="typeable">Self</h2>
                 <ul data-itemtype="materials" class="fabrics">
                     <li data-itemtype="material" draggable="true" class="material card">
-                        <span contenteditable="true" class="typeable">10001234</span>
+                        <span contenteditable="false" class="typeable">10001234</span>
                         <span></span>
                     </li>
                 </ul>
             </div>
-            <div data-itemtype="pieces" class="pieces"></div>
+            <div data-itemtype="pieces" class="pieces cardContainer"></div>
         </section>
     </template>
 
-    <template id="basket">
-        <section data-itemtype="basket" class="basket card" draggable="true">
+    <template id="section">
+        <section data-itemtype="section" class="section card" draggable="true">
             <div class="menu dropdownIcon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8.6">
                     <path
@@ -98,11 +98,19 @@
                 </ul>
             </div>
             <div class="title">
-                <h2 contenteditable="true" class="typeable">Section</h2>
+                <h2 contenteditable="false" class="typeable">Section A</h2>
             </div>
-            <div data-itemtype="pieces" class="pieces"></div>
-            <ol data-itemtype="details" class="details"></ol>
-
+            <div data-itemtype="components" class="components cardContainer"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.6 23.2" class="divot">
+                <path d="M0,0h35.6c0,0-13.8,23.2-17.8,23.2S0,0,0,0z" />
+            </svg>
+            <ol data-itemtype="details" class="details cardContainer"></ol>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.6 23.2" class="divot">
+                <path d="M0,0h35.6c0,0-13.8,23.2-17.8,23.2S0,0,0,0z" />
+            </svg>
+            <div class="title">
+                <h2 contenteditable="false" class="typeable">Unit</h2>
+            </div>
         </section>
     </template>
 
@@ -336,7 +344,7 @@
                                 </div>
                                 <ul>
                                     <li data-itemtype="material" draggable="true" class="material card inTray">
-                                        <span contenteditable="true" class="typeable">10066161</span>
+                                        <span contenteditable="false" class="typeable">10066161</span>
                                         <span>FUR S/P LAVENDER ANGEL BODY 80A/20O 60"</span>
                                     </li>
                                 </ul>

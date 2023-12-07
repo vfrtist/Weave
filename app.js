@@ -4,7 +4,7 @@ const mainContent = document.querySelector('.content');
 // Templates and Main Zones ***********************************************************************
 const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
-const basket = document.querySelector('#basket').content;
+const section = document.querySelector('#section').content;
 const detail = document.querySelector('#detail').content;
 const pieceTray = document.querySelector('#pieceTray')
 const frameTray = document.querySelector('#frameTray')
@@ -25,9 +25,9 @@ bundleNoTitle.querySelector('.material').remove();
 frameTray.append(fillFrame);
 frameTray.append(bundleNoTitle);
 
-let basketFrame = basket.cloneNode('true');
-basketFrame.querySelector('.basket').classList.add('inTray');
-frameTray.append(basketFrame);
+let sectionFrame = section.cloneNode('true');
+sectionFrame.querySelector('.section').classList.add('inTray');
+frameTray.append(sectionFrame);
 
 // Page change -------------------
 for (let btn of pageButtons) {
@@ -43,12 +43,8 @@ function makeInActive() {
 
 // Give the option to swap beteen readwrite and not -------------------
 // working but not in use so it's easier to just shut it off for now.
-// let isEditable = false
 
-// function readwrite(item) {
-//     isEditable = !isEditable
-//     item.contentEditable = isEditable;
-// }
+function makeEditable(item) { for (part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
 
 // Hover text -------------------
 for (let btn of pageButtons) {
@@ -91,15 +87,17 @@ let sorting;
 let controller;
 let signal;
 
+// Define all areas and what sorts of information they can take. This is represented by "data-itemtype" in html for a lightweight way of making zones.
 const dropZonePairs = {
     pieces: 'piece',
     materials: 'material',
-    content: ['bundle', 'basket'],
+    content: ['bundle', 'section'],
     details: ['detail'],
+    components: ['piece', 'material']
 }
 
 function getObjectKey(obj, value) {
-    return Object.keys(obj).find(key => obj[key].includes(value));
+    return Object.keys(obj).filter(key => obj[key].includes(value));
 }
 
 document.addEventListener('dragstart', (ev) => {
@@ -120,8 +118,10 @@ document.addEventListener('dragstart', (ev) => {
     })
 
     // identify the proper zones and install listening
-    let correctZone = getObjectKey(dropZonePairs, dragItem.dataset.itemtype);
-    parents = (correctZone === 'content') ? [mainContent] : mainContent.querySelectorAll(`*[data-itemtype='${correctZone}']`)
+    let zones = getObjectKey(dropZonePairs, dragItem.dataset.itemtype);
+    let correctZone = zones.map((area) => `[data-itemtype='${area}']`).toString()
+
+    parents = (zones.toString() === 'content') ? [mainContent] : mainContent.querySelectorAll(correctZone)
     parents.forEach(parent => {
         parent.addEventListener('dragenter', cancelDefault, { signal });
         parent.addEventListener('dragover', dragOverZone, { signal });
@@ -144,6 +144,7 @@ document.addEventListener('dragend', (e) => {
         dragItem.classList.remove('dragging');
         if (dragItem.parentElement !== pieceTray) {
             dragItem.classList.remove('inTray');
+            makeEditable(dragItem);
             if (dragItem.dataset.itemtype === 'piece') { dragItem.querySelector('input').classList.add('hidden') };
         }
         parents.forEach(parent => {
@@ -172,6 +173,15 @@ function cancelDefault(e) {
     e.stopPropagation();
     return false;
 }
+
+document.addEventListener('keydown', (e) => {
+    let item = e.target
+    if (e.key === 'Enter' && e.ctrlKey === true && item.parentElement.classList.contains('detail')) {
+        let container = item.closest('.cardContainer');
+        let newLine = item.parentElement.cloneNode('true');
+        container.insertBefore(newLine, item.parentElement.nextElementSibling);
+    }
+})
 
 // Trash Button ======================================
 const deleteButton = document.querySelector('#trash')
@@ -280,7 +290,7 @@ addPieceButton.addEventListener('click', () => {
 // Collapse
 const viewButton = document.querySelector('#view')
 viewButton.addEventListener('click', () => {
-    for (let bundle of mainContent.querySelectorAll('.bundle, .basket')) { bundle.classList.toggle('collapsed'); };
+    for (let bundle of mainContent.querySelectorAll('.bundle, .section')) { bundle.classList.toggle('collapsed'); };
     viewButton.classList.toggle('on');
 });
 
