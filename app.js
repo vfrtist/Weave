@@ -5,6 +5,7 @@ const mainContent = document.querySelector('.content');
 const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
 const basket = document.querySelector('#basket').content;
+const detail = document.querySelector('#detail').content;
 const pieceTray = document.querySelector('#pieceTray')
 const frameTray = document.querySelector('#frameTray')
 
@@ -12,8 +13,9 @@ const frameTray = document.querySelector('#frameTray')
 
 for (let i = 0; i < 3; i++) {
     pieceTray.append(piece.cloneNode('true'));
-    // mainContent.append(bundle.cloneNode('true'));
 }
+
+pieceTray.append(detail.cloneNode('true'));
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
@@ -93,7 +95,7 @@ const dropZonePairs = {
     pieces: 'piece',
     materials: 'material',
     content: ['bundle', 'basket'],
-    basket: ['instruction'],
+    details: ['detail'],
 }
 
 function getObjectKey(obj, value) {
@@ -217,7 +219,7 @@ function darkSwitch() {
 }
 
 // ----------------- Left Menu -------------------
-let leftButtons = document.querySelectorAll('.leftButton')
+let leftButtons = document.querySelectorAll('.top .leftButton')
 let uploadPieceImage = document.querySelectorAll('input[name="uploadPiece"]')
 let time
 
@@ -236,6 +238,15 @@ for (let btn of leftButtons) {
             btn.classList.toggle('open');
         }, time);
     });
+}
+
+function closeAllLeftMenus() {
+    for (let btn of leftButtons) {
+        btn.classList.remove('open');
+        console.log(btn);
+        console.log(btn.nextElementSibling);
+        btn.nextElementSibling.classList.remove('open');
+    };
 }
 
 // Piece Tray ======================================
@@ -266,12 +277,22 @@ addPieceButton.addEventListener('click', () => {
 
 // ----------------- Screen Button Events -------------------
 
-// View Button
+// Collapse
 const viewButton = document.querySelector('#view')
 viewButton.addEventListener('click', () => {
-    for (let bundle of mainContent.querySelectorAll('.bundle')) {
-        bundle.classList.toggle('collapsed');
-    };
+    for (let bundle of mainContent.querySelectorAll('.bundle, .basket')) { bundle.classList.toggle('collapsed'); };
+    viewButton.classList.toggle('on');
+});
+
+// Zen Mode
+const zenButton = document.querySelector('#zen')
+const leftBar = document.querySelector('.leftBar')
+zenButton.addEventListener('click', () => {
+    closeAllLeftMenus();
+    leftBar.classList.toggle('zen');
+    zenButton.classList.toggle('on');
+    zenButton.parentElement.classList.toggle('zen');
+    mainContent.classList.toggle('zen');
 });
 
 // ----------------- Generic Dropdown Functions -------------------

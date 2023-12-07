@@ -47,7 +47,8 @@ input[type='text'] {
     color: var(--font-color);
 }
 
-ul {
+ul,
+ol {
     margin: 0;
     padding: 0;
 }
@@ -141,10 +142,12 @@ header {
     background: var(--menu-background);
     color: var(--menu-button);
     fill: var(--menu-button);
-    padding: 12px;
+    padding: 20px 12px 12px;
     position: fixed;
     bottom: 0;
     z-index: 2;
+    left: 0;
+    transition: left .35s ease;
 }
 
 .leftBar h2 {
@@ -210,7 +213,7 @@ header {
     text-align: center;
     gap: 4px;
     cursor: grab;
-    transition: box-shadow .15s !important;
+    transition: border-radius .15s, box-shadow .15s !important;
     margin: 0;
     position: relative;
 }
@@ -257,7 +260,7 @@ header {
 
 .leftSub {
     box-sizing: border-box;
-    transition: width .3s ease;
+    transition: width .3s ease, left .3s ease;
     z-index: 0;
     background: var(--menu-background2);
     position: fixed;
@@ -270,7 +273,7 @@ header {
 
 .leftSub.open {
     width: 200px;
-    padding: 12px;
+    padding: 20px 12px 12px;
 }
 
 .leftSub>div {
@@ -486,6 +489,7 @@ header {
     right: 12%;
     flex-direction: column;
     gap: 24px;
+    transition: right .35s ease;
 }
 
 .screenButton {
@@ -497,10 +501,18 @@ header {
     background: var(--menu-background);
     border-radius: 50%;
     box-sizing: border-box;
-    padding: 10px;
     transition: all .2s;
     overflow: visible;
     opacity: .65;
+}
+
+.screenButton:not(#zen) {
+    padding: 10px;
+}
+
+#zen {
+    padding: 0px;
+    overflow: hidden;
 }
 
 .screenButton:not(#trash):hover,
@@ -608,6 +620,24 @@ header {
     border-radius: 50%;
 }
 
+.leftBar.zen,
+.leftBar.zen .leftSub {
+    left: -200px;
+}
+
+.screenButtons.zen {
+    right: 8%;
+}
+
+.content.zen {
+    gap: 80px;
+}
+
+.on {
+    opacity: 1;
+    fill: var(--menu-active);
+}
+
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
@@ -618,8 +648,8 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 24px;
-    transition: border .2s;
+    gap: 36px;
+    transition: border .2s, gap .35s ease;
 }
 
 .bundle {
@@ -630,12 +660,14 @@ header {
     transition: width .4s, height .4s;
 }
 
-.bundle .pieces {
+.pieces,
+.details {
     padding: 12px;
 }
 
 .trayContainer,
-.pieces {
+.pieces,
+.details {
     gap: 24px;
     box-sizing: border-box;
     background: var(--menu-background2);
@@ -653,6 +685,7 @@ header {
     max-width: 200px;
     min-width: 140px;
     transition: box-shadow .15s;
+    align-items: center;
 }
 
 .pieceCount {
@@ -737,7 +770,8 @@ header {
     outline: 2px solid var(--board-background)
 }
 
-.dropdownIcon {
+.dropdownIcon,
+.handleIcon {
     fill: var(--board-background);
     width: 30px;
     align-self: flex-end;
@@ -769,7 +803,7 @@ header {
     padding: 0;
 }
 
-.inTray .dropdownIcon {
+.inTray svg {
     display: none;
 }
 
@@ -777,14 +811,12 @@ header {
     width: 200px;
 }
 
-.bundle.collapsed .title {
+.collapsed .title {
     text-align: center;
     margin: 0;
 }
 
-.bundle.collapsed .pieces,
-.bundle.collapsed .fabrics,
-.bundle.collapsed .dropdownIcon {
+.collapsed :not(.title, h2) {
     display: none;
 }
 
@@ -797,6 +829,7 @@ header {
 .typeable {
     cursor: text;
     padding: 0 4px;
+    width: fit-content;
 }
 
 .typeable:focus {
@@ -810,8 +843,39 @@ header {
     top: 24px;
 }
 
-/* --------------------------- Generic Text Formatting ---------------------------  */
+/* --------------------------- Basket & Details ---------------------------  */
 
+.basket,
+.details {
+    gap: 12px;
+}
+
+.basket .pieceFrame {
+    display: none;
+}
+
+.handleIcon {
+    height: 100%;
+    cursor: grab;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.handleIcon svg {
+    height: 30px;
+    width: 30px;
+}
+
+.detail span {
+    max-width: 90%;
+}
+
+.detail {
+    justify-content: center;
+}
+
+/* --------------------------- Generic Text Formatting ---------------------------  */
 .title h2 {
     font-weight: 600;
     font-size: 2rem;
