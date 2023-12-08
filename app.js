@@ -180,13 +180,12 @@ document.addEventListener('keydown', (e) => {
         let container = item.closest('.cardContainer');
         let newLine = item.parentElement.cloneNode('true');
         container.insertBefore(newLine, item.parentElement.nextElementSibling);
+        newLine.querySelector('span').focus();
     }
 })
 
 // Trash Button ======================================
 const deleteButton = document.querySelector('#trash')
-function deleteItem(ev) { console.log(ev) };
-
 function wakeUp(item) { item.classList.toggle('awake') }
 
 deleteButton.addEventListener('drop', () => {
@@ -253,8 +252,6 @@ for (let btn of leftButtons) {
 function closeAllLeftMenus() {
     for (let btn of leftButtons) {
         btn.classList.remove('open');
-        console.log(btn);
-        console.log(btn.nextElementSibling);
         btn.nextElementSibling.classList.remove('open');
     };
 }

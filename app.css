@@ -21,6 +21,9 @@ font-style: normal; */
     --font-color: black;
     --piece-color: 0%;
     --alert: #D7282F;
+    --accent-1: #accceb;
+    --accent-2: #7fcbb2;
+    --accent-3: #d47fb5;
 }
 
 [data-theme="dark"] {
@@ -35,7 +38,6 @@ font-style: normal; */
     --container-shadow-dark: #312c38;
     --font-color: white;
     --piece-color: 100%;
-    --alert: #D7282F;
 }
 
 ::-webkit-scrollbar {
@@ -613,12 +615,9 @@ header {
 }
 
 .hot {
-    fill: white;
-    background: var(--alert);
-    padding: 8px;
-    overflow: visible;
     width: 24px;
     height: 24px;
+    animation: pop-in .2s;
 }
 
 .notification {
@@ -627,6 +626,10 @@ header {
     left: -20px;
     border-radius: 50%;
     color: white;
+    fill: white;
+    background: var(--alert);
+    padding: 8px;
+    overflow: visible;
 }
 
 .leftBar.zen,
@@ -645,6 +648,42 @@ header {
 .on {
     opacity: 1;
     fill: var(--menu-active);
+    outline: 2px solid var(--menu-active);
+    outline-offset: 6px;
+    animation: bubble .35s;
+}
+
+@keyframes bubble {
+    0% {
+        outline: 1px solid var(--menu-active);
+        outline-offset: -2px;
+    }
+
+    80% {
+        outline: 3px solid var(--menu-active);
+        outline-offset: 9px;
+    }
+
+    100% {
+        outline: 2px solid var(--menu-active);
+        outline-offset: 6px;
+    }
+
+}
+
+@keyframes pop-in {
+    0% {
+        scale: .75
+    }
+
+    80% {
+        scale: 1.15
+    }
+
+    100% {
+        scale: 1
+    }
+
 }
 
 /* --------------------------- Bundling ---------------------------  */
@@ -758,7 +797,6 @@ header {
     background-image: url('Ears Gentle.png');
     background-repeat: repeat;
     background-size: 40%;
-    border: 1px solid var(--board-background);
 }
 
 
@@ -810,6 +848,10 @@ header {
     padding: 0;
 }
 
+.bundle.inTray li span:last-of-type {
+    display: none;
+}
+
 .inTray svg {
     display: none;
 }
@@ -855,7 +897,7 @@ header {
 .details {
     gap: 12px;
     border-radius: 0;
-    padding-top: 22px;
+    padding-block: 22px;
 }
 
 .section {
@@ -884,10 +926,6 @@ header {
 
 .section .components {
     background: none;
-}
-
-.section .cardContainer:last-of-type {
-    padding-top: 22px;
 }
 
 .section .pieceFrame {
