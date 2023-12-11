@@ -577,7 +577,7 @@ header {
     list-style-type: none;
     padding: 8px;
     border-radius: 8px;
-    /* border: 2px solid var(--menu-active); */
+    text-align: left;
 }
 
 .subMenu li,
@@ -629,13 +629,10 @@ header {
     display: none;
 }
 
-.hot {
+.notification {
     width: 24px;
     height: 24px;
     animation: pop-in .2s;
-}
-
-.notification {
     position: absolute;
     top: -6px;
     left: -20px;
