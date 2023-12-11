@@ -24,6 +24,7 @@ font-style: normal; */
     --accent-1: #accceb;
     --accent-2: #7fcbb2;
     --accent-3: #d47fb5;
+    --treasure: #eda029;
 }
 
 [data-theme="dark"] {
@@ -663,6 +664,10 @@ header {
     outline: 2px solid var(--menu-active);
     outline-offset: 6px;
     animation: bubble .35s;
+}
+
+.treasure {
+    background: var(--treasure);
 }
 
 .treasure>path:last-of-type {
