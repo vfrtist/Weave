@@ -312,7 +312,7 @@ document.addEventListener('click', function (e) {
 
     if (func === 'delete-fabrics') {
         let fabrics = container.querySelectorAll('.material')
-        for (fabric of fabrics) { fabric.remove() }
+        for (let fabric of fabrics) { fabric.remove() }
     }
 
     if (func === 'duplicate') {
@@ -327,6 +327,16 @@ document.addEventListener('click', function (e) {
             container.appendChild(hotButton);
         }
         else { container.querySelector('.hot').remove() }
+    }
+
+    if (func === 'treasure') {
+        container.classList.toggle('treasure');
+        if (container.classList.contains('treasure')) {
+            let notification = createIcon('treasure');
+            notification.classList.add('treasure', 'notification', 'shadowed');
+            container.appendChild(notification);
+        }
+        else { container.querySelector('.treasure').remove() }
     }
 });
 

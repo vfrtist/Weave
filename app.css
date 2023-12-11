@@ -201,7 +201,7 @@ header {
     margin-top: auto;
 }
 
-/* ------------------------------------------------------ vv Card vv ------------------------------------------------------  */
+/* ------------------------------------------------------ Card ------------------------------------------------------  */
 .card {
     background: var(--container-background);
     color: var(--font-color);
@@ -666,6 +666,14 @@ header {
     outline: 2px solid var(--menu-active);
     outline-offset: 6px;
     animation: bubble .35s;
+}
+
+.treasure path:last-of-type {
+    transition: transform .2s;
+}
+
+.treasure:hover path:last-of-type {
+    transform: translateY(-8px);
 }
 
 @keyframes bubble {
