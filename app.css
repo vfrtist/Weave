@@ -665,11 +665,11 @@ header {
     animation: bubble .35s;
 }
 
-.treasure path:last-of-type {
+.treasure>path:last-of-type {
     transition: transform .2s;
 }
 
-.treasure:hover path:last-of-type {
+.treasure:hover>path:last-of-type {
     transform: translateY(-8px);
 }
 
