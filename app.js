@@ -322,13 +322,23 @@ document.addEventListener('click', function (e) {
     if (func === 'fuse') {
         container.classList.toggle('fused');
         if (container.classList.contains('fused')) {
-            let hotButton = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            hotButton.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-            hotButton.firstElementChild.setAttribute('d', "M14.4,0H9.1C8.7,0,8.4,0.3,8.4,0.7s0.3,0.7,0.7,0.7h5.3c0.6,0,1.1,0.5,1.1,1.1v1.3H7.8c-4.2,0-7,5-7.7,6.5,c-0.1,0.3-0.1,0.6,0,0.9c0.2,0.3,0.4,0.4,0.8,0.4h13.9c1.2,0,2.1-1,2.1-2.1V4.5V3.8V2.5C16.9,1.1,15.8,0,14.4,0z M15.5,9.5,c0,0.4-0.3,0.7-0.7,0.7H1.7c0.9-1.6,3.1-5,6.1-5h7.7V9.5z");
+            let hotButton = createIcon('hot');
+            // let hotButton = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            // hotButton.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+            // hotButton.firstElementChild.setAttribute('d', "M14.4,0H9.1C8.7,0,8.4,0.3,8.4,0.7s0.3,0.7,0.7,0.7h5.3c0.6,0,1.1,0.5,1.1,1.1v1.3H7.8c-4.2,0-7,5-7.7,6.5,c-0.1,0.3-0.1,0.6,0,0.9c0.2,0.3,0.4,0.4,0.8,0.4h13.9c1.2,0,2.1-1,2.1-2.1V4.5V3.8V2.5C16.9,1.1,15.8,0,14.4,0z M15.5,9.5,c0,0.4-0.3,0.7-0.7,0.7H1.7c0.9-1.6,3.1-5,6.1-5h7.7V9.5z");
             hotButton.classList.add('hot', 'notification', 'shadowed');
-            hotButton.setAttribute('viewBox', '0 0 16.9 11.6');
+            // hotButton.setAttribute('viewBox', '0 0 16.9 11.6');
             container.appendChild(hotButton);
         }
         else { container.querySelector('.hot').remove() }
     }
 });
+
+import { icons } from "./icons";
+
+function createIcon(iconName) {
+    let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.innerHTML = icons`.${iconName}`.path;
+    icon.setAttribute('viewbox', icons`.${iconName}`.viewbox);
+    return icon;
+}
