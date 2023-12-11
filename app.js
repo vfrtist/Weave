@@ -43,7 +43,7 @@ function makeInActive() {
 
 // As items get dragged out of the tray, we make them editable again. -------------------
 
-function makeEditable(item) { for (part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
+function makeEditable(item) { for (let part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
 
 // Hover text -------------------
 for (let btn of pageButtons) {
@@ -338,7 +338,7 @@ import { icons } from "./icons.js";
 
 function createIcon(iconName) {
     let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    icon.innerHTML = icons`.${iconName}`.path;
-    icon.setAttribute('viewbox', icons`.${iconName}`.viewbox);
+    icon.innerHTML = icons[`${iconName}`].path;
+    icon.setAttribute('viewbox', icons[`${iconName}`].viewbox);
     return icon;
 }
