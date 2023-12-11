@@ -334,7 +334,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-import { icons } from "./icons";
+import { icons } from "./icons.js";
 
 function createIcon(iconName) {
     let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
