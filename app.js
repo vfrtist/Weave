@@ -41,8 +41,7 @@ function makeInActive() {
     for (let btn of pageButtons) { btn.classList.remove('active') }
 }
 
-// Give the option to swap beteen readwrite and not -------------------
-// working but not in use so it's easier to just shut it off for now.
+// As items get dragged out of the tray, we make them editable again. -------------------
 
 function makeEditable(item) { for (part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
 

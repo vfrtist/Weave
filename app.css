@@ -233,10 +233,6 @@ header {
     /* transform: scale(1.01); */
 }
 
-.content>.bundle {
-    border-radius: 12px 12px 34px 34px;
-}
-
 .content>.card:hover {
     box-shadow: 3px 3px 12px var(--container-shadow-dark), -3px -3px 8px var(--board-background);
 }
@@ -259,6 +255,20 @@ header {
 .material span:first-child {
     font-weight: 500;
     font-family: 'Work Sans', sans-serif;
+}
+
+/* -------------------------------------------------------- Frame --------------------------------------------------------  */
+
+.frame {
+    padding: 16px 0px;
+    justify-items: center;
+    background-color: var(--container-background);
+    text-align: center;
+    gap: 0px;
+}
+
+.frame .dropdownIcon {
+    margin-right: 16px;
 }
 
 /* ------------------------------------------------------ Left Sub ------------------------------------------------------  */
@@ -409,6 +419,11 @@ header {
 
 .inTray .typeable {
     cursor: inherit;
+}
+
+.inTray h2 {
+    margin: 0;
+    padding: 0;
 }
 
 /* --------------------------- Arrow Shenanigans ---------------------------  */
@@ -700,14 +715,6 @@ header {
     transition: border .2s, gap .35s ease;
 }
 
-.bundle {
-    padding: 16px;
-    text-align: left;
-    justify-items: center;
-    background-color: var(--container-background);
-    transition: width .4s, height .4s;
-}
-
 .cardContainer {
     padding: 12px;
 }
@@ -720,7 +727,6 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    border-radius: 18px;
     justify-content: space-around;
 }
 
@@ -843,11 +849,6 @@ header {
     border-left: 1px solid var(--board-background);
 }
 
-.bundle.inTray h2 {
-    margin: 0;
-    padding: 0;
-}
-
 .bundle.inTray li span:last-of-type {
     display: none;
 }
@@ -900,15 +901,6 @@ header {
     padding-block: 22px;
 }
 
-.section {
-    gap: 0px;
-    padding-inline: 0px;
-}
-
-.section .dropdownIcon {
-    margin: 12px;
-}
-
 .divot {
     width: 24px;
     align-self: center;
@@ -924,13 +916,15 @@ header {
     fill: var(--menu-background2);
 }
 
+/* This line is for makign the top half not have the background so it goes white pink white
+After the introduction of the chest it might be a moot point. */
 .section .components {
     background: none;
 }
 
-.section .pieceFrame {
+/* .section .pieceFrame {
     display: none;
-}
+} */
 
 .handleIcon {
     height: 100%;
