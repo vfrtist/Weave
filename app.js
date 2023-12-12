@@ -6,6 +6,7 @@ const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
 const section = document.querySelector('#section').content;
 const detail = document.querySelector('#detail').content;
+const treasure = document.querySelector('#treasure').content;
 const pieceTray = document.querySelector('#pieceTray')
 const frameTray = document.querySelector('#frameTray')
 
@@ -78,7 +79,7 @@ for (let btn of pageButtons) {
 // Drag and Drop Section ***********************************************************************
 
 // Global Events ======================================
-let dragItem, siblings, parents, newZone, sorting, controller, signal;
+let dragItem, siblings, parents, newZone, sorting, controller, signal, target;
 
 // Define all areas and what sorts of information they can take. This is represented by "data-itemtype" in html for a lightweight way of making zones.
 const dropZonePairs = {
@@ -116,8 +117,9 @@ document.addEventListener('dragstart', (ev) => {
 
     parents = (zones.toString() === 'content') ? [mainContent] : mainContent.querySelectorAll(correctZone)
     parents.forEach(parent => {
-        parent.addEventListener('dragenter', cancelDefault, { signal });
+        parent.addEventListener('dragenter', dragEnter, { signal });
         parent.addEventListener('dragover', dragOverZone, { signal });
+        parent.addEventListener('dragleave', dragLeave, { signal });
         parent.classList.add('available');
     })
 })
@@ -125,9 +127,7 @@ document.addEventListener('dragstart', (ev) => {
 document.addEventListener('drop', (e) => {
     if (e.target.name != 'uploadPiece') {
         controller.abort();
-        parents.forEach(parent => {
-            parent.classList.remove('available');
-        })
+        stopHighlight();
     }
 })
 
@@ -140,19 +140,39 @@ document.addEventListener('dragend', (e) => {
             makeEditable(dragItem);
             if (dragItem.dataset.itemtype === 'piece') { dragItem.querySelector('input').classList.add('hidden') };
         }
-        parents.forEach(parent => {
-            parent.classList.remove('available');
-        })
+        stopHighlight();
     }
 })
+
+function stopHighlight() {
+    parents.forEach(parent => {
+        parent.classList.remove('available', 'target');
+    })
+}
+
+function dragEnter(e) {
+    target = e.target;
+    this.classList.add('target');
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+}
+
+function dragLeave(e) {
+    if (target == e.target) { this.classList.remove('target'); }
+}
 
 function dragOverZone(e) {
     e.preventDefault()
     if (newZone !== this) {
         newZone = this;
         sorting = false;
+        if (newZone.dataset.itemtype === 'detail') {
+            treasureDrop(this);
+            return;
+        }
     }
-    if (!sorting) { this.insertBefore(dragItem, this.firstChild); }
+    if (!sorting && newZone.dataset.itemtype != 'detail') { this.insertBefore(dragItem, this.firstChild); }
 }
 
 function dragOverItem(e) {
@@ -161,10 +181,9 @@ function dragOverItem(e) {
     this.parentElement.insertBefore(dragItem, this);
 }
 
-function cancelDefault(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
+function treasureDrop(detail) {
+    detail = detail.querySelector('.treasure')
+    detail.appendChild(dragItem)
 }
 
 document.addEventListener('keydown', (e) => {

@@ -24,7 +24,7 @@ font-style: normal; */
     --accent-1: #accceb;
     --accent-2: #7fcbb2;
     --accent-3: #d47fb5;
-    --treasure: #eda029;
+    --treasure: #875bd8;
 }
 
 [data-theme="dark"] {
@@ -616,6 +616,14 @@ header {
     outline: var(--menu-background) solid 4px;
 }
 
+.target {
+    outline: var(--menu-active) solid 2px;
+}
+
+.target .treasure>svg>path:last-of-type {
+    transform: translateY(-8px);
+}
+
 .dragging {
     opacity: .5;
     box-shadow: none;
@@ -632,12 +640,12 @@ header {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .notification {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     animation: pop-in .2s;
     position: absolute;
     top: -6px;
@@ -646,8 +654,9 @@ header {
     color: white;
     fill: white;
     background: var(--alert);
-    padding: 8px;
+    padding: 6px;
     overflow: visible;
+    display: flex;
 }
 
 .leftBar.zen,
@@ -673,14 +682,39 @@ header {
 
 .treasure {
     background: var(--treasure);
-}
-
-.treasure>path:last-of-type {
     transition: transform .2s;
 }
 
-.treasure:hover>path:last-of-type {
+.treasure svg {
+    overflow: visible;
+    width: 100%;
+    height: 100%;
+}
+
+.card .treasure>svg>path:last-of-type {
+    transition: transform .2s;
+}
+
+.card .treasure:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.treasure.open>svg>path:last-of-type,
+.card .treasure:hover>svg>path:last-of-type {
     transform: translateY(-8px);
+}
+
+.treasure :not(svg, path) {
+    display: none;
+}
+
+/* .treasure svg:has(+*) {
+    display: flex;
+} */
+
+.treasure:not(.treasure:has(.piece, .material)) {
+    display: none;
 }
 
 @keyframes bubble {
@@ -868,7 +902,7 @@ header {
     display: none;
 }
 
-.inTray svg {
+.inTray :is(svg, .cardContainer) {
     display: none;
 }
 
