@@ -342,18 +342,13 @@ document.addEventListener('click', function (e) {
         else { container.querySelector('.hot').remove() }
     }
 
-    if (func === 'treasure') {
-        container.classList.toggle('treasure');
-        if (container.classList.contains('treasure')) {
-            let notification = createIcon('treasure');
-            notification.classList.add('treasure', 'notification', 'shadowed');
-            container.appendChild(notification);
-        }
-        else { container.querySelector('.treasure').remove() }
+    if (e.target.closest('.treasure')) {
+        e.target.closest('.treasure').classList.toggle('closed');
+        e.target.closest('.treasure').classList.toggle('open');
     }
 });
 
-// import { icons } from "./icons.js";
+import { icons } from "./icons.js";
 
 function createIcon(iconName) {
     let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

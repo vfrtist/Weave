@@ -43,7 +43,7 @@
 
     <template id="detail">
         <li data-itemtype="detail" class="detail card inTray" draggable="true">
-            <div class="treasure notification shadowed" draggable="true">
+            <div class="treasure notification shadowed closed" draggable="true" data-function="treasure">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 32">
                     <path d="M34.7,32H3.3C1.5,32,0,30.5,0,28.7V15.9h15.4v4.1c0,0.3,0.3,0.6,0.6,0.6H22c0.3,0,0.6-0.3,0.6-0.6v-4.1H38v12.8
                     C38,30.5,36.5,32,34.7,32z M2,17.9v10.8C2,29.4,2.6,30,3.3,30h31.4c0.7,0,1.3-0.6,1.3-1.3V17.9H24.6v2.1c0,1.4-1.2,2.6-2.6,2.6h-6.1
@@ -85,7 +85,6 @@
                     <li data-function="duplicate">Duplicate Bundle</li>
                     <li data-function="delete">Delete Bundle</li>
                     <li data-function="delete-fabrics">Delete Fabrics</li>
-                    <li data-function="treasure">Treasure</li>
                 </ul>
             </div>
             <div class="title">
@@ -132,7 +131,7 @@
     </template>
 
     <template id="treasure">
-        <div class="treasure notification shadowed" draggable="true">
+        <div class="treasure notification shadowed closed" draggable="true" data-function="treasure">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 32">
                 <path d="M34.7,32H3.3C1.5,32,0,30.5,0,28.7V15.9h15.4v4.1c0,0.3,0.3,0.6,0.6,0.6H22c0.3,0,0.6-0.3,0.6-0.6v-4.1H38v12.8
                 C38,30.5,36.5,32,34.7,32z M2,17.9v10.8C2,29.4,2.6,30,3.3,30h31.4c0.7,0,1.3-0.6,1.3-1.3V17.9H24.6v2.1c0,1.4-1.2,2.6-2.6,2.6h-6.1
@@ -540,11 +539,11 @@
     </section>
 
     <!-- Turn on for real and off for mockup -->
-    <!-- <script type="module" src="icons.js"></script>
-    <script type="module" src="app.js"></script> -->
+    <script type="module" src="icons.js"></script>
+    <script type="module" src="app.js"></script>
 
     <!-- Turn off for real and on for mockup -->
-    <script src="app.js"></script>
+    <!-- <script src="app.js"></script> -->
 </body>
 
 </html>

@@ -639,9 +639,13 @@ header {
     display: none !important;
 }
 
+.hot {
+    width: 24px;
+    height: 24px;
+    background: var(--alert);
+}
+
 .notification {
-    width: 18px;
-    height: 18px;
     animation: pop-in .2s;
     position: absolute;
     top: -6px;
@@ -649,7 +653,6 @@ header {
     border-radius: 50%;
     color: white;
     fill: white;
-    background: var(--alert);
     padding: 6px;
     overflow: visible;
     display: flex;
@@ -677,21 +680,42 @@ header {
 }
 
 .treasure {
+    width: 80%;
+    display: flex;
+    transition: width .35s;
     background: var(--treasure);
-    transition: transform .2s;
+    z-index: 1;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
-.treasure svg {
+.treasure.closed {
+    background: var(--treasure);
+    transition: transform .2s;
+    width: 18px;
+    height: 18px;
+}
+
+.treasure:not(.closed) {
+    border-radius: 12px;
+}
+
+.treasure>svg {
     overflow: visible;
-    width: 100%;
-    height: 100%;
+    width: 18px;
+    height: 18px;
+}
+
+.treasure:not(.closed) :not(svg, path) {
+    animation: slide-in .35s .22s backwards;
 }
 
 .card .treasure>svg>path:last-of-type {
     transition: transform .2s;
 }
 
-.card .treasure:hover {
+.card .treasure.closed:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
@@ -701,16 +725,27 @@ header {
     transform: translateY(-8px);
 }
 
-.treasure :not(svg, path) {
+.treasure.closed :not(svg, path) {
     display: none;
 }
 
-/* .treasure svg:has(+*) {
-    display: flex;
-} */
-
 .treasure:not(.treasure:has(.piece, .material)) {
     display: none;
+}
+
+.treasure.open {
+    cursor: pointer;
+    padding: 18px;
+}
+
+.treasure.open .card {
+    max-width: 200px;
+    min-width: 140px;
+}
+
+.treasure.open>svg {
+    position: absolute;
+    inset: 12px;
 }
 
 @keyframes bubble {
