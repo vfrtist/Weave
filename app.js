@@ -78,13 +78,7 @@ for (let btn of pageButtons) {
 // Drag and Drop Section ***********************************************************************
 
 // Global Events ======================================
-let dragItem;
-let siblings;
-let parents;
-let newZone;
-let sorting;
-let controller;
-let signal;
+let dragItem, siblings, parents, newZone, sorting, controller, signal;
 
 // Define all areas and what sorts of information they can take. This is represented by "data-itemtype" in html for a lightweight way of making zones.
 const dropZonePairs = {
@@ -92,7 +86,7 @@ const dropZonePairs = {
     materials: 'material',
     content: ['bundle', 'section'],
     details: ['detail'],
-    components: ['piece', 'material']
+    detail: ['piece', 'material']
 }
 
 function getObjectKey(obj, value) {
@@ -340,7 +334,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-import { icons } from "./icons.js";
+// import { icons } from "./icons.js";
 
 function createIcon(iconName) {
     let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

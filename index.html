@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weave</title>
+    <link rel="icon" href="weave.png">
+
     <link rel="stylesheet" href="app.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,13 +76,13 @@
             </div>
             <div class="title">
                 <h2 contenteditable="false" class="typeable">Self</h2>
-                <ul data-itemtype="materials" class="fabrics">
-                    <li data-itemtype="material" draggable="true" class="material card">
-                        <span contenteditable="false" class="typeable">10001234</span>
-                        <span>TWILL OR SOMETHING 66"</span>
-                    </li>
-                </ul>
             </div>
+            <ul data-itemtype="materials" class="fabrics">
+                <li data-itemtype="material" draggable="true" class="material card">
+                    <span contenteditable="false" class="typeable">10001234</span>
+                    <span>TWILL OR SOMETHING 66"</span>
+                </li>
+            </ul>
             <div data-itemtype="pieces" class="pieces cardContainer"></div>
         </section>
     </template>
@@ -101,7 +103,7 @@
             <div class="title">
                 <h2 contenteditable="false" class="typeable">Section A</h2>
             </div>
-            <div data-itemtype="components" class="components cardContainer"></div>
+            <!-- <div data-itemtype="components" class="components cardContainer"></div> -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.6 23.2" class="divot">
                 <path d="M0,0h35.6c0,0-13.8,23.2-17.8,23.2S0,0,0,0z" />
             </svg>
@@ -109,7 +111,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.6 23.2" class="divot">
                 <path d="M0,0h35.6c0,0-13.8,23.2-17.8,23.2S0,0,0,0z" />
             </svg>
-            <div class="title">
+            <div class="unit">
                 <h2 contenteditable="false" class="typeable">Unit</h2>
             </div>
         </section>
@@ -337,7 +339,7 @@
                         <div class="leftSub">
                             <div class="trayContainer">
                                 <div class="search">
-                                    <input type="text" placeholder="Search">
+                                    <input type="text" placeholder="Search" id="search">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                                         <path
                                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
@@ -508,11 +510,12 @@
 
     </section>
 
-    <script type="module" src="icons.js"></script>
-    <script type="module" src="app.js"></script>
+    <!-- Turn on for real and off for mockup -->
+    <!-- <script type="module" src="icons.js"></script>
+    <script type="module" src="app.js"></script> -->
 
-    <!-- for mockup purposes
-    <script src="app.js"></script> -->
+    <!-- Turn off for real and on for mockup -->
+    <script src="app.js"></script>
 </body>
 
 </html>

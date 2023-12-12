@@ -261,7 +261,7 @@ header {
 /* -------------------------------------------------------- Frame --------------------------------------------------------  */
 
 .frame {
-    padding: 16px 0px;
+    padding: 12px 0px;
     justify-items: center;
     background-color: var(--container-background);
     text-align: center;
@@ -269,7 +269,12 @@ header {
 }
 
 .frame .dropdownIcon {
-    margin-right: 16px;
+    margin-right: 12px;
+}
+
+.title {
+    margin-right: auto;
+    padding: 0px 12px;
 }
 
 /* ------------------------------------------------------ Left Sub ------------------------------------------------------  */
@@ -698,15 +703,15 @@ header {
 
 @keyframes pop-in {
     0% {
-        scale: .75
+        transform: scale(.75)
     }
 
     80% {
-        scale: 1.15
+        transform: scale(1.15)
     }
 
     100% {
-        scale: 1
+        transform: scale(1)
     }
 
 }
@@ -889,6 +894,7 @@ header {
 .typeable {
     cursor: text;
     padding: 0 4px;
+    width: -moz-fit-content;
     width: fit-content;
 }
 
@@ -958,6 +964,7 @@ After the introduction of the chest it might be a moot point. */
 }
 
 /* --------------------------- Generic Text Formatting ---------------------------  */
+.unit h2,
 .title h2 {
     font-weight: 600;
     font-size: 2rem;
