@@ -919,6 +919,7 @@ header {
     box-sizing: border-box;
     padding: 4px;
     border-radius: 12px;
+    margin-bottom: 4px;
 }
 
 .typeable {
