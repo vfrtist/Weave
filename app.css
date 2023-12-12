@@ -616,10 +616,6 @@ header {
     outline: var(--menu-background) solid 4px;
 }
 
-.target {
-    outline: var(--menu-active) solid 2px;
-}
-
 .target .treasure>svg>path:last-of-type {
     transform: translateY(-8px);
 }
