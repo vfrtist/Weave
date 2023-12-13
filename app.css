@@ -523,6 +523,9 @@ header {
     flex-direction: column;
     gap: 24px;
     transition: right .35s ease;
+    width: 100px;
+    align-items: center;
+    text-align: center;
 }
 
 .screenButton {
@@ -539,6 +542,24 @@ header {
     opacity: .65;
 }
 
+.halves {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.halves .screenButton {
+    border-radius: 100% 0 0 100%/50% 0 0 50%;
+    width: 25px;
+    padding: 5px !important;
+}
+
+.halves .screenButton:last-child {
+    transform: rotate(180deg);
+}
+
 .screenButton:not(#zen) {
     padding: 10px;
 }
@@ -551,7 +572,7 @@ header {
 .screenButton:not(#trash):hover,
 .screenButton.awake {
     fill: var(--menu-active);
-    transform: scale(1.08);
+    scale: 1.08;
     opacity: 1;
     z-index: 99;
 }
@@ -564,6 +585,15 @@ header {
 
 #trash.awake>path:last-of-type {
     transform: rotate(15deg);
+}
+
+#caption.transparent {
+    opacity: 0;
+}
+
+#caption {
+    opacity: 1;
+    transition: opacity .2s;
 }
 
 /*  --------------------------- Hover Menu ---------------------------   */

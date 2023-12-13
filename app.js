@@ -42,10 +42,6 @@ function makeInActive() {
     for (let btn of pageButtons) { btn.classList.remove('active') }
 }
 
-// As items get dragged out of the tray, we make them editable again. -------------------
-
-function makeEditable(item) { for (let part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
-
 // Hover text -------------------
 for (let btn of pageButtons) {
     let pageLabel = document.createElement('div');
@@ -65,20 +61,8 @@ for (let btn of pageButtons) {
     })
 }
 
-// ----------------- Material Lookup -------------------
-// working but not in use so it's easier to just shut it off for now.
-
-// const materialLookUp = document.querySelector('.Material_Number');
-// materialLookUp.addEventListener('keydown', function (e) {
-//     // e.preventDefault();
-//     if (e.key === 'Tab') {
-//         materialDescription.innerText = fabrics[materialLookUp.value]
-//     };
-// })
-
 // Drag and Drop Section ***********************************************************************
 
-// Global Events ======================================
 let dragItem, siblings, parents, newZone, sorting, controller, signal, target;
 
 // Define all areas and what sorts of information they can take. This is represented by "data-itemtype" in html for a lightweight way of making zones.
@@ -186,15 +170,7 @@ function treasureDrop(detail) {
     detail.appendChild(dragItem)
 }
 
-document.addEventListener('keydown', (e) => {
-    let item = e.target
-    if (e.key === 'Enter' && e.ctrlKey === true && item.parentElement.classList.contains('detail')) {
-        let container = item.closest('.cardContainer');
-        let newLine = item.parentElement.cloneNode('true');
-        container.insertBefore(newLine, item.parentElement.nextElementSibling);
-        newLine.querySelector('span').focus();
-    }
-})
+function makeEditable(item) { for (let part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
 
 // Trash Button ======================================
 const deleteButton = document.querySelector('#trash')
@@ -295,6 +271,8 @@ addPieceButton.addEventListener('click', () => {
 })
 
 // ----------------- Screen Button Events -------------------
+const screenButtons = document.querySelectorAll('.screenButton')
+const caption = document.querySelector('#caption')
 
 // Collapse
 const viewButton = document.querySelector('#view')
@@ -314,7 +292,18 @@ zenButton.addEventListener('click', () => {
     mainContent.classList.toggle('zen');
 });
 
-// ----------------- Generic Dropdown Functions -------------------
+for (let button of screenButtons) {
+    button.addEventListener('mouseenter', (e) => {
+        console.log(button);
+        caption.innerText = button.dataset.value
+        caption.classList.toggle('transparent');
+    });
+    button.addEventListener('mouseleave', () => {
+        caption.classList.toggle('transparent');
+    });
+}
+
+// ----------------- Dropdown Menu Functions -------------------
 document.addEventListener('click', function (e) {
     let func = e.target.dataset.function;
     let container = e.target.closest('section');
@@ -356,3 +345,14 @@ function createIcon(iconName) {
     icon.setAttribute('viewBox', icons[`${iconName}`].viewbox);
     return icon;
 }
+
+// ----------------- Detail Writing Keycommands -------------------
+document.addEventListener('keydown', (e) => {
+    let item = e.target
+    if (e.key === 'Enter' && e.ctrlKey === true && item.parentElement.classList.contains('detail')) {
+        let container = item.closest('.cardContainer');
+        let newLine = item.parentElement.cloneNode('true');
+        container.insertBefore(newLine, item.parentElement.nextElementSibling);
+        newLine.querySelector('span').focus();
+    }
+})
