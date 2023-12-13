@@ -303,6 +303,14 @@ for (let button of screenButtons) {
     });
 }
 
+// ----------------- History Events -------------------
+let history = []
+
+function writeHistory(item, start, finish) {
+    let obj = { "item": item, "start": start, "finish": finish };
+    history.push(obj);
+}
+
 // ----------------- Dropdown Menu Functions -------------------
 document.addEventListener('click', function (e) {
     let func = e.target.dataset.function;
