@@ -184,6 +184,8 @@ header {
     padding: 8px;
     border-radius: 18px;
     transition: background .2s, outline .2s, color .2s, fill .2s, stroke .2s;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .leftButton:hover {
@@ -736,6 +738,7 @@ header {
 .treasure.open {
     cursor: pointer;
     padding: 18px;
+    z-index: 2;
 }
 
 .treasure.open .card {
