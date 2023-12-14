@@ -62,7 +62,7 @@ for (let btn of pageButtons) {
 
 // Drag and Drop Section ***********************************************************************
 
-let dragItem, siblings, parents, newZone, sorting, controller, signal, target;
+let dragItem, siblings, parents, newZone, sorting, controller, signal, target, dragGhost;
 
 // Define all areas and what sorts of information they can take. This is represented by "data-itemtype" in html for a lightweight way of making zones.
 const dropZonePairs = {
@@ -85,7 +85,13 @@ document.addEventListener('dragstart', (ev) => {
     signal = controller.signal
 
     dragItem = ev.target;
-    if (dragItem.classList.contains('inTray')) { dragItem = ev.target.cloneNode('true') }
+    startHistory(dragItem, dragItem.classList.contains('inTray'), 'picked up');
+
+    if (dragItem.classList.contains('inTray')) { dragItem = ev.target.cloneNode('true'); };
+    dragGhost = dragItem.cloneNode('true');
+    dragGhost.classList.add('ghost', 'inTray');
+    document.body.append(dragGhost);
+    ev.dataTransfer.setDragImage(dragGhost, 0, 0);
     dragItem.classList.add('dragging');
 
     // identify all like objects and install listening
@@ -124,6 +130,7 @@ document.addEventListener('dragend', (e) => {
             if (dragItem.dataset.itemtype === 'piece') { dragItem.querySelector('input').classList.add('hidden') };
         }
         stopHighlight();
+        dragGhost.remove()
     }
 })
 
