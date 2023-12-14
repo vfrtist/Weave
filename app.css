@@ -674,6 +674,7 @@ header {
     left: -250px;
     max-width: 180px;
     opacity: 1;
+    box-shadow: none;
 }
 
 
