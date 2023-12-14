@@ -523,7 +523,7 @@ header {
     flex-direction: column;
     gap: 24px;
     transition: right .35s ease;
-    width: 100px;
+    width: 140px;
     align-items: center;
     text-align: center;
 }
@@ -594,6 +594,7 @@ header {
 #caption {
     opacity: 1;
     transition: opacity .2s;
+    user-select: none;
 }
 
 /*  --------------------------- Hover Menu ---------------------------   */

@@ -11,7 +11,6 @@ const pieceTray = document.querySelector('#pieceTray')
 const frameTray = document.querySelector('#frameTray')
 
 // to fill out the page and keep the html small
-
 for (let i = 0; i < 3; i++) {
     pieceTray.append(piece.cloneNode('true'));
 }
@@ -294,7 +293,6 @@ zenButton.addEventListener('click', () => {
 
 for (let button of screenButtons) {
     button.addEventListener('mouseenter', (e) => {
-        console.log(button);
         caption.innerText = button.dataset.value
         caption.classList.toggle('transparent');
     });
@@ -303,15 +301,51 @@ for (let button of screenButtons) {
     });
 }
 
-// ----------------- History Events -------------------
-let history = []
+// --------------------------------- History Events -----------------------------------
+let userHistory = [], reverseHistory = [];
+let historyStart, historyStop;
 
-function writeHistory(item, start, finish) {
-    let obj = { "item": item, "start": start, "finish": finish };
-    history.push(obj);
+function startHistory(item, value, change) { historyStart = { item: item, value: value, change: change }; };
+function stopHistory(value) { historyStop = value; };
+function writeHistory() { if (historyStart.value !== historyStop) { userHistory.push(historyStart); } };
+function readHistory(direction) {
+    let order = [];
+    direction === 'undo' ? order = [userHistory, reverseHistory] : order = [reverseHistory, userHistory];
+    try {
+        let { item, value, change } = order[0].pop()
+        switch (change) {
+            case 'type':
+                order[1].push({ item: item, value: item.innerText, change: change });
+                item.innerText = value;
+                break;
+            case 'create':
+
+                break;
+            case 'move':
+
+                break;
+            case 'remove':
+
+                break;
+        };
+    } catch (error) {
+        alert(`Nothing to ${direction}`);
+    }
 }
 
-// ----------------- Dropdown Menu Functions -------------------
+document.addEventListener('focusin', (e) => { if (e.target.classList.contains('typeable')) { startHistory(e.target, e.target.innerText, "type"); } });
+document.addEventListener('focusout', (e) => {
+    stopHistory(e.target.innerText);
+    writeHistory();
+});
+
+const undo = document.querySelector('#undo');
+const redo = document.querySelector('#redo');
+
+undo.addEventListener('click', () => { readHistory('undo') })
+redo.addEventListener('click', () => { readHistory('redo') })
+
+// ------------------------------ Dropdown Menu Functions ------------------------------
 document.addEventListener('click', function (e) {
     let func = e.target.dataset.function;
     let container = e.target.closest('section');
