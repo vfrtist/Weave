@@ -83,11 +83,15 @@ document.addEventListener('dragstart', (ev) => {
     newZone = ""
     controller = new AbortController();
     signal = controller.signal
-
     dragItem = ev.target;
-    startHistory(dragItem, dragItem.classList.contains('inTray'), 'picked up');
 
-    if (dragItem.classList.contains('inTray')) { dragItem = ev.target.cloneNode('true'); };
+    startHistory(dragItem, dragItem.nextElementSibling);
+
+    if (dragItem.classList.contains('inTray')) {
+        dragItem = ev.target.cloneNode('true');
+        startHistory(dragItem, 'tray', 'create');
+    };
+
     dragGhost = dragItem.cloneNode('true');
     dragGhost.classList.add('ghost', 'inTray');
     document.body.append(dragGhost);
@@ -130,7 +134,8 @@ document.addEventListener('dragend', (e) => {
             if (dragItem.dataset.itemtype === 'piece') { dragItem.querySelector('input').classList.add('hidden') };
         }
         stopHighlight();
-        dragGhost.remove()
+        dragGhost.remove();
+        stopHistory(dragItem, dragItem.nextElementSibling);
     }
 })
 
@@ -309,42 +314,68 @@ for (let button of screenButtons) {
 }
 
 // --------------------------------- History Events -----------------------------------
-let userHistory = [], reverseHistory = [];
-let historyStart, historyStop;
+let userHistory = [];
+let historyStart, historyStop, position;
 
-function startHistory(item, value, change) { historyStart = { item: item, value: value, change: change }; };
-function stopHistory(value) { historyStop = value; };
-function writeHistory() { if (historyStart.value !== historyStop) { userHistory.push(historyStart); } };
+function startHistory(item, value, change = 'move') {
+    if (value === null) { value = item.parentElement };
+    historyStart = { item: item, start: value, change: change };
+};
+
+function stopHistory(item, value) {
+    if (value === null) { value = item.parentElement };
+    historyStop = { stop: value };
+    writeHistory();
+};
+
+// The last piece of the puzzle. Check position so that containers are grabbed, not parent objects where necessary.
+
+// function checkPosition(item, value) {
+
+// }
+
+
+function writeHistory() {
+    if (historyStart.start !== historyStop.stop) {
+        userHistory.push({ ...historyStart, ...historyStop });
+        position = userHistory.length - 1;
+    }
+};
+
 function readHistory(direction) {
-    let order = [];
-    direction === 'undo' ? order = [userHistory, reverseHistory] : order = [reverseHistory, userHistory];
     try {
-        let { item, value, change } = order[0].pop()
-        switch (change) {
-            case 'type':
-                order[1].push({ item: item, value: item.innerText, change: change });
-                item.innerText = value;
-                break;
-            case 'create':
+        if (direction === 'redo') { position++ };
 
+        let { item, start, stop, change } = userHistory[position];
+        let reference;
+        if (direction === 'undo') {
+            reference = start;
+            position--;
+            if (change === 'create' || change === 'delete') { change === 'create' ? change = 'delete' : change = 'create' }
+        } else {
+            reference = stop;
+        }
+
+        switch (change) {
+            case 'text':
+                item.innerText = reference
                 break;
             case 'move':
-
+            case 'create':
+                reference === mainContent ? mainContent.appendChild(item) : reference.insertAdjacentElement('beforebegin', item);
                 break;
-            case 'remove':
-
+            case 'delete':
+                item.remove()
                 break;
-        };
+        }
+
     } catch (error) {
         alert(`Nothing to ${direction}`);
     }
 }
 
-document.addEventListener('focusin', (e) => { if (e.target.classList.contains('typeable')) { startHistory(e.target, e.target.innerText, "type"); } });
-document.addEventListener('focusout', (e) => {
-    stopHistory(e.target.innerText);
-    writeHistory();
-});
+document.addEventListener('focusin', (e) => { if (e.target.classList.contains('typeable')) { startHistory(e.target, e.target.innerText, 'text'); } });
+document.addEventListener('focusout', (e) => { stopHistory(e.target, e.target.innerText); });
 
 const undo = document.querySelector('#undo');
 const redo = document.querySelector('#redo');
