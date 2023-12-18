@@ -188,6 +188,7 @@ const deleteButton = document.querySelector('#trash')
 function wakeUp(item) { item.classList.toggle('awake') }
 
 deleteButton.addEventListener('drop', () => {
+    stopHistory(dragItem, 'delete', 'delete');
     dragItem.remove();
     deleteButton.classList.remove('awake');
 })
@@ -322,18 +323,11 @@ function startHistory(item, value, change = 'move') {
     historyStart = { item: item, start: value, change: change };
 };
 
-function stopHistory(item, value) {
+function stopHistory(item, value, change) {
     if (value === null) { value = item.parentElement };
-    historyStop = { stop: value };
+    arguments.length == 3 ? historyStop = { stop: value, change: change } : historyStop = { stop: value };
     writeHistory();
 };
-
-// The last piece of the puzzle. Check position so that containers are grabbed, not parent objects where necessary.
-
-// function checkPosition(item, value) {
-
-// }
-
 
 function writeHistory() {
     if (historyStart.start !== historyStop.stop) {
@@ -356,13 +350,15 @@ function readHistory(direction) {
             reference = stop;
         }
 
+        console.log(change);
         switch (change) {
             case 'text':
                 item.innerText = reference
                 break;
             case 'move':
             case 'create':
-                reference === mainContent ? mainContent.appendChild(item) : reference.insertAdjacentElement('beforebegin', item);
+                reference.classList.contains('card') ? reference.insertAdjacentElement('beforebegin', item) : reference.appendChild(item);
+                item.classList.remove('dragging');
                 break;
             case 'delete':
                 item.remove()
@@ -389,6 +385,8 @@ document.addEventListener('click', function (e) {
     let container = e.target.closest('section');
 
     if (func === 'delete') {
+        userHistory.push({ item: container, start: container.nextElementSibling, stop: container.nextElementSibling, change: 'delete' });
+        position++;
         container.remove();
     }
 
@@ -399,6 +397,8 @@ document.addEventListener('click', function (e) {
 
     if (func === 'duplicate') {
         mainContent.insertBefore(container.cloneNode('true'), container.nextElementSibling);
+        userHistory.push({ item: container.nextElementSibling, start: 'tray', stop: container.nextElementSibling.nextElementSibling, change: 'create' });
+        position++
     }
 
     if (func === 'fuse') {

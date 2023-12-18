@@ -519,7 +519,7 @@ header {
     display: flex;
     position: fixed;
     bottom: 8%;
-    right: 12%;
+    right: 10%;
     flex-direction: column;
     gap: 24px;
     transition: right .35s ease;
@@ -603,6 +603,10 @@ header {
     position: relative;
     display: inline-block;
     width: 100%;
+}
+
+.small .subMenu {
+    left: 35px;
 }
 
 .subMenu {
@@ -706,8 +710,33 @@ header {
     left: -200px;
 }
 
+.leftBar.small {
+    width: 50px;
+    padding-inline: 0;
+}
+
+.leftBar.small .subheading,
+.leftBar.small .leftButton :not(.leftIcon, path) {
+    display: none;
+}
+
+.leftBar.small .leftIcon {
+    margin-right: 0px;
+    width: 24px;
+    height: 24px;
+}
+
+.leftBar.small .leftSub {
+    left: 50px;
+}
+
+.small .leftButton {
+    border-radius: 18px 0px 0px 18px;
+    justify-content: center;
+}
+
 .screenButtons.zen {
-    right: 8%;
+    right: 6%;
 }
 
 .content.zen {
