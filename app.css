@@ -20,11 +20,13 @@ font-style: normal; */
     --container-shadow-dark: #a29caa;
     --font-color: black;
     --piece-color: 0%;
+    --piece-edit: none;
     --alert: #D7282F;
     --accent-1: #accceb;
     --accent-2: #7fcbb2;
     --accent-3: #d47fb5;
     --treasure: #875bd8;
+    --piece-edit: none;
 }
 
 [data-theme="dark"] {
@@ -39,6 +41,7 @@ font-style: normal; */
     --container-shadow-dark: #312c38;
     --font-color: white;
     --piece-color: 100%;
+    --piece-edit: color-dodge;
 }
 
 ::-webkit-scrollbar {
@@ -950,6 +953,7 @@ header {
     height: inherit;
     object-fit: contain;
     filter: invert(var(--piece-color));
+    mix-blend-mode: var(--piece-edit);
 }
 
 .pieceFrame.unloaded {
