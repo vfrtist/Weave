@@ -19,11 +19,12 @@ pieceTray.append(detail.cloneNode('true'));
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
-let bundleNoTitle = fillFrame.cloneNode('true');
-bundleNoTitle.querySelector('.material').remove();
+fillFrame.querySelector('.material').draggable = false;
+let bundleNoFabrics = fillFrame.cloneNode('true');
+bundleNoFabrics.querySelector('.material').remove();
 
 frameTray.append(fillFrame);
-frameTray.append(bundleNoTitle);
+frameTray.append(bundleNoFabrics);
 
 let sectionFrame = section.cloneNode('true');
 sectionFrame.querySelector('.section').classList.add('inTray');
@@ -131,6 +132,8 @@ document.addEventListener('dragend', (e) => {
         if (dragItem.parentElement !== pieceTray) {
             dragItem.classList.remove('inTray');
             makeEditable(dragItem);
+            let materials = dragItem.querySelectorAll('.material')
+            if (materials) { for (let material of materials) material.draggable = true }
             if (dragItem.dataset.itemtype === 'piece') { dragItem.querySelector('input').classList.add('hidden') };
         }
         stopHighlight();
@@ -417,8 +420,6 @@ document.addEventListener('click', function (e) {
     }
 });
 
-import { icons } from "./icons.js";
-
 function createIcon(iconName) {
     let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     icon.innerHTML = icons[`${iconName}`].path;
@@ -436,3 +437,5 @@ document.addEventListener('keydown', (e) => {
         newLine.querySelector('span').focus();
     }
 })
+
+import { icons } from "./icons.js";

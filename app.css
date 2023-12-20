@@ -140,7 +140,7 @@ header {
 
 .leftBar {
     box-sizing: border-box;
-    width: 170px;
+    width: 150px;
     height: calc(100% - 50px);
     display: flex;
     flex-direction: column;
@@ -236,7 +236,10 @@ header {
 
 .card:hover {
     box-shadow: 4px 4px 10px var(--container-shadow-light);
-    /* transform: scale(1.01); */
+}
+
+.card.inTray:hover .card {
+    box-shadow: none
 }
 
 .content>.card:hover {
@@ -292,7 +295,7 @@ header {
     background: var(--menu-background2);
     position: fixed;
     bottom: 0;
-    left: 170px;
+    left: 150px;
     height: calc(100% - 50px);
     width: 0;
     overflow: auto;
@@ -522,7 +525,7 @@ header {
     display: flex;
     position: fixed;
     bottom: 8%;
-    right: 10%;
+    right: 5%;
     flex-direction: column;
     gap: 24px;
     transition: right .35s ease;
@@ -739,11 +742,12 @@ header {
 }
 
 .screenButtons.zen {
-    right: 6%;
+    right: 3%;
 }
 
 .content.zen {
     gap: 80px;
+    margin-inline: 20%;
 }
 
 .on {
@@ -860,7 +864,7 @@ header {
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
-    margin: 100px 20% 20px;
+    margin: 100px 15% 100px 400px;
     padding: 18px;
     border-radius: 18px;
     display: flex;
@@ -868,7 +872,7 @@ header {
     align-items: center;
     justify-content: center;
     gap: 36px;
-    transition: border .2s, gap .35s ease;
+    transition: border .2s, gap .35s ease, margin .35s ease;
 }
 
 .cardContainer {
