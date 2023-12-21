@@ -21,12 +21,17 @@ font-style: normal; */
     --font-color: black;
     --piece-color: 0%;
     --piece-edit: none;
+    --piece-brightness: 1;
     --alert: #D7282F;
     --accent-1: #accceb;
     --accent-2: #7fcbb2;
     --accent-3: #d47fb5;
     --treasure: #875bd8;
-    --piece-edit: none;
+}
+
+[data-theme="brighter"] {
+    --menu-background2: #eadaff;
+    --board-background: #f6e9ff;
 }
 
 [data-theme="dark"] {
@@ -42,6 +47,24 @@ font-style: normal; */
     --font-color: white;
     --piece-color: 100%;
     --piece-edit: color-dodge;
+    --piece-brightness: 2;
+}
+
+[data-theme="colorful"] {
+    --menu-background: white;
+    --menu-background2: #ddf3ff;
+    --menu-button: #767581;
+    --menu-active: #3083f0;
+    --board-background: #eec4ff8c;
+    --container-background: white;
+    --container-shadow: #bbb6ce;
+    --container-shadow-light: #bbb6ce56;
+    --container-shadow-dark: #a29caa;
+    --font-color: black;
+    --piece-color: 0%;
+    --piece-edit: none;
+    --piece-brightness: 1;
+    --treasure: #3083f0;
 }
 
 ::-webkit-scrollbar {
@@ -79,7 +102,7 @@ header {
     position: fixed;
     top: 0;
     gap: 8px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .leftNav,
@@ -956,7 +979,7 @@ header {
     width: inherit;
     height: inherit;
     object-fit: contain;
-    filter: invert(var(--piece-color));
+    filter: invert(var(--piece-color)) brightness(var(--piece-brightness));
     mix-blend-mode: var(--piece-edit);
 }
 

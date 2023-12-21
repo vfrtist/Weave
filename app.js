@@ -109,13 +109,17 @@ document.addEventListener('dragstart', (ev) => {
     let zones = getObjectKey(dropZonePairs, dragItem.dataset.itemtype);
     let correctZone = zones.map((area) => `[data-itemtype='${area}']`).toString()
 
-    parents = (zones.toString() === 'content') ? [mainContent] : mainContent.querySelectorAll(correctZone)
-    parents.forEach(parent => {
-        parent.addEventListener('dragenter', dragEnter, { signal });
-        parent.addEventListener('dragover', dragOverZone, { signal });
-        parent.addEventListener('dragleave', dragLeave, { signal });
-        parent.classList.add('available');
-    })
+    try {
+        parents = (zones.toString() === 'content') ? [mainContent] : mainContent.querySelectorAll(correctZone)
+        parents.forEach(parent => {
+            parent.addEventListener('dragenter', dragEnter, { signal });
+            parent.addEventListener('dragover', dragOverZone, { signal });
+            parent.addEventListener('dragleave', dragLeave, { signal });
+            parent.classList.add('available');
+        })
+    } catch (error) {
+        console.log('no parents')
+    }
 })
 
 document.addEventListener('drop', (e) => {
@@ -430,12 +434,19 @@ function createIcon(iconName) {
 // ----------------- Detail Writing Keycommands -------------------
 document.addEventListener('keydown', (e) => {
     let item = e.target
-    if (e.key === 'Enter' && e.ctrlKey === true && item.parentElement.classList.contains('detail')) {
+    if (item.parentElement.classList.contains('detail')) {
         let container = item.closest('.cardContainer');
-        let newLine = item.parentElement.cloneNode('true');
-        container.insertBefore(newLine, item.parentElement.nextElementSibling);
-        newLine.querySelector('span').focus();
+
+        if (e.key === 'Enter') {
+            let newLine = item.parentElement.cloneNode('true');
+            container.insertBefore(newLine, item.parentElement.nextElementSibling);
+            newLine.querySelector('span').focus();
+        };
+
+        // if (e.key === 'Enter' && e.ctrlKey === true) {
+        //     e.target.append(item.cloneNode('true'));
+        // }
     }
 })
 
-import { icons } from "./icons.js";
+// import { icons } from "./icons.js";
