@@ -6,9 +6,9 @@ const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
 const section = document.querySelector('#section').content;
 const detail = document.querySelector('#detail').content;
-const treasure = document.querySelector('#treasure').content;
-const pieceTray = document.querySelector('#pieceTray')
-const frameTray = document.querySelector('#frameTray')
+const detailImage = document.querySelector('#detailImage').content;
+const pieceTray = document.querySelector('#pieceTray');
+const frameTray = document.querySelector('#frameTray');
 
 // to fill out the page and keep the html small
 for (let i = 0; i < 3; i++) {
@@ -16,6 +16,7 @@ for (let i = 0; i < 3; i++) {
 }
 
 pieceTray.append(detail.cloneNode('true'));
+pieceTray.append(detailImage.cloneNode('true'));
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
@@ -323,7 +324,8 @@ for (let button of screenButtons) {
 
 // --------------------------------- History Events -----------------------------------
 let userHistory = [];
-let historyStart, historyStop, position;
+let position = 0;
+let historyStart, historyStop;
 
 function startHistory(item, value, change = 'move') {
     if (value === null) { value = item.parentElement };
@@ -333,31 +335,32 @@ function startHistory(item, value, change = 'move') {
 function stopHistory(item, value, change) {
     if (value === null) { value = item.parentElement };
     arguments.length == 3 ? historyStop = { stop: value, change: change } : historyStop = { stop: value };
-    writeHistory();
+    writeHistory(historyStart, historyStop);
 };
 
-function writeHistory() {
-    if (historyStart.start !== historyStop.stop) {
+function writeHistory(start, stop) {
+    if (start.start !== stop.stop) {
+        userHistory.length = position;
+        position++
         userHistory.push({ ...historyStart, ...historyStop });
-        position = userHistory.length - 1;
     }
 };
 
 function readHistory(direction) {
     try {
-        if (direction === 'redo') { position++ };
+        let reference;
+
+        if (direction === 'undo') { position-- };
 
         let { item, start, stop, change } = userHistory[position];
-        let reference;
         if (direction === 'undo') {
             reference = start;
-            position--;
             if (change === 'create' || change === 'delete') { change === 'create' ? change = 'delete' : change = 'create' }
         } else {
             reference = stop;
+            position++;
         }
 
-        console.log(change);
         switch (change) {
             case 'text':
                 item.innerText = reference
@@ -371,6 +374,8 @@ function readHistory(direction) {
                 item.remove()
                 break;
         }
+
+        console.log(userHistory);
 
     } catch (error) {
         alert(`Nothing to ${direction}`);
@@ -392,8 +397,8 @@ document.addEventListener('click', function (e) {
     let container = e.target.closest('section');
 
     if (func === 'delete') {
-        userHistory.push({ item: container, start: container.nextElementSibling, stop: container.nextElementSibling, change: 'delete' });
-        position++;
+        startHistory(container, container.nextElementSibling, 'delete');
+        stopHistory(container, 'delete')
         container.remove();
     }
 
@@ -404,8 +409,8 @@ document.addEventListener('click', function (e) {
 
     if (func === 'duplicate') {
         mainContent.insertBefore(container.cloneNode('true'), container.nextElementSibling);
-        userHistory.push({ item: container.nextElementSibling, start: 'tray', stop: container.nextElementSibling.nextElementSibling, change: 'create' });
-        position++
+        startHistory(container, 'tray', 'create');
+        stopHistory(container, container.nextElementSibling.nextElementSibling);
     }
 
     if (func === 'fuse') {
@@ -449,4 +454,4 @@ document.addEventListener('keydown', (e) => {
     }
 })
 
-// import { icons } from "./icons.js";
+import { icons } from "./icons.js";
