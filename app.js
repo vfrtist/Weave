@@ -236,9 +236,8 @@ function darkSwitch() {
 }
 
 // ----------------- Left Menu -------------------
-let leftButtons = document.querySelectorAll('.top .leftButton')
-let uploadPieceImage = document.querySelectorAll('input[name="uploadPiece"]')
-let time
+let leftButtons = document.querySelectorAll('.top .leftButton');
+let time;
 
 for (let btn of leftButtons) {
     btn.addEventListener('click', () => {
@@ -270,11 +269,12 @@ const addPieceButton = pieceTray.nextElementSibling
 function dropHandler(ev) {
     ev.preventDefault();
     let fileName = URL.createObjectURL(ev.target.files[0]);
-    let image = ev.target.nextElementSibling;
-    image.setAttribute('src', fileName);
-    image.innerHTML = '';
+    let img = ev.target.nextElementSibling;
+    img.setAttribute('src', fileName);
+    img.innerHTML = '';
     ev.target.parentElement.classList.remove('unloaded');
-    // ev.target.parentElement.appendChild(image);
+    // this works great to fix the information order if setting this class correctly since it assigns it previous to load without it
+    // img.addEventListener('load', () => { if (img.naturalHeight > img.naturalWidth) { img.classList.add('portrait') }; })
 }
 
 document.addEventListener('change', (e) => { if (verifyUpload(e.target.name)) { dropHandler(e) } })
@@ -282,9 +282,7 @@ document.addEventListener('dragover', (e) => { if (verifyUpload(e.target.name)) 
 document.addEventListener('dragleave', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.remove('selected') } })
 document.addEventListener('drop', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.remove('selected') } })
 
-function verifyUpload(thing) {
-    return thing === 'uploadPiece'
-}
+function verifyUpload(thing) { return thing === 'uploadPiece' };
 
 addPieceButton.addEventListener('click', () => {
     pieceTray.append(piece.cloneNode('true'));
@@ -333,15 +331,17 @@ function startHistory(item, value, change = 'move') {
 };
 
 function stopHistory(item, value, change) {
-    if (value === null) { value = item.parentElement };
-    arguments.length == 3 ? historyStop = { stop: value, change: change } : historyStop = { stop: value };
-    writeHistory(historyStart, historyStop);
+    if (item === historyStart.item) {
+        if (value === null) { value = item.parentElement };
+        arguments.length == 3 ? historyStop = { stop: value, change: change } : historyStop = { stop: value };
+        writeHistory(historyStart, historyStop);
+    }
 };
 
 function writeHistory(start, stop) {
     if (start.start !== stop.stop) {
         userHistory.length = position;
-        position++
+        position++;
         userHistory.push({ ...historyStart, ...historyStop });
     }
 };
@@ -375,15 +375,13 @@ function readHistory(direction) {
                 break;
         }
 
-        console.log(userHistory);
-
     } catch (error) {
         alert(`Nothing to ${direction}`);
     }
 }
 
 document.addEventListener('focusin', (e) => { if (e.target.classList.contains('typeable')) { startHistory(e.target, e.target.innerText, 'text'); } });
-document.addEventListener('focusout', (e) => { stopHistory(e.target, e.target.innerText); });
+document.addEventListener('focusout', (e) => { if (e.target.classList.contains('typeable')) { stopHistory(e.target, e.target.innerText); } });
 
 const undo = document.querySelector('#undo');
 const redo = document.querySelector('#redo');
@@ -392,36 +390,40 @@ undo.addEventListener('click', () => { readHistory('undo') })
 redo.addEventListener('click', () => { readHistory('redo') })
 
 // ------------------------------ Dropdown Menu Functions ------------------------------
-document.addEventListener('click', function (e) {
-    let func = e.target.dataset.function;
-    let container = e.target.closest('section');
 
-    if (func === 'delete') {
-        startHistory(container, container.nextElementSibling, 'delete');
-        stopHistory(container, 'delete')
-        container.remove();
+class dropdown {
+    constructor(item) {
+        this.func = item.dataset.function;
+        this.container = item.closest('section');
+        this.sibling = this.container.nextElementSibling;
+        this.fabrics = this.container.querySelector('.fabrics');
     }
-
-    if (func === 'delete-fabrics') {
-        let fabrics = container.querySelectorAll('.material')
-        for (let fabric of fabrics) { fabric.remove() }
+    delete() {
+        startHistory(this.container, this.sibling, 'delete');
+        stopHistory(this.container, 'delete');
+        this.container.remove();
     }
-
-    if (func === 'duplicate') {
-        mainContent.insertBefore(container.cloneNode('true'), container.nextElementSibling);
-        startHistory(container, 'tray', 'create');
-        stopHistory(container, container.nextElementSibling.nextElementSibling);
+    deleteFabrics() { this.fabrics.innerHTML = '' }
+    duplicate() {
+        mainContent.insertBefore(this.container.cloneNode('true'), this.sibling);
+        startHistory(this.container, 'tray', 'create');
+        stopHistory(this.container, this.sibling);
     }
-
-    if (func === 'fuse') {
-        container.classList.toggle('fused');
-        if (container.classList.contains('fused')) {
+    fuse() {
+        this.container.classList.toggle('fused');
+        if (this.container.classList.contains('fused')) {
             let hotButton = createIcon('hot');
             hotButton.classList.add('hot', 'notification', 'shadowed');
-            container.appendChild(hotButton);
+            this.container.appendChild(hotButton);
         }
-        else { container.querySelector('.hot').remove() }
+        else { this.container.querySelector('.hot').remove() }
     }
+    runFunction() { this[this.func](); }
+}
+
+document.addEventListener('click', function (e) {
+    try { let menuSelection = new dropdown(e.target); menuSelection.runFunction(); }
+    catch (error) { }
 
     if (e.target.closest('.treasure')) {
         e.target.closest('.treasure').classList.toggle('closed');
@@ -443,7 +445,10 @@ document.addEventListener('keydown', (e) => {
         let container = item.closest('.cardContainer');
 
         if (e.key === 'Enter') {
+            e.preventDefault();
             let newLine = item.parentElement.cloneNode('true');
+            startHistory(newLine, 'tray', 'create');
+            stopHistory(newLine, item.parentElement.nextElementSibling);
             container.insertBefore(newLine, item.parentElement.nextElementSibling);
             newLine.querySelector('span').focus();
         };
