@@ -807,6 +807,8 @@ header {
     overflow: visible;
     width: 18px;
     height: 18px;
+    inset: 6px;
+    transition: inset .25s;
 }
 
 .treasure:not(.closed) :not(svg, path) {
@@ -946,6 +948,23 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.detail:first-child {
+    margin: 0 !important;
+}
+
+.detail:not(.inTray):has(.pieceFrame) {
+    margin-top: 24px;
+}
+
+.detail:not(.inTray)>.pieceFrame {
+    height: auto;
+    max-height: 250px;
+}
+
+.detail:not(.inTray)>.pieceFrame img {
+    object-fit: scale-down;
 }
 
 .pieceFrame {
