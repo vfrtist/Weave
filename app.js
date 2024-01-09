@@ -285,11 +285,10 @@ addPieceButton.addEventListener('click', () => {
 })
 
 
-
 // The place to work on creating the hover menu.
 document.addEventListener('mouseenter', (e) => {
-    const isPicture = (item) => item === 'pieceframe'
-    if (e.target.classList.every(isPicture)) {
+    // const isPicture = (item) => item === 'pieceframe'
+    if (e.target.classList === 'pieceFrame') {
         let hoverMenu = document.createElement('div');
         hoverMenu.classList.add('float');
         for (const element of ['rotate', 'flip', 'magnify']) {
@@ -299,7 +298,7 @@ document.addEventListener('mouseenter', (e) => {
     }
 })
 
-document.addEventListener('mouseleave', (e) => { e.target.querySelector('.float').remove(); })
+document.addEventListener('mouseleave', (e) => { if (e.target.classList === 'pieceFrame') { e.target.querySelector('.float').remove(); } })
 
 
 // ----------------- Screen Button Events -------------------
