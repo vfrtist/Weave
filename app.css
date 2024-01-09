@@ -140,6 +140,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-self: center;
+    display: none;
 }
 
 .pageLabel {
@@ -292,7 +293,7 @@ header {
 /* -------------------------------------------------------- Frame --------------------------------------------------------  */
 
 .frame {
-    padding: 12px 0px;
+    padding: 8px 0px;
     justify-items: center;
     background-color: var(--container-background);
     text-align: center;
@@ -306,6 +307,10 @@ header {
 .title {
     margin-right: auto;
     padding: 0px 12px;
+}
+
+.frame.bundle {
+    padding-bottom: 24px;
 }
 
 /* ------------------------------------------------------ Left Sub ------------------------------------------------------  */
@@ -710,7 +715,6 @@ header {
     box-shadow: none;
 }
 
-
 .hidden {
     display: none !important;
 }
@@ -780,6 +784,25 @@ header {
     outline-offset: 6px;
     animation: bubble .35s;
 }
+
+.pieceFrame img.portrait {
+    rotate: -90deg;
+}
+
+.float {
+    position: absolute;
+    display: flex;
+    right: 4px;
+    top: 4px;
+    width: 20px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    fill: var(--menu-active);
+}
+
+/* --------------------------- Treasure Stylings which are complicated ---------------------------  */
+
 
 .treasure {
     width: 80%;
@@ -886,10 +909,6 @@ header {
 
 }
 
-.pieceFrame img.portrait {
-    rotate: -90deg;
-}
-
 /* --------------------------- Bundling ---------------------------  */
 
 .content {
@@ -950,15 +969,15 @@ header {
     align-items: center;
 }
 
-.detail:first-child {
+.details .detail:first-child {
     margin: 0 !important;
 }
 
-.detail:not(.inTray):has(.pieceFrame) {
-    margin-top: 24px;
+.detail.picture:not(.inTray) {
+    margin-top: 48px;
 }
 
-.detail:not(.inTray)>.pieceFrame {
+.detail.picture:not(.inTray)>.pieceFrame {
     height: auto;
     max-height: 250px;
 }

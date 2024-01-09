@@ -6,17 +6,15 @@ const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
 const section = document.querySelector('#section').content;
 const detail = document.querySelector('#detail').content;
-const detailImage = document.querySelector('#detailImage').content;
+const picture = document.querySelector('#picture').content;
 const pieceTray = document.querySelector('#pieceTray');
 const frameTray = document.querySelector('#frameTray');
 
 // to fill out the page and keep the html small
-for (let i = 0; i < 3; i++) {
-    pieceTray.append(piece.cloneNode('true'));
-}
+for (let i = 0; i < 3; i++) { pieceTray.append(piece.cloneNode('true')); }
 
 pieceTray.append(detail.cloneNode('true'));
-pieceTray.append(detailImage.cloneNode('true'));
+pieceTray.append(picture.cloneNode('true'));
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
@@ -49,14 +47,14 @@ for (let btn of pageButtons) {
     pageLabel.classList.add('pageLabel');
     pageLabel.innerText = btn.value;
 
-    btn.addEventListener('mouseenter', function () {
+    btn.addEventListener('mouseenter', () => {
         document.body.appendChild(pageLabel)
         const dif = (btn.offsetWidth - pageLabel.offsetWidth) / 2
         pageLabel.style.left = `${btn.offsetLeft + dif}px`;
         pageLabel.classList.add('move');
     })
 
-    btn.addEventListener('mouseleave', function () {
+    btn.addEventListener('mouseleave', () => {
         pageLabel.classList.remove('move');
         pageLabel.remove();
     })
@@ -113,10 +111,12 @@ document.addEventListener('dragstart', (ev) => {
     try {
         parents = (zones.toString() === 'content') ? [mainContent] : mainContent.querySelectorAll(correctZone)
         parents.forEach(parent => {
-            parent.addEventListener('dragenter', dragEnter, { signal });
-            parent.addEventListener('dragover', dragOverZone, { signal });
-            parent.addEventListener('dragleave', dragLeave, { signal });
-            parent.classList.add('available');
+            if (!parent.dataset.dropzone) {
+                parent.addEventListener('dragenter', dragEnter, { signal });
+                parent.addEventListener('dragover', dragOverZone, { signal });
+                parent.addEventListener('dragleave', dragLeave, { signal });
+                parent.classList.add('available');
+            }
         })
     } catch (error) {
         console.log('no parents')
@@ -147,11 +147,7 @@ document.addEventListener('dragend', (e) => {
     }
 })
 
-function stopHighlight() {
-    parents.forEach(parent => {
-        parent.classList.remove('available', 'target');
-    })
-}
+function stopHighlight() { parents.forEach(parent => { parent.classList.remove('available', 'target'); }) }
 
 function dragEnter(e) {
     target = e.target;
@@ -288,6 +284,24 @@ addPieceButton.addEventListener('click', () => {
     pieceTray.append(piece.cloneNode('true'));
 })
 
+
+
+// The place to work on creating the hover menu.
+document.addEventListener('mouseenter', (e) => {
+    const isPicture = (item) => item === 'pieceframe'
+    if (e.target.classList.every(isPicture)) {
+        let hoverMenu = document.createElement('div');
+        hoverMenu.classList.add('float');
+        for (const element of ['rotate', 'flip', 'magnify']) {
+            hoverMenu.appendChild(createIcon(element));
+        }
+        e.target.append(hoverMenu);
+    }
+})
+
+document.addEventListener('mouseleave', (e) => { e.target.querySelector('.float').remove(); })
+
+
 // ----------------- Screen Button Events -------------------
 const screenButtons = document.querySelectorAll('.screenButton')
 const caption = document.querySelector('#caption')
@@ -311,7 +325,7 @@ zenButton.addEventListener('click', () => {
 });
 
 for (let button of screenButtons) {
-    button.addEventListener('mouseenter', (e) => {
+    button.addEventListener('mouseenter', () => {
         caption.innerText = button.dataset.value
         caption.classList.toggle('transparent');
     });
@@ -459,4 +473,4 @@ document.addEventListener('keydown', (e) => {
     }
 })
 
-// import { icons } from "./icons.js";
+import { icons } from "./icons.js";
