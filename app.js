@@ -329,6 +329,7 @@ class pictureMenu {
         this.frame = ''
     }
     rotate() {
+        console.log(this.image.dataset.rotation);
         let rotation = this.image.dataset.rotation || 0;
         rotation = (rotation + 90) % 360;
         this.image.dataset.rotation = rotation;
