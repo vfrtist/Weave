@@ -792,13 +792,18 @@ header {
 .float {
     position: absolute;
     display: flex;
-    right: 4px;
-    top: 4px;
-    width: 20px;
+    right: 0px;
+    top: 0px;
+    width: 24px;
+    height: 24px;
+    gap: 4px;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-evenly;
     fill: var(--menu-active);
+    background-color: var(--accent-3);
+    cursor: pointer;
+    z-index: 3;
 }
 
 /* --------------------------- Treasure Stylings which are complicated ---------------------------  */

@@ -92,6 +92,10 @@ document.addEventListener('dragstart', (ev) => {
         startHistory(dragItem, 'tray', 'create');
     };
 
+    //This feels like overkill? but it does the job. The second line cleans up 90% but not the item on the ground. 
+    hover.hide();
+    if (dragItem.querySelector('.float')) { dragItem.querySelector('.float').remove(); }
+
     dragGhost = dragItem.cloneNode('true');
     dragGhost.classList.add('ghost', 'inTray');
     document.body.append(dragGhost);
@@ -285,20 +289,71 @@ addPieceButton.addEventListener('click', () => {
 })
 
 
-// The place to work on creating the hover menu.
-document.addEventListener('mouseenter', (e) => {
-    // const isPicture = (item) => item === 'pieceframe'
-    if (e.target.classList === 'pieceFrame') {
-        let hoverMenu = document.createElement('div');
-        hoverMenu.classList.add('float');
-        for (const element of ['rotate', 'flip', 'magnify']) {
-            hoverMenu.appendChild(createIcon(element));
-        }
-        e.target.append(hoverMenu);
+// Hover Menu ---------------------------------------------------
+class pictureMenu {
+    constructor() {
+        this.buttons = ['rotate', 'flip', 'magnify'];
+        this.menu;
+        this.image;
     }
-})
+    set location(target) {
+        target = target.closest('.pieceFrame');
+        if (target) {
+            this.image = target;
+            this.validTarget() ? this.popUp() : this.hide();
+        }
+        else { this.hide(); }
+    }
+    buildMenu() {
+        this.menu = document.createElement('div');
+        this.menu.classList.add('float');
+        this.fillMenu();
+    }
+    fillMenu() { for (button of this.buttons) { this.menu.appendChild(createIcon(button)); } }
+    validTarget() { return (this.image && !this.image.classList.contains('unloaded')); }
+    popUp() {
+        this.menu.classList.remove('hidden');
+        this.image.appendChild(this.menu);
+    }
+    hide() {
+        this.menu.classList.add('hidden');
+        this.loc = ''
+        this.image = ''
+    }
+}
 
-document.addEventListener('mouseleave', (e) => { if (e.target.classList === 'pieceFrame') { e.target.querySelector('.float').remove(); } })
+let hover = new pictureMenu
+hover.buildMenu();
+
+document.addEventListener('mousemove', (e) => {
+    try {
+        hover.location = e.target;
+        // hover = new pictureMenu(e.target);
+        // let target = e.target.closest('.card').querySelector('.pieceFrame');
+        // let activeMenu = target.closest('.card').querySelector('.float');
+        // console.log(activeMenu);
+        // if (target.classList.value === 'pieceFrame') {
+        //     pictureHoverMenu = document.createElement('div');
+        //     pictureHoverMenu.classList.add('float');
+        //     target.append(pictureHoverMenu);
+        // };
+    } catch (error) {
+
+    }
+
+    // const isPicture = (item) => item === 'pieceframe'
+    // if (e.target.classList === 'pieceFrame') {
+    //     console.log(e.target);
+    // let hoverMenu = document.createElement('div');
+    // hoverMenu.classList.add('float');
+    // for (const element of ['rotate', 'flip', 'magnify']) {
+    //     hoverMenu.appendChild(createIcon(element));
+    // }
+    // e.target.append(hoverMenu);
+}
+)
+
+// document.addEventListener('mouseleave', (e) => { if (e.target.classList === 'pieceFrame') { e.target.querySelector('.float').remove(); } })
 
 
 // ----------------- Screen Button Events -------------------
