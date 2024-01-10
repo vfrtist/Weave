@@ -794,9 +794,8 @@ header {
     display: flex;
     right: 0px;
     top: 0px;
-    width: 24px;
-    height: 24px;
-    gap: 4px;
+    width: 22px;
+    gap: 6px;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-evenly;
@@ -806,18 +805,18 @@ header {
 }
 
 .float svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     transition: all .2s;
 }
 
-.float svg:hover {
+.float :is(svg, path):hover {
     fill: var(--menu-active);
     scale: 1.1;
 }
 
 .float:hover {
-    fill: var(--board-background);
+    fill: var(--menu-background2);
 }
 
 /* --------------------------- Treasure Stylings which are complicated ---------------------------  */
