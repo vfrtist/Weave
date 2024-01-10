@@ -299,8 +299,10 @@ class pictureMenu {
     set location(target) {
         target = target.closest('.pieceFrame');
         if (target) {
-            this.image = target;
-            this.validTarget() ? this.popUp() : this.hide();
+            if (target !== this.image) {
+                this.image = target;
+                this.validTarget() ? this.popUp() : this.hide();
+            }
         }
         else { this.hide(); }
     }
