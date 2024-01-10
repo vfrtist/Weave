@@ -309,7 +309,7 @@ class pictureMenu {
         this.menu.classList.add('float');
         this.fillMenu();
     }
-    fillMenu() { for (button of this.buttons) { this.menu.appendChild(createIcon(button)); } }
+    fillMenu() { for (let button of this.buttons) { this.menu.appendChild(createIcon(button)); } }
     validTarget() { return (this.image && !this.image.classList.contains('unloaded')); }
     popUp() {
         this.menu.classList.remove('hidden');
@@ -325,33 +325,7 @@ class pictureMenu {
 let hover = new pictureMenu
 hover.buildMenu();
 
-document.addEventListener('mousemove', (e) => {
-    try {
-        hover.location = e.target;
-        // hover = new pictureMenu(e.target);
-        // let target = e.target.closest('.card').querySelector('.pieceFrame');
-        // let activeMenu = target.closest('.card').querySelector('.float');
-        // console.log(activeMenu);
-        // if (target.classList.value === 'pieceFrame') {
-        //     pictureHoverMenu = document.createElement('div');
-        //     pictureHoverMenu.classList.add('float');
-        //     target.append(pictureHoverMenu);
-        // };
-    } catch (error) {
-
-    }
-
-    // const isPicture = (item) => item === 'pieceframe'
-    // if (e.target.classList === 'pieceFrame') {
-    //     console.log(e.target);
-    // let hoverMenu = document.createElement('div');
-    // hoverMenu.classList.add('float');
-    // for (const element of ['rotate', 'flip', 'magnify']) {
-    //     hoverMenu.appendChild(createIcon(element));
-    // }
-    // e.target.append(hoverMenu);
-}
-)
+document.addEventListener('mousemove', (e) => { try { hover.location = e.target; } catch (error) { } })
 
 // document.addEventListener('mouseleave', (e) => { if (e.target.classList === 'pieceFrame') { e.target.querySelector('.float').remove(); } })
 
