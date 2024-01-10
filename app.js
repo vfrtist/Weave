@@ -295,12 +295,14 @@ class pictureMenu {
         this.buttons = ['rotate', 'flip', 'magnify'];
         this.menu;
         this.image;
+        this.frame;
     }
     set location(target) {
         target = target.closest('.pieceFrame');
         if (target) {
-            if (target !== this.image) {
-                this.image = target;
+            if (target !== this.frame) {
+                this.frame = target;
+                this.image = this.frame.querySelector('img');
                 this.validTarget() ? this.popUp() : this.hide();
             }
         }
@@ -310,21 +312,21 @@ class pictureMenu {
         this.menu = document.createElement('div');
         this.menu.classList.add('float');
         this.fillMenu();
-        let buttons = this.menu.querySelectorAll('svg')
+        let buttons = this.menu.querySelectorAll('svg');
         for (let button of buttons) {
             button.addEventListener('click', (e) => { this[e.target.closest('svg').dataset.name](); })
         }
     }
 
     fillMenu() { for (let button of this.buttons) { this.menu.appendChild(createIcon(button)); } }
-    validTarget() { return (this.image && !this.image.classList.contains('unloaded')); }
+    validTarget() { return (this.frame && !this.frame.classList.contains('unloaded')); }
     popUp() {
         this.menu.classList.remove('hidden');
-        this.image.appendChild(this.menu);
+        this.frame.appendChild(this.menu);
     }
     hide() {
         this.menu.classList.add('hidden');
-        this.image = ''
+        this.frame = ''
     }
     rotate() {
 
