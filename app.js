@@ -332,7 +332,7 @@ class pictureMenu {
         let rotation = this.image.dataset.rotation || 0;
         rotation = (parseInt(rotation) + 90) % 360;
         this.image.dataset.rotation = rotation;
-        this.image.style.transform = `rotate(${rotation}deg)`;
+        this.image.style.rotate = `${rotation}deg`;
     }
     flip() { this.image.classList.toggle('flipped'); }
     magnify() {
