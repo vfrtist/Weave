@@ -310,12 +310,12 @@ class pictureMenu {
         this.menu = document.createElement('div');
         this.menu.classList.add('float');
         this.fillMenu();
-
-        this.menu.addEventListener('click', (e) => {
-            console.log(e.target.dataset.name);
-        })
-
+        let buttons = this.menu.querySelectorAll('svg')
+        for (let button of buttons) {
+            button.addEventListener('click', (e) => { console.log(e.target.closest('svg').dataset.name); })
+        }
     }
+
     fillMenu() { for (let button of this.buttons) { this.menu.appendChild(createIcon(button)); } }
     validTarget() { return (this.image && !this.image.classList.contains('unloaded')); }
     popUp() {
