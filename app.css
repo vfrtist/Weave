@@ -801,9 +801,23 @@ header {
     flex-wrap: nowrap;
     justify-content: space-evenly;
     fill: var(--menu-active);
-    background-color: var(--accent-3);
     cursor: pointer;
     z-index: 3;
+}
+
+.float svg {
+    width: 24px;
+    height: 24px;
+    transition: all .2s;
+}
+
+.float svg:hover {
+    fill: var(--menu-active);
+    scale: 1.1;
+}
+
+.float:hover {
+    fill: var(--board-background);
 }
 
 /* --------------------------- Treasure Stylings which are complicated ---------------------------  */
