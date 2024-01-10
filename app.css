@@ -819,6 +819,10 @@ header {
     fill: var(--menu-background2);
 }
 
+.flipped {
+    transform: scaleX(-1);
+}
+
 /* --------------------------- Treasure Stylings which are complicated ---------------------------  */
 
 

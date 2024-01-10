@@ -312,7 +312,7 @@ class pictureMenu {
         this.fillMenu();
         let buttons = this.menu.querySelectorAll('svg')
         for (let button of buttons) {
-            button.addEventListener('click', (e) => { console.log(e.target.closest('svg').dataset.name); })
+            button.addEventListener('click', (e) => { this[e.target.closest('svg').dataset.name](); })
         }
     }
 
@@ -324,15 +324,12 @@ class pictureMenu {
     }
     hide() {
         this.menu.classList.add('hidden');
-        this.loc = ''
         this.image = ''
     }
     rotate() {
 
     }
-    flip() {
-
-    }
+    flip() { this.image.classList.toggle('flipped'); }
     magnify() {
 
     }
