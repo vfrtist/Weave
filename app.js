@@ -310,6 +310,11 @@ class pictureMenu {
         this.menu = document.createElement('div');
         this.menu.classList.add('float');
         this.fillMenu();
+
+        this.menu.addEventListener('click', (e) => {
+            console.log(e.target.dataset.name);
+        })
+
     }
     fillMenu() { for (let button of this.buttons) { this.menu.appendChild(createIcon(button)); } }
     validTarget() { return (this.image && !this.image.classList.contains('unloaded')); }
@@ -321,6 +326,15 @@ class pictureMenu {
         this.menu.classList.add('hidden');
         this.loc = ''
         this.image = ''
+    }
+    rotate() {
+
+    }
+    flip() {
+
+    }
+    magnify() {
+
     }
 }
 
@@ -479,6 +493,7 @@ function createIcon(iconName) {
     let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     icon.innerHTML = icons[`${iconName}`].path;
     icon.setAttribute('viewBox', icons[`${iconName}`].viewbox);
+    icon.dataset.name = iconName;
     return icon;
 }
 
