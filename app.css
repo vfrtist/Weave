@@ -832,7 +832,7 @@ header {
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    position: sticky;
     inset: 0;
 }
 
@@ -847,6 +847,10 @@ header {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+}
+
+body :has(.modal) {
+    overflow: hidden;
 }
 
 /* --------------------------- Treasure Stylings which are complicated ---------------------------  */
@@ -1071,7 +1075,7 @@ header {
     object-fit: contain;
     filter: invert(var(--piece-color)) brightness(var(--piece-brightness));
     mix-blend-mode: var(--piece-edit);
-    transition: rotate .2s, width .2s ease-in, height .2s ease-in;
+    transition: rotate .2s, width .2s;
 }
 
 .pieceFrame.unloaded {
