@@ -343,7 +343,13 @@ class pictureMenu {
     }
     flip() { this.image.classList.toggle('flipped'); }
     magnify() {
-
+        let modal = document.createElement('div');
+        modal.classList.add('modal');
+        let insides = document.createElement('div');
+        insides.appendChild(this.image.cloneNode('true'));
+        modal.append(insides);
+        document.body.append(modal);
+        modal.addEventListener('click', () => { modal.remove(); })
     }
 }
 
