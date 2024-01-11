@@ -979,7 +979,7 @@ body :has(.modal) {
 
 .trayContainer,
 .cardContainer {
-    gap: 24px;
+    gap: 36px;
     box-sizing: border-box;
     background: var(--menu-background2);
     display: flex;
@@ -1074,6 +1074,7 @@ body :has(.modal) {
     filter: invert(var(--piece-color)) brightness(var(--piece-brightness));
     mix-blend-mode: var(--piece-edit);
     transition: rotate .2s, width .2s;
+    z-index: 2;
 }
 
 .pieceFrame.unloaded {
