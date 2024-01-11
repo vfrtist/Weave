@@ -296,6 +296,7 @@ class pictureMenu {
         this.menu;
         this.image;
         this.frame;
+        this.rotation;
     }
     set location(target) {
         target = target.closest('.pieceFrame');
@@ -329,11 +330,11 @@ class pictureMenu {
         this.frame = ''
     }
     rotate() {
-        let rotation = this.image.dataset.rotation || 0;
+        let rotation = this.rotation();
         rotation = (parseInt(rotation) + 90) % 360;
         this.image.dataset.rotation = rotation;
         this.image.style.rotate = `${rotation}deg`;
-        if (rotation == 90 || rotation == 270) {
+        if (this.isPortrait()) {
             this.image.style.height = `${this.frame.clientWidth}px`;
             this.image.style.width = `${this.frame.clientHeight}px`;
         } else {
@@ -347,15 +348,20 @@ class pictureMenu {
         modal.classList.add('modal');
         const insides = document.createElement('div');
         const image = this.image.cloneNode('true');
-        image.style.removeProperty('width');
-        image.style.removeProperty('height');
+        if (this.isPortrait()) {
+            image.style.removeProperty('width');
+            image.style.removeProperty('height');
+            image.style.removeProperty('rotate');
+        }
         insides.appendChild(image);
         modal.append(insides);
         document.body.append(modal);
         modal.addEventListener('click', () => { modal.remove(); })
-    }
-}
 
+    }
+    rotation() { return parseInt(this.image.dataset.rotation) || 0; }
+    isPortrait() { return (this.rotation() == 90 || this.rotation() == 270); }
+}
 let hover = new pictureMenu
 hover.buildMenu();
 

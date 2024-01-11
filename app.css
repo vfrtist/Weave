@@ -1071,7 +1071,7 @@ header {
     object-fit: contain;
     filter: invert(var(--piece-color)) brightness(var(--piece-brightness));
     mix-blend-mode: var(--piece-edit);
-    transition: rotate .2s, width .2s, height .2s;
+    transition: rotate .2s, width .2s ease-in, height .2s ease-in;
 }
 
 .pieceFrame.unloaded {
