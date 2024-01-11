@@ -840,6 +840,8 @@ header {
     display: flex;
     width: fit-content;
     height: fit-content;
+    max-width: 60%;
+    max-height: 60%;
     background-color: white;
     padding: 24px;
     object-fit: contain;
@@ -847,6 +849,7 @@ header {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+    border: none;
 }
 
 

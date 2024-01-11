@@ -336,8 +336,10 @@ class pictureMenu {
         this.image.style.rotate = `${rotation}deg`;
         if (this.isPortrait()) {
             this.image.style.width = `${this.frame.clientHeight}px`;
+            this.image.style.height = `${this.frame.clientWidth}px`;
         } else {
             this.image.style.removeProperty('width');
+            this.image.style.removeProperty('height');
         }
     }
     flip() { this.image.classList.toggle('flipped'); }
@@ -346,6 +348,7 @@ class pictureMenu {
         modal.classList.add('modal');
         const image = this.image.cloneNode('true');
         image.style.removeProperty('width');
+        image.style.removeProperty('height');
         image.style.removeProperty('rotate');
         modal.append(image);
         document.body.append(modal);
