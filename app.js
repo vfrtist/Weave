@@ -216,9 +216,11 @@ deleteButton.addEventListener('dragleave', () => {
 
 // ----------------- Dark Mode-------------------
 const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-const darkButton = document.querySelector('#darkButton')
+const darkButton = document.querySelector('#darkButton');
+const toggleSidebar = document.querySelector('#sidebar');
 
 darkButton.addEventListener('click', darkSwitch)
+toggleSidebar.addEventListener('click', () => { leftBar.classList.toggle('small'); })
 
 // This returns the value for repeat visits to bring back the same theme as before.
 if (currentTheme) {
