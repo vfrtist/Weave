@@ -334,8 +334,8 @@ class pictureMenu {
         this.image.dataset.rotation = rotation;
         this.image.style.rotate = `${rotation}deg`;
         if (rotation == 90 || rotation == 270) {
-            this.image.style.height = this.frame.clientWidth;
-            this.image.style.width = this.frame.clientHeight;
+            this.image.style.height = `${this.frame.clientWidth}px`;
+            this.image.style.width = `${this.frame.clientHeight}px`;
         } else {
             this.image.style.removeProperty('width');
             this.image.style.removeProperty('height');
