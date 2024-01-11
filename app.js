@@ -335,25 +335,21 @@ class pictureMenu {
         this.image.dataset.rotation = rotation;
         this.image.style.rotate = `${rotation}deg`;
         if (this.isPortrait()) {
-            // this.image.style.height = `${this.frame.clientWidth}px`;
             this.image.style.width = `${this.frame.clientHeight}px`;
         } else {
             this.image.style.removeProperty('width');
-            // this.image.style.removeProperty('height');
         }
     }
     flip() { this.image.classList.toggle('flipped'); }
     magnify() {
-        const modal = document.createElement('div');
+        const modal = document.createElement('dialog');
         modal.classList.add('modal');
-        const insides = document.createElement('div');
         const image = this.image.cloneNode('true');
         image.style.removeProperty('width');
         image.style.removeProperty('rotate');
-        // image.style.removeProperty('height');
-        insides.appendChild(image);
-        modal.append(insides);
+        modal.append(image);
         document.body.append(modal);
+        modal.showModal()
         modal.addEventListener('click', () => { modal.remove(); })
     }
     rotation() { return parseInt(this.image.dataset.rotation) || 0; }
