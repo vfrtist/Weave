@@ -657,18 +657,18 @@ header {
     text-align: left;
 }
 
-.subMenu li,
-.subMenu a {
+.subMenu :is(li, a) {
     color: var(--font-color);
     padding: 3px 8px;
     display: block;
     transition: all .1s;
     border-radius: 4px;
     text-decoration: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
-.subMenu li:hover,
-.subMenu a:hover {
+.subMenu :is(li, a):hover {
     cursor: default;
     background: var(--menu-background2);
 }
