@@ -259,14 +259,17 @@ addPieceButton.addEventListener('click', () => { pieceTray.append(piece.cloneNod
 function dropHandler(e) {
     e.preventDefault();
     let files = [...e.target.files];
-    for (let file of files) {
-        let fileName = URL.createObjectURL(file);
-        let newCard = piece.cloneNode('true');
-        let img = newCard.querySelector('img');
-        img.setAttribute('src', fileName);
-        newCard.querySelector('.pieceFrame').classList.remove('unloaded');
-        pieceTray.append(newCard);
-    }
+    for (let file of files) { uploadImage(file, e.target.closest('.card')); }
+}
+
+function uploadImage(file, existingCard) {
+    let fileName = URL.createObjectURL(file);
+    let newCard;
+    existingCard ? newCard = existingCard : newCard = piece.cloneNode('true');
+    let img = newCard.querySelector('img');
+    img.setAttribute('src', fileName);
+    newCard.querySelector('.pieceFrame').classList.remove('unloaded');
+    if (!existingCard) { pieceTray.append(newCard); }
 }
 
 document.addEventListener('change', (e) => { if (verifyUpload(e.target.name)) { dropHandler(e) } })
@@ -504,17 +507,6 @@ function createIcon(iconName) {
     icon.dataset.name = iconName;
     return icon;
 }
-
-class card {
-    constructor(card, type) {
-        this.card = card;
-        this.type = type;
-    }
-    addToTray() { this.card.classList.add('card', 'inTray'); }
-}
-
-// to fill out the page and keep the html small
-// for (let i = 0; i < 3; i++) { pieceTray.append(piece.cloneNode('true')); }
 
 // pieceTray.append(piece.cloneNode('true'));
 pieceTray.append(detail.cloneNode('true'));
