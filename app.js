@@ -1,7 +1,7 @@
+// Variables ***************************************************************************************************
+
 const pageButtons = document.querySelectorAll('.pageButton');
 const mainContent = document.querySelector('.content');
-
-// Templates and Main Zones ***********************************************************************
 const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
 const section = document.querySelector('#section').content;
@@ -9,25 +9,18 @@ const detail = document.querySelector('#detail').content;
 const picture = document.querySelector('#picture').content;
 const pieceTray = document.querySelector('#pieceTray');
 const frameTray = document.querySelector('#frameTray');
-
-// to fill out the page and keep the html small
-for (let i = 0; i < 3; i++) { pieceTray.append(piece.cloneNode('true')); }
-
-pieceTray.append(detail.cloneNode('true'));
-pieceTray.append(picture.cloneNode('true'));
-
-let fillFrame = bundle.cloneNode('true');
-fillFrame.querySelector('.bundle').classList.add('inTray');
-fillFrame.querySelector('.material').draggable = false;
-let bundleNoFabrics = fillFrame.cloneNode('true');
-bundleNoFabrics.querySelector('.material').remove();
-
-frameTray.append(fillFrame);
-frameTray.append(bundleNoFabrics);
-
-let sectionFrame = section.cloneNode('true');
-sectionFrame.querySelector('.section').classList.add('inTray');
-frameTray.append(sectionFrame);
+const zenButton = document.querySelector('#zen')
+const leftBar = document.querySelector('.leftBar')
+const deleteButton = document.querySelector('#trash')
+const darkButton = document.querySelector('#darkButton');
+const toggleSidebar = document.querySelector('#sidebar');
+const addPieceButton = pieceTray.nextElementSibling
+const screenButtons = document.querySelector('.screenButtons').querySelectorAll('.screenButton');
+const caption = document.querySelector('#caption')
+const viewButton = document.querySelector('#view')
+const undo = document.querySelector('#undo');
+const redo = document.querySelector('#redo');
+const upload = document.querySelector('.upload');
 
 // Page change -------------------
 for (let btn of pageButtons) {
@@ -60,11 +53,11 @@ for (let btn of pageButtons) {
     })
 }
 
-// Drag and Drop Section ***********************************************************************
-
+// Drag and Drop Section ***************************************************************************************************
 let dragItem, siblings, parents, newZone, sorting, controller, signal, target, dragGhost;
 
-// Define all areas and what sorts of information they can take. This is represented by "data-itemtype" in html for a lightweight way of making zones.
+// Define all areas and what sorts of information they can take. 
+//This is represented by "data-itemtype" in html for a lightweight way of making zones.
 const dropZonePairs = {
     pieces: 'piece',
     materials: 'material',
@@ -73,9 +66,7 @@ const dropZonePairs = {
     detail: ['piece', 'material']
 }
 
-function getObjectKey(obj, value) {
-    return Object.keys(obj).filter(key => obj[key].includes(value));
-}
+function getObjectKey(obj, value) { return Object.keys(obj).filter(key => obj[key].includes(value)); }
 
 document.addEventListener('dragstart', (ev) => {
     // Set all variables
@@ -92,7 +83,7 @@ document.addEventListener('dragstart', (ev) => {
         startHistory(dragItem, 'tray', 'create');
     };
 
-    //This feels like overkill? but it does the job. The second line cleans up 90% but not the item on the ground. 
+    //image menu hiding 
     hover.hide();
     if (dragItem.querySelector('.float')) { dragItem.querySelector('.float').remove(); }
 
@@ -108,7 +99,7 @@ document.addEventListener('dragstart', (ev) => {
         sibling.addEventListener('dragover', dragOverItem, { signal });
     })
 
-    // identify the proper zones and install listening
+    // identify all proper zones and install listening
     let zones = getObjectKey(dropZonePairs, dragItem.dataset.itemtype);
     let correctZone = zones.map((area) => `[data-itemtype='${area}']`).toString()
 
@@ -191,8 +182,7 @@ function treasureDrop(detail) {
 
 function makeEditable(item) { for (let part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
 
-// Trash Button ======================================
-const deleteButton = document.querySelector('#trash')
+// Trash Button
 function wakeUp(item) { item.classList.toggle('awake') }
 
 deleteButton.addEventListener('drop', () => {
@@ -212,20 +202,16 @@ deleteButton.addEventListener('dragleave', () => {
     wakeUp(deleteButton);
 })
 
-//*******************************************************************************************
+// User Settings ***************************************************************************************************
 
 // ----------------- Dark Mode-------------------
 const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-const darkButton = document.querySelector('#darkButton');
-const toggleSidebar = document.querySelector('#sidebar');
 
 darkButton.addEventListener('click', darkSwitch)
 toggleSidebar.addEventListener('click', () => { leftBar.classList.toggle('small'); })
 
 // This returns the value for repeat visits to bring back the same theme as before.
-if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-}
+if (currentTheme) { document.documentElement.setAttribute('data-theme', currentTheme); }
 
 function darkSwitch() {
     if (localStorage.getItem('theme') === 'dark') {
@@ -236,6 +222,8 @@ function darkSwitch() {
         localStorage.setItem('theme', 'dark');
     }
 }
+
+// Functionality/Stylings ***************************************************************************************************
 
 // ----------------- Left Menu -------------------
 let leftButtons = document.querySelectorAll('.top .leftButton');
@@ -265,18 +253,20 @@ function closeAllLeftMenus() {
     };
 }
 
-// Piece Tray ======================================
-const addPieceButton = pieceTray.nextElementSibling
+addPieceButton.addEventListener('click', () => { pieceTray.append(piece.cloneNode('true')); })
 
-function dropHandler(ev) {
-    ev.preventDefault();
-    let fileName = URL.createObjectURL(ev.target.files[0]);
-    let img = ev.target.nextElementSibling;
-    img.setAttribute('src', fileName);
-    img.innerHTML = '';
-    ev.target.parentElement.classList.remove('unloaded');
-    // this works great to fix the information order if setting this class correctly since it assigns it previous to load without it
-    // img.addEventListener('load', () => { if (img.naturalHeight > img.naturalWidth) { img.classList.add('portrait') }; })
+// Dealing with Images ======================================
+function dropHandler(e) {
+    e.preventDefault();
+    let files = [...e.target.files];
+    for (let file of files) {
+        let fileName = URL.createObjectURL(file);
+        let newCard = piece.cloneNode('true');
+        let img = newCard.querySelector('img');
+        img.setAttribute('src', fileName);
+        newCard.querySelector('.pieceFrame').classList.remove('unloaded');
+        pieceTray.append(newCard);
+    }
 }
 
 document.addEventListener('change', (e) => { if (verifyUpload(e.target.name)) { dropHandler(e) } })
@@ -286,12 +276,10 @@ document.addEventListener('drop', (e) => { if (verifyUpload(e.target.name)) { e.
 
 function verifyUpload(thing) { return thing === 'uploadPiece' };
 
-addPieceButton.addEventListener('click', () => {
-    pieceTray.append(piece.cloneNode('true'));
-})
+// document.addEventListener('dragover', (e) => { if (e.target.files.length > 1) { console.log('multiple') }; })
 
+// Hover Menu ***************************************************************************************************
 
-// Hover Menu ---------------------------------------------------
 class pictureMenu {
     constructor() {
         this.buttons = ['rotate', 'flip', 'magnify'];
@@ -321,7 +309,11 @@ class pictureMenu {
         }
     }
 
-    fillMenu() { for (let button of this.buttons) { this.menu.appendChild(createIcon(button)); } }
+    fillMenu() {
+        for (let button of this.buttons) {
+            this.menu.appendChild(createIcon(button));
+        }
+    }
     validTarget() { return (this.frame && !this.frame.classList.contains('unloaded')); }
     popUp() {
         this.menu.classList.remove('hidden');
@@ -365,23 +357,15 @@ hover.buildMenu();
 
 document.addEventListener('mousemove', (e) => { try { hover.location = e.target; } catch (error) { } })
 
-// document.addEventListener('mouseleave', (e) => { if (e.target.classList === 'pieceFrame') { e.target.querySelector('.float').remove(); } })
-
-
-// ----------------- Screen Button Events -------------------
-const screenButtons = document.querySelectorAll('.screenButton')
-const caption = document.querySelector('#caption')
+// Screen Button Events ***************************************************************************************************
 
 // Collapse
-const viewButton = document.querySelector('#view')
 viewButton.addEventListener('click', () => {
     for (let bundle of mainContent.querySelectorAll('.bundle, .section')) { bundle.classList.toggle('collapsed'); };
     viewButton.classList.toggle('on');
 });
 
 // Zen Mode
-const zenButton = document.querySelector('#zen')
-const leftBar = document.querySelector('.leftBar')
 zenButton.addEventListener('click', () => {
     closeAllLeftMenus();
     leftBar.classList.toggle('zen');
@@ -390,6 +374,7 @@ zenButton.addEventListener('click', () => {
     mainContent.classList.toggle('zen');
 });
 
+// Tooltip
 for (let button of screenButtons) {
     button.addEventListener('mouseenter', () => {
         caption.innerText = button.dataset.value
@@ -400,7 +385,8 @@ for (let button of screenButtons) {
     });
 }
 
-// --------------------------------- History Events -----------------------------------
+// History ***************************************************************************************************
+
 let userHistory = [];
 let position = 0;
 let historyStart, historyStop;
@@ -463,13 +449,11 @@ function readHistory(direction) {
 document.addEventListener('focusin', (e) => { if (e.target.classList.contains('typeable')) { startHistory(e.target, e.target.innerText, 'text'); } });
 document.addEventListener('focusout', (e) => { if (e.target.classList.contains('typeable')) { stopHistory(e.target, e.target.innerText); } });
 
-const undo = document.querySelector('#undo');
-const redo = document.querySelector('#redo');
-
 undo.addEventListener('click', () => { readHistory('undo') })
 redo.addEventListener('click', () => { readHistory('redo') })
 
-// ------------------------------ Dropdown Menu Functions ------------------------------
+
+// Dropdown Functions ***************************************************************************************************
 
 class dropdown {
     constructor(item) {
@@ -511,6 +495,8 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// Generative Functions ***************************************************************************************************
+
 function createIcon(iconName) {
     let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     icon.innerHTML = icons[`${iconName}`].path;
@@ -518,6 +504,36 @@ function createIcon(iconName) {
     icon.dataset.name = iconName;
     return icon;
 }
+
+class card {
+    constructor(card, type) {
+        this.card = card;
+        this.type = type;
+    }
+    addToTray() { this.card.classList.add('card', 'inTray'); }
+}
+
+// to fill out the page and keep the html small
+// for (let i = 0; i < 3; i++) { pieceTray.append(piece.cloneNode('true')); }
+
+// pieceTray.append(piece.cloneNode('true'));
+pieceTray.append(detail.cloneNode('true'));
+pieceTray.append(picture.cloneNode('true'));
+
+let fillFrame = bundle.cloneNode('true');
+fillFrame.querySelector('.bundle').classList.add('inTray');
+fillFrame.querySelector('.material').draggable = false;
+let bundleNoFabrics = fillFrame.cloneNode('true');
+bundleNoFabrics.querySelector('.material').remove();
+
+frameTray.append(fillFrame);
+frameTray.append(bundleNoFabrics);
+
+let sectionFrame = section.cloneNode('true');
+sectionFrame.querySelector('.section').classList.add('inTray');
+frameTray.append(sectionFrame);
+
+// Key Command/Intuitive User Functionality ***************************************************************************************************
 
 // ----------------- Detail Writing Keycommands -------------------
 document.addEventListener('keydown', (e) => {
@@ -538,6 +554,10 @@ document.addEventListener('keydown', (e) => {
         //     e.target.append(item.cloneNode('true'));
         // }
     }
+    undo.addEventListener('click', () => { readHistory('undo') })
+    redo.addEventListener('click', () => { readHistory('redo') })
+
+    if (e.key === 'z' && e.ctrlKey === true) { e.shiftKey ? readHistory('redo') : readHistory('undo') };
 })
 
 import { icons } from "./icons.js";

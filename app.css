@@ -339,7 +339,7 @@ header {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 12px;
+    gap: 36px;
 }
 
 .leftSub.open>div {
@@ -777,7 +777,8 @@ header {
     margin-inline: 20%;
 }
 
-.on {
+.on,
+.upload.selected {
     opacity: 1;
     fill: var(--menu-active);
     outline: 2px solid var(--menu-active);
@@ -840,6 +841,11 @@ header {
     box-sizing: border-box;
     border: none;
     outline: none;
+}
+
+.modal img {
+    width: 100%;
+    height: 100%;
 }
 
 /* --------------------------- Treasure Stylings which are complicated ---------------------------  */
@@ -1055,6 +1061,29 @@ header {
     position: absolute;
     inset: 0;
     cursor: pointer;
+}
+
+.upload {
+    width: 50px;
+    height: 50px;
+    background: var(--menu-background);
+    border-radius: 50%;
+    fill: var(--menu-button);
+    display: flex;
+    position: relative;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.upload input {
+    background: none;
+    border: none;
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    width: inherit;
+    height: inherit;
 }
 
 .pieceFrame img {

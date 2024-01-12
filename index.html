@@ -29,7 +29,7 @@
                     <path
                         d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
                 </svg>
-                <input type="file" name="uploadPiece">
+                <input type="file" multiple accept="image/*" name="uploadPiece">
                 <img src="" alt="" draggable="false">
             </div>
             <span contenteditable="false" class="typeable">Sht Front</span>
@@ -346,12 +346,14 @@
                             <div>
                                 <div id="pieceTray" class="trayContainer">
                                 </div>
-                                <button>
+
+                                <div class="upload">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                                         <path
                                             d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                     </svg>
-                                </button>
+                                    <input type="file" multiple accept="image/*" name="uploadPiece">
+                                </div>
                             </div>
                         </div>
                     </div>
