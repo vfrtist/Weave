@@ -785,10 +785,6 @@ header {
     animation: bubble .35s;
 }
 
-.pieceFrame img.portrait {
-    rotate: -90deg;
-}
-
 .float {
     position: absolute;
     display: flex;
@@ -843,12 +839,7 @@ header {
     justify-content: center;
     box-sizing: border-box;
     border: none;
-}
-
-
-
-body :has(.modal) {
-    overflow: hidden;
+    outline: none;
 }
 
 /* --------------------------- Treasure Stylings which are complicated ---------------------------  */
@@ -1073,7 +1064,6 @@ body :has(.modal) {
     object-fit: contain;
     filter: invert(var(--piece-color)) brightness(var(--piece-brightness));
     mix-blend-mode: var(--piece-edit);
-    transition: rotate .2s, width .2s;
     z-index: 2;
 }
 
