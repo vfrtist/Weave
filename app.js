@@ -272,14 +272,16 @@ function uploadImage(file, existingCard) {
     if (!existingCard) { pieceTray.append(newCard); }
 }
 
-document.addEventListener('change', (e) => { if (verifyUpload(e.target.name)) { dropHandler(e) } })
-document.addEventListener('dragover', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.add('selected') } })
-document.addEventListener('dragleave', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.remove('selected') } })
-document.addEventListener('drop', (e) => { if (verifyUpload(e.target.name)) { e.target.parentElement.classList.remove('selected') } })
+document.addEventListener('change', (e) => { if (verifyUpload(e)) { dropHandler(e) } })
+document.addEventListener('dragover', (e) => { if (verifyUpload(e)) { e.target.parentElement.classList.add('selected') } })
+document.addEventListener('dragleave', (e) => { if (verifyUpload(e)) { e.target.parentElement.classList.remove('selected') } })
+document.addEventListener('drop', (e) => { if (verifyUpload(e)) { e.target.parentElement.classList.remove('selected') } })
 
-function verifyUpload(thing) { return thing === 'uploadPiece' };
-
-// document.addEventListener('dragover', (e) => { if (e.target.files.length > 1) { console.log('multiple') }; })
+function verifyUpload(target) {
+    // const imageType = ['image/png', 'image/gif', 'image/bmp', 'image/jpeg'];
+    target = target.target.name;
+    return target === 'uploadPiece'
+};
 
 // Hover Menu ***************************************************************************************************
 
@@ -541,10 +543,6 @@ document.addEventListener('keydown', (e) => {
             container.insertBefore(newLine, item.parentElement.nextElementSibling);
             newLine.querySelector('span').focus();
         };
-
-        // if (e.key === 'Enter' && e.ctrlKey === true) {
-        //     e.target.append(item.cloneNode('true'));
-        // }
     }
     undo.addEventListener('click', () => { readHistory('undo') })
     redo.addEventListener('click', () => { readHistory('redo') })
