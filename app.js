@@ -4,6 +4,7 @@ const pageButtons = document.querySelectorAll('.pageButton');
 const mainContent = document.querySelector('.content');
 const piece = document.querySelector('#piece').content;
 const bundle = document.querySelector('#bundle').content;
+const marker = document.querySelector('#marker').content;
 const section = document.querySelector('#section').content;
 const detail = document.querySelector('#detail').content;
 const picture = document.querySelector('#picture').content;
@@ -510,6 +511,13 @@ function createIcon(iconName) {
     return icon;
 }
 
+
+function addToTray(card) {
+    card = card.cloneNode('true');
+    card.querySelector('*').classList.add('inTray')
+    return card;
+}
+
 // pieceTray.append(piece.cloneNode('true'));
 pieceTray.append(detail.cloneNode('true'));
 pieceTray.append(picture.cloneNode('true'));
@@ -523,9 +531,11 @@ bundleNoFabrics.querySelector('.material').remove();
 frameTray.append(fillFrame);
 frameTray.append(bundleNoFabrics);
 
-let sectionFrame = section.cloneNode('true');
-sectionFrame.querySelector('.section').classList.add('inTray');
-frameTray.append(sectionFrame);
+frameTray.append(addToTray(section));
+frameTray.append(addToTray(marker));
+
+// let markerFrame = marker.cloneNode('true').classList.add('inTray');
+// frameTray.append(markerFrame);
 
 // Key Command/Intuitive User Functionality ***************************************************************************************************
 

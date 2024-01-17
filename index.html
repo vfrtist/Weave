@@ -124,6 +124,35 @@
         </section>
     </template>
 
+    <template id="marker">
+        <section data-itemtype="bundle" class="card shadowed" draggable="true">
+            <div class="menu dropdownIcon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8.6">
+                    <path
+                        d="M8.6,4.3c0,2.4-1.9,4.3-4.3,4.3S0,6.7,0,4.3S1.9,0,4.3,0S8.6,1.9,8.6,4.3z M18,0c-2.4,0-4.3,1.9-4.3,4.3
+            s1.9,4.3,4.3,4.3s4.3-1.9,4.3-4.3S20.4,0,18,0z M31.7,0c-2.4,0-4.3,1.9-4.3,4.3s1.9,4.3,4.3,4.3S36,6.7,36,4.3S34.1,0,31.7,0z" />
+                </svg>
+                <ul class="subMenu shadowed">
+                    <li data-function="fuse">Fuse Fabrics</li>
+                    <li data-function="duplicate">Duplicate Bundle</li>
+                    <li data-function="delete">Delete Bundle</li>
+                    <li data-function="deleteFabrics">Delete Fabrics</li>
+                </ul>
+            </div>
+            <div class="marker bundle card frame">
+                <div class="title">
+                    <h2 contenteditable="false" class="typeable">Self</h2>
+                </div>
+                <ul data-itemtype="materials" class="fabrics">
+                    <li data-itemtype="material" draggable="true" class="material card">
+                        <span contenteditable="false" class="typeable">10001234</span>
+                        <span>TWILL OR SOMETHING 66"</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </template>
+
     <template id="section">
         <section data-itemtype="section" class="section card frame shadowed" draggable="true">
             <div class="menu dropdownIcon">
@@ -140,7 +169,6 @@
             <div class="title">
                 <h2 contenteditable="false" class="typeable">Section A</h2>
             </div>
-            <!-- <div data-itemtype="components" class="components cardContainer"></div> -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.6 23.2" class="divot">
                 <path d="M0,0h35.6c0,0-13.8,23.2-17.8,23.2S0,0,0,0z" />
             </svg>

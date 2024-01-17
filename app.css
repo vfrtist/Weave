@@ -17,7 +17,7 @@ font-style: normal; */
     --container-background: white;
     --container-shadow: #c0b6ce;
     --container-shadow-light: #c0b6ce56;
-    --container-shadow-dark: #a29caa;
+    --container-shadow-dark: #a29caa82;
     --font-color: black;
     --piece-color: 0%;
     --piece-edit: none;
@@ -245,9 +245,15 @@ header {
     text-align: center;
     gap: 4px;
     cursor: grab;
-    transition: border-radius .15s, box-shadow .15s !important;
+    will-change: filter;
+    transition: border-radius .15s, filter .15s !important;
     margin: 0;
     position: relative;
+}
+
+.card:has(.marker) {
+    padding: 0;
+    background: none;
 }
 
 .card:active {
@@ -259,7 +265,7 @@ header {
 }
 
 .card:hover {
-    box-shadow: 4px 4px 10px var(--container-shadow-light);
+    filter: drop-shadow(4px 4px 2px var(--container-shadow));
 }
 
 .card.inTray:hover .card {
@@ -267,7 +273,7 @@ header {
 }
 
 .content>.card:hover {
-    box-shadow: 3px 3px 12px var(--container-shadow-dark), -3px -3px 8px var(--board-background);
+    filter: drop-shadow(4px 4px 4px var(--container-shadow-dark));
 }
 
 .material {
@@ -300,10 +306,6 @@ header {
     gap: 0px;
 }
 
-.frame .dropdownIcon {
-    margin-right: 12px;
-}
-
 .title {
     margin-right: auto;
     padding: 0px 12px;
@@ -311,6 +313,21 @@ header {
 
 .frame.bundle {
     padding-bottom: 16px;
+}
+
+.marker {
+    --path: 0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%;
+    clip-path: polygon(var(--path));
+}
+
+.marker::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--accent-1);
 }
 
 /* ------------------------------------------------------ Left Sub ------------------------------------------------------  */
@@ -1125,6 +1142,8 @@ header {
     align-self: flex-end;
     position: absolute;
     cursor: default;
+    z-index: 1;
+    margin-right: 12px;
 }
 
 .dropdownIcon:hover {
@@ -1314,6 +1333,7 @@ li {
     display: inline-block;
 }
 
+.inTray,
 .shadowed {
-    box-shadow: 3px 3px 12px var(--container-shadow), -3px -3px 8px var(--board-background);
+    filter: drop-shadow(4px 4px 2px var(--container-shadow-light));
 }
