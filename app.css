@@ -328,6 +328,7 @@ header {
     width: 32px;
     height: 32px;
     background: var(--accent-1);
+    cursor: pointer;
 }
 
 /* ------------------------------------------------------ Left Sub ------------------------------------------------------  */
@@ -1165,7 +1166,7 @@ header {
     border-left: 1px solid var(--board-background);
 }
 
-.bundle.inTray li span:last-of-type {
+.inTray li span:last-of-type {
     display: none;
 }
 
