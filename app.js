@@ -308,13 +308,12 @@ class pictureMenu {
     buildMenu() {
         this.menu = document.createElement('div');
         this.menu.classList.add('float');
-        this.fillMenu();
+        // this.fillMenu();
         let buttons = this.menu.querySelectorAll('svg');
         for (let button of buttons) {
             button.addEventListener('click', (e) => { this[e.target.closest('svg').dataset.name](); })
         }
     }
-
     fillMenu() {
         for (let button of this.buttons) {
             this.menu.appendChild(createIcon(button));
@@ -358,6 +357,7 @@ class pictureMenu {
     rotation() { return parseInt(this.image.dataset.rotation) || 0; }
     isPortrait() { return (this.rotation() == 90 || this.rotation() == 270); }
 }
+
 let hover = new pictureMenu
 hover.buildMenu();
 
@@ -560,4 +560,4 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'z' && e.ctrlKey === true) { e.shiftKey ? readHistory('redo') : readHistory('undo') };
 })
 
-import { icons } from "./icons.js";
+// import { icons } from "./icons.js";
