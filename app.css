@@ -246,8 +246,7 @@ header {
     text-align: center;
     gap: 4px;
     cursor: grab;
-    will-change: filter;
-    transition: border-radius .15s, filter .15s !important;
+    transition: border-radius .15s, box-shadow .15s, filter .15s !important;
     margin: 0;
     position: relative;
 }
@@ -262,10 +261,14 @@ header {
 }
 
 .card.inTray {
-    box-shadow: none;
+    will-change: filter;
 }
 
-.card:hover {
+.card:not(.inTray):hover {
+    box-shadow: 4px 4px 8px var(--container-shadow);
+}
+
+.card.inTray:hover {
     filter: drop-shadow(4px 4px 2px var(--container-shadow));
 }
 
@@ -316,19 +319,31 @@ header {
 }
 
 .marker {
-    --path: 0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%;
-    clip-path: polygon(var(--path));
+    /* --path: 0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%; */
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%);
+    transition: all .5s;
 }
 
-.marker::after {
-    content: "";
+.marker:has(.corner:hover) {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 48px), calc(100% - 48px) 100%, 0 100%);
+    transition: all .5s;
+}
+
+.corner {
     position: absolute;
     bottom: 0;
     right: 0;
     width: 32px;
-    height: 32px;
+    height: auto;
+    aspect-ratio: 1/1;
     background: var(--accent-1);
     cursor: pointer;
+    border-radius: 12px 0px;
+    transition: width .5s, height .5s;
+}
+
+.corner:hover {
+    width: 48px;
 }
 
 /* ------------------------------------------------------ Left Sub ------------------------------------------------------  */
@@ -479,6 +494,10 @@ header {
 
 .inTray .typeable {
     cursor: inherit;
+}
+
+.inTray .typeable:hover {
+    filter: none;
 }
 
 .inTray h2 {
