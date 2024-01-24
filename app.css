@@ -319,8 +319,8 @@ header {
 }
 
 .marker {
-    /* --path: 0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%; */
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%);
+    --path: 0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%;
+    clip-path: polygon(var(--path));
     transition: all .5s;
 }
 
@@ -329,20 +329,28 @@ header {
     transition: all .5s;
 }
 
-.corner {
+.corner,
+.cornerTarget {
     position: absolute;
     bottom: 0;
     right: 0;
     width: 32px;
     height: auto;
     aspect-ratio: 1/1;
-    background: var(--accent-1);
     cursor: pointer;
+}
+
+.cornerTarget {
+    background: none;
+}
+
+.corner {
+    background: var(--accent-1);
     border-radius: 12px 0px;
     transition: width .5s, height .5s;
 }
 
-.corner:hover {
+.cornerTarget:hover {
     width: 48px;
 }
 
@@ -953,6 +961,10 @@ header {
 .treasure.open .card {
     max-width: 200px;
     min-width: 140px;
+}
+
+.treasure.open .card:hover {
+    box-shadow: none;
 }
 
 .treasure.open>svg {

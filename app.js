@@ -254,7 +254,10 @@ function closeAllLeftMenus() {
     };
 }
 
-addPieceButton.addEventListener('click', () => { pieceTray.append(piece.cloneNode('true')); })
+addPieceButton.addEventListener('click', () => {
+    preventDefault();
+    pieceTray.append(piece.cloneNode('true'));
+})
 
 // Dealing with Images ======================================
 function dropHandler(e) {
