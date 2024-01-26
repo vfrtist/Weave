@@ -22,7 +22,7 @@
 <body>
     <!------------------------------------------------ Templates ------------------------------------------------>
     <template id="piece">
-        <div data-itemtype="piece" class="piece card inTray" draggable="true">
+        <div data-itemtype="piece" class="piece card" draggable="true">
             <div class="pieceFrame unloaded">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -42,7 +42,7 @@
     </template>
 
     <template id="detail">
-        <li data-itemtype="detail" class="detail card inTray" draggable="true">
+        <li data-itemtype="detail" class="detail card" draggable="true">
             <div class="treasure notification shadowed closed" draggable="true" data-function="treasure">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 32">
                     <path d="M34.7,32H3.3C1.5,32,0,30.5,0,28.7V15.9h15.4v4.1c0,0.3,0.3,0.6,0.6,0.6H22c0.3,0,0.6-0.3,0.6-0.6v-4.1H38v12.8
@@ -73,7 +73,7 @@
     </template>
 
     <template id="picture">
-        <li data-itemtype="detail" data-dropzone="false" class="detail card picture inTray" draggable="true">
+        <li data-itemtype="detail" data-dropzone="false" class="detail card picture" draggable="true">
             <div class="pieceFrame unloaded">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -166,6 +166,7 @@
                 <ul class="subMenu shadowed">
                     <li data-function="duplicate">Duplicate Section</li>
                     <li data-function="delete">Delete Section</li>
+                    <li data-function="insertLines">Insert Copied Lines</li>
                 </ul>
             </div>
             <div class="title">

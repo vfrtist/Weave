@@ -269,7 +269,7 @@ function dropHandler(e) {
 function uploadImage(file, existingCard) {
     let fileName = URL.createObjectURL(file);
     let newCard;
-    existingCard ? newCard = existingCard : newCard = piece.cloneNode('true');
+    existingCard ? newCard = existingCard : newCard = addToTray(piece.cloneNode('true'));
     let img = newCard.querySelector('img');
     img.setAttribute('src', fileName);
     newCard.querySelector('.pieceFrame').classList.remove('unloaded');
@@ -491,6 +491,9 @@ class dropdown {
         }
         else { this.container.querySelector('.hot').remove() }
     }
+    insertLines() {
+
+    }
     runFunction() { this[this.func](); }
 }
 
@@ -522,8 +525,8 @@ function addToTray(card) {
 }
 
 // pieceTray.append(piece.cloneNode('true'));
-pieceTray.append(detail.cloneNode('true'));
-pieceTray.append(picture.cloneNode('true'));
+pieceTray.append(addToTray(detail));
+pieceTray.append(addToTray(picture));
 
 let fillFrame = bundle.cloneNode('true');
 fillFrame.querySelector('.bundle').classList.add('inTray');
@@ -536,6 +539,24 @@ frameTray.append(bundleNoFabrics);
 
 frameTray.append(addToTray(section));
 frameTray.append(addToTray(marker));
+
+function createDetail(text) {
+    let newLine = detail.cloneNode('true');
+    newLine.querySelector('span').innerText = text.trim();
+    return newLine;
+}
+
+document.addEventListener('paste', (e) => {
+    e.preventDefault();
+    let paste = (e.clipboardData || window.clipboardData).getData('text');
+    if (paste) {
+        if (e.target.closest('.detail')) {
+            let container = e.target.closest('.cardContainer');
+            let lines = paste.split('\n');
+            for (let line of lines) { if (line.trim().length > 0) { container.append(createDetail(line)); } }
+        }
+    };
+})
 
 // let markerFrame = marker.cloneNode('true').classList.add('inTray');
 // frameTray.append(markerFrame);
