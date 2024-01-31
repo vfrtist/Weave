@@ -540,22 +540,29 @@ frameTray.append(bundleNoFabrics);
 frameTray.append(addToTray(section));
 frameTray.append(addToTray(marker));
 
-function createDetail(text) {
-    let newLine = detail.cloneNode('true');
-    newLine.querySelector('span').innerText = text.trim();
-    return newLine;
+class container {
+    constructor(item) {
+        this.container = item.closest('.cardContainer');
+    }
+    createDetail(text) {
+        let newLine = detail.cloneNode('true');
+        newLine.querySelector('span').innerText = text.trim();
+        return newLine;
+    }
+    addLine(line) { this.container.append(this.createDetail(line)); }
+    parseCopiedText(paste) {
+        if (paste) {
+            let lines = paste.split('\n');
+            for (let line of lines) { if (line.trim().length > 0) { this.addLine(line); } }
+        }
+    }
 }
 
 document.addEventListener('paste', (e) => {
     e.preventDefault();
     let paste = (e.clipboardData || window.clipboardData).getData('text');
-    if (paste) {
-        if (e.target.closest('.detail')) {
-            let container = e.target.closest('.cardContainer');
-            let lines = paste.split('\n');
-            for (let line of lines) { if (line.trim().length > 0) { container.append(createDetail(line)); } }
-        }
-    };
+    let card = new container(e.target);
+    card.parseCopiedText(paste);
 })
 
 // let markerFrame = marker.cloneNode('true').classList.add('inTray');

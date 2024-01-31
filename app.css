@@ -1294,6 +1294,7 @@ After the introduction of the chest it might be a moot point. */
 
 .detail span {
     max-width: 90%;
+    text-align: left;
 }
 
 .detail {
