@@ -22,22 +22,55 @@ const viewButton = document.querySelector('#view')
 const undo = document.querySelector('#undo');
 const redo = document.querySelector('#redo');
 const upload = document.querySelector('.upload');
+const themes = ['light', 'dark']
+let currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+// Functions ***************************************************************************************************
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+}
+
+function nextTheme() {
+    currentTheme = themes[themes.indexOf(currentTheme) + 1];
+    if (!currentTheme) { currentTheme = themes[0] }
+    setTheme(currentTheme);
+}
+
+function make(item) { return document.createElement(item.toString()); }
+
+function makeInActive() { for (let btn of pageButtons) { btn.classList.remove('active') } }
+
+function createIcon(iconName) {
+    let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.innerHTML = icons[`${iconName}`].path;
+    icon.setAttribute('viewBox', icons[`${iconName}`].viewbox);
+    icon.dataset.name = iconName;
+    return icon;
+}
+
+function addToTray(card) {
+    card = card.cloneNode('true');
+    card.querySelector('*').classList.add('inTray')
+    return card;
+}
+
+function getObjectKey(obj, value) { return Object.keys(obj).filter(key => obj[key].includes(value)); }
+
+function makeEditable(item) { for (let part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
 
 // Page change -------------------
 for (let btn of pageButtons) {
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', () => {
         makeInActive();
         this.classList.add('active');
     })
 }
 
-function makeInActive() {
-    for (let btn of pageButtons) { btn.classList.remove('active') }
-}
-
 // Hover text -------------------
 for (let btn of pageButtons) {
-    let pageLabel = document.createElement('div');
+    let pageLabel = make('div');
     pageLabel.classList.add('pageLabel');
     pageLabel.innerText = btn.value;
 
@@ -54,175 +87,12 @@ for (let btn of pageButtons) {
     })
 }
 
-// Drag and Drop Section ***************************************************************************************************
-let dragItem, siblings, parents, newZone, sorting, controller, signal, target, dragGhost;
-
-// Define all areas and what sorts of information they can take. 
-//This is represented by "data-itemtype" in html for a lightweight way of making zones.
-const dropZonePairs = {
-    pieces: 'piece',
-    materials: 'material',
-    content: ['bundle', 'section'],
-    details: ['detail'],
-    detail: ['piece', 'material']
-}
-
-function getObjectKey(obj, value) { return Object.keys(obj).filter(key => obj[key].includes(value)); }
-
-document.addEventListener('dragstart', (ev) => {
-    // Set all variables
-    sorting = false;
-    newZone = ""
-    controller = new AbortController();
-    signal = controller.signal
-    dragItem = ev.target;
-
-    startHistory(dragItem, dragItem.nextElementSibling);
-
-    if (dragItem.classList.contains('inTray')) {
-        dragItem = ev.target.cloneNode('true');
-        startHistory(dragItem, 'tray', 'create');
-    };
-
-    //image menu hiding 
-    hover.hide();
-    if (dragItem.querySelector('.float')) { dragItem.querySelector('.float').remove(); }
-
-    dragGhost = dragItem.cloneNode('true');
-    dragGhost.classList.add('ghost', 'inTray');
-    document.body.append(dragGhost);
-    ev.dataTransfer.setDragImage(dragGhost, 0, 0);
-    dragItem.classList.add('dragging');
-
-    // identify all like objects and install listening
-    siblings = mainContent.querySelectorAll(`*[data-itemtype='${dragItem.dataset.itemtype}']:not(.dragging)`);
-    siblings.forEach(sibling => {
-        sibling.addEventListener('dragover', dragOverItem, { signal });
-    })
-
-    // identify all proper zones and install listening
-    let zones = getObjectKey(dropZonePairs, dragItem.dataset.itemtype);
-    let correctZone = zones.map((area) => `[data-itemtype='${area}']`).toString()
-
-    try {
-        parents = (zones.toString() === 'content') ? [mainContent] : mainContent.querySelectorAll(correctZone)
-        parents.forEach(parent => {
-            if (!parent.dataset.dropzone) {
-                parent.addEventListener('dragenter', dragEnter, { signal });
-                parent.addEventListener('dragover', dragOverZone, { signal });
-                parent.addEventListener('dragleave', dragLeave, { signal });
-                parent.classList.add('available');
-            }
-        })
-    } catch (error) {
-        console.log('no parents')
-    }
-})
-
-document.addEventListener('drop', (e) => {
-    if (e.target.name != 'uploadPiece') {
-        controller.abort();
-        stopHighlight();
-    }
-})
-
-document.addEventListener('dragend', (e) => {
-    if (e.target.name != 'uploadPiece') {
-        controller.abort();
-        dragItem.classList.remove('dragging');
-        if (dragItem.parentElement !== pieceTray) {
-            dragItem.classList.remove('inTray');
-            makeEditable(dragItem);
-            let materials = dragItem.querySelectorAll('.material')
-            if (materials) { for (let material of materials) material.draggable = true }
-            if (dragItem.dataset.itemtype === 'piece') { dragItem.querySelector('input').classList.add('hidden') };
-        }
-        stopHighlight();
-        dragGhost.remove();
-        stopHistory(dragItem, dragItem.nextElementSibling);
-    }
-})
-
-function stopHighlight() { parents.forEach(parent => { parent.classList.remove('available', 'target'); }) }
-
-function dragEnter(e) {
-    target = e.target;
-    this.classList.add('target');
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-}
-
-function dragLeave(e) {
-    if (target == e.target) { this.classList.remove('target'); }
-}
-
-function dragOverZone(e) {
-    e.preventDefault()
-    if (newZone !== this) {
-        newZone = this;
-        sorting = false;
-        if (newZone.dataset.itemtype === 'detail') {
-            treasureDrop(this);
-            return;
-        }
-    }
-    if (!sorting && newZone.dataset.itemtype != 'detail') { this.insertBefore(dragItem, this.firstChild); }
-}
-
-function dragOverItem(e) {
-    e.preventDefault()
-    sorting = true;
-    this.parentElement.insertBefore(dragItem, this);
-}
-
-function treasureDrop(detail) {
-    detail = detail.querySelector('.treasure')
-    detail.appendChild(dragItem)
-}
-
-function makeEditable(item) { for (let part of item.querySelectorAll('.typeable')) { part.contentEditable = true; } }
-
-// Trash Button
-function wakeUp(item) { item.classList.toggle('awake') }
-
-deleteButton.addEventListener('drop', () => {
-    stopHistory(dragItem, 'delete', 'delete');
-    dragItem.remove();
-    deleteButton.classList.remove('awake');
-})
-
-deleteButton.addEventListener('dragenter', (ev) => {
-    ev.preventDefault();
-    wakeUp(deleteButton);
-})
-deleteButton.addEventListener('dragover', (ev) => {
-    ev.preventDefault();
-})
-deleteButton.addEventListener('dragleave', () => {
-    wakeUp(deleteButton);
-})
-
 // User Settings ***************************************************************************************************
 
-// ----------------- Dark Mode-------------------
-const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+if (currentTheme) { setTheme(currentTheme); }
 
-darkButton.addEventListener('click', darkSwitch)
+darkButton.addEventListener('click', nextTheme)
 toggleSidebar.addEventListener('click', () => { leftBar.classList.toggle('small'); })
-
-// This returns the value for repeat visits to bring back the same theme as before.
-if (currentTheme) { document.documentElement.setAttribute('data-theme', currentTheme); }
-
-function darkSwitch() {
-    if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-    }
-}
 
 // Functionality/Stylings ***************************************************************************************************
 
@@ -282,7 +152,6 @@ document.addEventListener('dragleave', (e) => { if (verifyUpload(e)) { e.target.
 document.addEventListener('drop', (e) => { if (verifyUpload(e)) { e.target.parentElement.classList.remove('selected') } })
 
 function verifyUpload(target) {
-    // const imageType = ['image/png', 'image/gif', 'image/bmp', 'image/jpeg'];
     target = target.target.name;
     return target === 'uploadPiece'
 };
@@ -296,6 +165,7 @@ class pictureMenu {
         this.image;
         this.frame;
         this.rotation;
+        this.buildMenu();
     }
     set location(target) {
         target = target.closest('.pieceFrame');
@@ -309,7 +179,7 @@ class pictureMenu {
         else { this.hide(); }
     }
     buildMenu() {
-        this.menu = document.createElement('div');
+        this.menu = make('div');
         this.menu.classList.add('float');
         this.fillMenu();
         let buttons = this.menu.querySelectorAll('svg');
@@ -346,7 +216,7 @@ class pictureMenu {
     }
     flip() { this.image.classList.toggle('flipped'); }
     magnify() {
-        const modal = document.createElement('dialog');
+        const modal = make('dialog');
         modal.classList.add('modal');
         const image = this.image.cloneNode('true');
         image.style.removeProperty('width');
@@ -362,7 +232,6 @@ class pictureMenu {
 }
 
 let hover = new pictureMenu
-hover.buildMenu();
 
 document.addEventListener('mousemove', (e) => { try { hover.location = e.target; } catch (error) { } })
 
@@ -403,6 +272,7 @@ let historyStart, historyStop;
 function startHistory(item, value, change = 'move') {
     if (value === null) { value = item.parentElement };
     historyStart = { item: item, start: value, change: change };
+    console.log(historyStart)
 };
 
 function stopHistory(item, value, change) {
@@ -507,23 +377,6 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// Generative Functions ***************************************************************************************************
-
-function createIcon(iconName) {
-    let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    icon.innerHTML = icons[`${iconName}`].path;
-    icon.setAttribute('viewBox', icons[`${iconName}`].viewbox);
-    icon.dataset.name = iconName;
-    return icon;
-}
-
-
-function addToTray(card) {
-    card = card.cloneNode('true');
-    card.querySelector('*').classList.add('inTray')
-    return card;
-}
-
 // pieceTray.append(piece.cloneNode('true'));
 pieceTray.append(addToTray(detail));
 pieceTray.append(addToTray(picture));
@@ -590,5 +443,7 @@ document.addEventListener('keydown', (e) => {
 
     if (e.key === 'z' && e.ctrlKey === true) { e.shiftKey ? readHistory('redo') : readHistory('undo') };
 })
+
+// JSON Test ***************************************************************************************************
 
 import { icons } from "./icons.js";
